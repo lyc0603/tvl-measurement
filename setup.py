@@ -1,5 +1,5 @@
 """
-Script to setup the repository for the first time.
+Automatically set up the project for development.
 """
 
 from setuptools import setup, find_packages
@@ -8,10 +8,17 @@ setup(
     name="environ",
     packages=find_packages(),
     install_requires=[
-        "numpy",
+        "multicall",
+        "python-dotenv",
         "pandas",
-        "matplotlib",
         "web3",
+        "tqdm",
+        "requests",
+        "plotly",
+        "randomcolor",
+        "pycoingecko",
+        "matplotlib",
+        "bs4",
     ],
-    extras_require={"dev": ["pylint", "black"]},
+    extra_require={"dev": ["pylint", "black"]},
 )
