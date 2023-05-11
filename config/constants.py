@@ -8,6 +8,7 @@ from config.settings import PROJECT_ROOT
 # --------------------------------------------
 # Data paths
 DATA_PATH = path.join(PROJECT_ROOT, "data")
+PROCESSED_DATA_PATH = path.join(PROJECT_ROOT, "processed_data")
 FIGURES_PATH = path.join(PROJECT_ROOT, "figures")
 TABLES_PATH = path.join(PROJECT_ROOT, "tables")
 CACHE_PATH = path.join(DATA_PATH, "cache")
@@ -180,6 +181,12 @@ DELISTED_TOKENS_BALANCER = [
     "0xeb486af868aeb3b6e53066abc9623b1041b42bc0",
     # bb-euler-USD (bb-euler-USD-BPT)
     "0x50cf90b954958480b8df7958a9e965752f627124",
+    # Balancer Aave v3 Boosted Pool (DAI)
+    "0x6667c6fa9f2b3fc1cc8d85320b62703d938e4385",
+    # Balancer Aave v3 Boosted Pool (USDT)
+    "0xa1697f9af0875b63ddc472d6eebada8c1fab8568",
+    # Balancer Aave v3 Boosted Pool (USDC)
+    "0xcbfa4532d8b2ade2c261d3dd5ef2a2284f792692",
 ]
 
 # Euler Finance related addresses

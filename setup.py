@@ -19,6 +19,7 @@ setup(
         "pycoingecko",
         "matplotlib",
         "bs4",
+        "plotly",
     ],
     extra_require={"dev": ["pylint", "black"]},
 )

@@ -258,5 +258,5 @@ if __name__ == "__main__":
     # print(get_curve_lp_price("0x06325440d014e39736583c165c2963ba99faf14e"))
     # print(get_eth_price())
     # print(get_token_price_defillama("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"))
-    # print(get_token_price("0x82698aecc9e28e9bb27608bd52cf57f704bd1b83"))
-    print(get_balancer_lp_price("0x2bbf681cc4eb09218bee85ea2a5d3d13fa40fc0c".lower()))
+    print(get_token_price("0xba100000625a3754423978a60c9317c58a424e3d"))
+    # print(get_balancer_lp_price("0x2bbf681cc4eb09218bee85ea2a5d3d13fa40fc0c".lower()))

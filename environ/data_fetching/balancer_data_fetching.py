@@ -2,6 +2,8 @@
 Fetch the balancer-related data from the graph
 """
 
+import json
+
 from multicall import Call, Multicall
 
 from config import constants
@@ -10,7 +12,7 @@ from environ.data_fetching import subgraph_query, web3_call
 
 def get_all_receipt_tokens() -> list[str]:
     """
-    Functio to get all the receipt tokens from the balancer subgraph
+    Function to get all the receipt tokens from the balancer subgraph
     """
 
     # call the graph
@@ -42,8 +44,10 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, dict[str,
             / 10 ** liquidity_pool["outputToken"]["decimals"]
         )
         underlying_token_to_amount = {}
+
+        # TODO: check whether there are negative value in amount
         for i, underlying_token in enumerate(liquidity_pool["inputTokens"]):
-            underlying_token_to_amount[underlying_token["id"]] = (
+            underlying_token_to_amount[underlying_token["id"]] = abs(
                 int(liquidity_pool["inputTokenBalances"][i])
                 / 10 ** liquidity_pool["inputTokens"][i]["decimals"]
             )
@@ -100,5 +104,11 @@ def get_token_actual_supply(token_address: str) -> int:
 
 if __name__ == "__main__":
     # test
-    print(get_receipt_tokens_and_composition())
+    # save the data to a json file
+    with open(
+        f"{constants.DATA_PATH}/composition/balancer.json", "w", encoding="utf-8"
+    ) as f:
+        json.dump(get_receipt_tokens_and_composition(), f, indent=4)
+
+    # print(get_receipt_tokens_and_composition())
     # print(get_token_actual_supply("0xA13a9247ea42D743238089903570127DdA72fE44".lower()))

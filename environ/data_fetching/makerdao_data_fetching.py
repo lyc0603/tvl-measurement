@@ -2,10 +2,12 @@
 Function to fetch MakerDAO data directly from the blockchain
 """
 
+import json
+
 from multicall import Call, Multicall
+
+from config import collateral, constants
 from environ.data_fetching import web3_call
-from config import constants
-from config import collateral
 
 
 def get_all_receipt_tokens() -> list[str]:
@@ -300,3 +302,9 @@ if __name__ == "__main__":
     # print(get_collaterals_info(get_collaterals_list()))
     # print(get_collateral_to_info_and_data())
     print(get_receipt_tokens_and_composition())
+    with open(
+        f"{constants.DATA_PATH}/composition/MakerDAO.json",
+        "w",
+        encoding="utf-8",
+    ) as f_json:
+        json.dump(get_receipt_tokens_and_composition(), f_json, indent=4)

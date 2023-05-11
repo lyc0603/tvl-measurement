@@ -18,7 +18,7 @@ def get_all_receipt_tokens() -> list[str]:
     atokens_list = Call(
         constants.AAVE2_PROTOCOL_DATA_PROVIDER_ADDRESS,
         ["getAllATokens()((string,address)[])"],
-        [["list", None]],
+        [["list", None]],  # type: ignore
         _w3=web3_call.eth_w3,
     )()["list"]
 
@@ -31,7 +31,9 @@ def get_all_receipt_tokens() -> list[str]:
     return underlying_tokens
 
 
-def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, [str, int]]):
+def get_receipt_tokens_and_composition() -> (
+    tuple[dict[str, int], dict[str, dict[str, int]]]
+):
     """
     Function to get the total supply of all compositions
     """
@@ -51,7 +53,7 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, [str, int
             Call(
                 atoken,
                 ["UNDERLYING_ASSET_ADDRESS()(address)"],
-                [[atoken, None]],
+                [[atoken, None]],  # type: ignore
             )
         )
 
