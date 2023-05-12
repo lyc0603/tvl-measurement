@@ -189,6 +189,66 @@ DELISTED_TOKENS_BALANCER = [
     "0xcbfa4532d8b2ade2c261d3dd5ef2a2284f792692",
 ]
 
+# Balancer Aave v3 Boosted Pool
+BALANCER_AAVE_V3_BOOSTED_POOL = {
+    "derivative_square": {
+        # Balancer Aave v3 Boosted StablePool (bb-a-USD)
+        "0xfebb0bbf162e64fb9d0dfe186e517d84c395f016": [
+            # Balancer Aave v3 Boosted Pool (DAI) (bb-a-DAI)
+            "0x6667c6fa9f2b3fc1cc8d85320b62703d938e4385",
+            # Balancer Aave v3 Boosted Pool (USDT) (bb-a-USDT)
+            "0xa1697f9af0875b63ddc472d6eebada8c1fab8568",
+            # Balancer Aave v3 Boosted Pool (USDC) (bb-a-USDC)
+            "0xcbfa4532d8b2ade2c261d3dd5ef2a2284f792692",
+        ],
+        # Balancer Boosted swETH-WETH (swETH-bb-a-WETH-BPT)
+        "0x02d928e68d8f10c0358566152677db51e1e2dc8c": [
+            # Balancer Aave v3 Boosted Pool (WETH) (bb-a-WETH)
+            "0x60d604890feaa0b5460b28a424407c24fe89374a",
+            # swETH (swETH)
+            "0xf951e335afb289353dc249e82926178eac7ded78",
+        ],
+        # Balancer Gearboox Boosted StablePool (bb-g-USD)
+        "0x99c88ad7dc566616548adde8ed3effa730eb6c34": [
+            # Balancer Gearbox Boosted Pool (USDC) (bb-g-USDC)
+            "0x8f5adc58b32d4e5ca02eac0e293d35855999436c",
+            # Balancer Gearbox Boosted Pool (DAI) (bb-g-DAI)
+            "0xe03af00fabe8401560c1ff7d242d622a5b601573",
+        ],
+        # Balancer 50wstETH-50Tessera-Boosted-APE (50wstETH-50stk-APE)
+        "0x959216bb492b2efa72b15b7aacea5b5c984c3cca": [
+            # Balancer Tessera Boosted APE Pool (bb-t-stkAPE)
+            "0x126e7643235ec0ab9c103c507642dc3f4ca23c66",
+            # Wrapped liquid staked Ether 2.0 (wstETH)
+            "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+        ],
+    },
+    "derivative_simple": [
+        # Balancer Aave v3 Boosted Pool (DAI) (bb-a-DAI)
+        "0x6667c6fa9f2b3fc1cc8d85320b62703d938e4385",
+        # Balancer Aave v3 Boosted Pool (USDT) (bb-a-USDT)
+        "0xa1697f9af0875b63ddc472d6eebada8c1fab8568",
+        # Balancer Aave v3 Boosted Pool (USDC) (bb-a-USDC)
+        "0xcbfa4532d8b2ade2c261d3dd5ef2a2284f792692",
+        # Balancer Aave v3 Boosted Pool (WETH) (bb-a-WETH)
+        "0x60d604890feaa0b5460b28a424407c24fe89374a",
+        # Balancer Gearbox Boosted Pool (USDC) (bb-g-USDC)
+        "0x4a82b580365cff9b146281ab72500957a849abdc",
+        # Balancer Gearbox Boosted Pool (DAI) (bb-g-DAI)
+        "0xe03af00fabe8401560c1ff7d242d622a5b601573",
+        # Balancer Tessera Boosted APE Pool (bb-t-stkAPE)
+        "0x126e7643235ec0ab9c103c507642dc3f4ca23c66",
+    ],
+    "no_record_underlying": {
+        # Diesel USDC : USDC
+        "0xc411db5f5eb3f7d552f9b8454b2d74097ccde6e3": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        # Diesel DAI : DAI
+        "0x6cfaf95457d7688022fc53e7abe052ef8dfbbdba": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        # Staked Apecoin (sAPE): APE
+        "0x7966c5bae631294d7cffcea5430b78c2f76db6fa": "0x4d224452801ACEd8B2F0aebE155379bb5D594381",
+    },
+}
+
 # Euler Finance related addresses
 EULER_RELATED_ADDRESSES = [
     # eDAI

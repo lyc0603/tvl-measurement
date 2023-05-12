@@ -47,43 +47,39 @@ def get_receipt_tokens_and_composition() -> (
     receipt_token_to_underlying = Multicall(call_list, _w3=web3_call.eth_w3)()
     call_list = []
     for receipt_token, underlying_token in tqdm(receipt_token_to_underlying.items()):
-        # cETH is a special case
-        if underlying_token is None:
-            receipt_token_to_underlying[receipt_token] = "ETH"
-            continue
-
         # Get the exchange rate and divisor of each receipt token
         call_list.append(
             Call(
                 receipt_token,
-                ["exchangeRateStored()(uint256)"],
-                [["exchangeRateStored" + receipt_token, None]],
+                ["getCash()(uint256)"],
+                [["getCash" + receipt_token, None]],
             )
         )
-        call_list.append(
-            Call(
-                underlying_token,
-                ["decimals()(uint8)"],
-                [["decimals" + underlying_token, None]],
+        if underlying_token is not None:
+            # cETH is a special case without decimals and underlying_tokens
+            call_list.append(
+                Call(
+                    underlying_token,
+                    ["decimals()(uint8)"],
+                    [["decimals" + underlying_token, None]],
+                )
             )
-        )
+        else:
+            receipt_token_to_underlying[receipt_token] = "ETH"
     multicall = Multicall(call_list, _w3=web3_call.eth_w3)()
 
     # Calculate the reserve of each underlying token
     for receipt_token, underlying_token in receipt_token_to_underlying.items():
         if underlying_token == "ETH":
+            get_cash = multicall["getCash" + receipt_token]
             receipt_token_to_composition[receipt_token] = {
-                underlying_token: exchange_rate
-                * receipt_token_to_total_supply[receipt_token]
-                / 10**18
+                underlying_token: get_cash / 10**18
             }
             continue
-        exchange_rate = multicall["exchangeRateStored" + receipt_token]
+        get_cash = multicall["getCash" + receipt_token]
         decimals = multicall["decimals" + underlying_token]
         receipt_token_to_composition[receipt_token] = {
-            underlying_token: exchange_rate
-            * receipt_token_to_total_supply[receipt_token]
-            / 10**decimals
+            underlying_token: get_cash / 10**decimals
         }
     return receipt_token_to_total_supply, receipt_token_to_composition
 

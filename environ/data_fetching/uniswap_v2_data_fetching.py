@@ -148,7 +148,7 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, [str, int
             token_to_decimals[token1] / 2
         )
         receipt_token_to_underlying_token_to_amount[receipt_token] = {
-            receipt_token: reserve0,
+            token0: reserve0,
             token1: reserve1,
         }
 

@@ -5,9 +5,11 @@ Fetch the balancer-related data from the graph
 import json
 
 from multicall import Call, Multicall
+from tqdm import tqdm
 
 from config import constants
 from environ.data_fetching import subgraph_query, web3_call
+from environ.data_fetching.web3_call import get_token_total_supply
 
 
 def get_all_receipt_tokens() -> list[str]:
@@ -38,10 +40,11 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, dict[str,
     liquidity_pools_info = json_response["data"]["liquidityPools"]
     receipt_token_to_total_supply = {}
     receipt_token_to_composition = {}
-    for liquidity_pool in liquidity_pools_info:
+    for liquidity_pool in tqdm(liquidity_pools_info, desc="Fetching Balancer data"):
         receipt_token_to_total_supply[liquidity_pool["id"]] = (
-            int(liquidity_pool["outputTokenSupply"])
-            / 10 ** liquidity_pool["outputToken"]["decimals"]
+            # int(liquidity_pool["outputTokenSupply"])
+            # / 10 ** liquidity_pool["outputToken"]["decimals"]
+            get_token_actual_supply(liquidity_pool["id"])
         )
         underlying_token_to_amount = {}
 
@@ -55,14 +58,14 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, dict[str,
     return receipt_token_to_total_supply, receipt_token_to_composition
 
 
-def get_token_actual_supply(token_address: str) -> int:
+def get_token_actual_supply(token_address: str) -> float:
     """
     Function to get the actual supply of the token
     in boosted pools such as bb-a-usd
     """
 
+    # One possble way to get the actual supply of the token
     try:
-        # One possble way to get the actual supply of the token
         multicall = Multicall(
             [
                 Call(
@@ -79,10 +82,14 @@ def get_token_actual_supply(token_address: str) -> int:
             _w3=web3_call.eth_w3,
         )()
 
+    except:  # pylint: disable=bare-except
+        pass
+    else:
         return multicall["actualSupply"] / 10 ** multicall["decimals"]
-    except:
-        # Another possible way to get the actual supply of the token
-        # For example 0xA13a9247ea42D743238089903570127DdA72fE44
+
+    # Another possible way to get the actual supply of the token
+    # For example 0xA13a9247ea42D743238089903570127DdA72fE44
+    try:
         multicall = Multicall(
             [
                 Call(
@@ -98,17 +105,22 @@ def get_token_actual_supply(token_address: str) -> int:
             ],
             _w3=web3_call.eth_w3,
         )()
-
+    except:  # pylint: disable=bare-except
+        pass
+    else:
         return multicall["virtualSupply"] / 10 ** multicall["decimals"]
+
+    # final general method
+    return get_token_total_supply(token_address)
 
 
 if __name__ == "__main__":
     # test
     # save the data to a json file
-    with open(
-        f"{constants.DATA_PATH}/composition/balancer.json", "w", encoding="utf-8"
-    ) as f:
-        json.dump(get_receipt_tokens_and_composition(), f, indent=4)
+    # with open(
+    #     f"{constants.DATA_PATH}/composition/balancer.json", "w", encoding="utf-8"
+    # ) as f:
+    #     json.dump(get_receipt_tokens_and_composition(), f, indent=4)
 
-    # print(get_receipt_tokens_and_composition())
-    # print(get_token_actual_supply("0xA13a9247ea42D743238089903570127DdA72fE44".lower()))
+    print(get_receipt_tokens_and_composition())
+    # print(get_token_actual_supply("0x5c6ee304399dbdb9c8ef030ab642b10820db8f56".lower()))

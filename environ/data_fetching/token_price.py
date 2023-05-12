@@ -53,9 +53,65 @@ def get_eth_price() -> float:
     return eth_info["prices"][-1][1]
 
 
+def get_derivative_simple_price(
+    derivative_token_address: str,
+    receipt_token_to_total_supply: dict,
+    receipt_token_to_composition: dict,
+) -> float:
+    """
+    Function to calculate the simple derivative price
+    e.g. Balancer Aave v3 Boosted Pool (DAI) (bb-a-DAI)
+    """
+
+    # initial value
+    underlying_value = 0
+
+    # iterate through the underlying tokens and calculate the price
+    for token, token_amount in receipt_token_to_composition[
+        derivative_token_address
+    ].items():
+        if token_amount != 0:
+            try:
+                underlying_value += token_amount * get_token_price(token)
+            except:  # pylint: disable=W0702
+                # no record underlying
+                print(token)
+                underlying_value += token_amount * 1
+
+    # get the total supply of the derivative token
+    return underlying_value / receipt_token_to_total_supply[derivative_token_address]
+
+
+def get_derivative_square_price(
+    derivative_token_address: str,
+    receipt_token_to_total_supply: dict,
+    receipt_token_to_composition: dict,
+) -> float:
+    """
+    Function to calculate the complex derivative price
+    e.g. Balancer Aave v3 Boosted StablePool (bb-a-USD)
+    """
+
+    # initial value
+    underlying_value = 0
+
+    # iterate through the simple derivateive underlying the complex derivative
+    for simple_derivative, simple_derivative_amount in receipt_token_to_composition[
+        derivative_token_address
+    ].items():
+        if simple_derivative_amount != 0:
+            # calculate the amount of the simple derivative
+            underlying_value += simple_derivative_amount * get_derivative_simple_price(
+                simple_derivative,
+                receipt_token_to_total_supply,
+                receipt_token_to_composition,
+            )
+
+    # get the total supply of the derivative token
+    return underlying_value / receipt_token_to_total_supply[derivative_token_address]
+
+
 # Special price oracle for balancer
-
-
 def get_balancer_lp_price(token_address: str) -> float:
     """
     Function to fetch the price of a balancer lp token
@@ -257,6 +313,6 @@ if __name__ == "__main__":
     # print(get_lp_price("0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc"))
     # print(get_curve_lp_price("0x06325440d014e39736583c165c2963ba99faf14e"))
     # print(get_eth_price())
-    # print(get_token_price_defillama("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"))
-    print(get_token_price("0xba100000625a3754423978a60c9317c58a424e3d"))
+    print(get_token_price_defillama("0xc411db5f5eb3f7d552f9b8454b2d74097ccde6e3"))
+    # print(get_token_price("0x02d928e68d8f10c0358566152677db51e1e2dc8c"))
     # print(get_balancer_lp_price("0x2bbf681cc4eb09218bee85ea2a5d3d13fa40fc0c".lower()))

@@ -27,6 +27,7 @@ FETCH_DICT = {
     "Yearn": yearn_data_fetching.get_receipt_tokens_and_composition(),
 }
 
+
 # save the json to data path
 with open(
     f"{constants.DATA_PATH}/composition/defi_compo.json", "w", encoding="utf-8"

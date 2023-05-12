@@ -4,8 +4,6 @@ Function to process the composition of the receipt tokens
 
 import json
 
-from tqdm import tqdm
-
 from config import constants
 
 
@@ -24,7 +22,7 @@ def _process_compo(
     flow_dict = {"source": [], "target": [], "contract": [], "amount": []}
 
     # iterate through all keys
-    for target_protocol, target_info in tqdm(compo_dict.items()):
+    for target_protocol, target_info in compo_dict.items():
         for receipt, _ in target_info[1].items():
             # iterate through other protocols
             for other_protocol, other_info in compo_dict.items():
@@ -34,8 +32,8 @@ def _process_compo(
                         # if the receipt is in the other composition
                         if (receipt in other_compo) & (compo_amount != 0):
                             # add the flow
-                            flow_dict["source"].append(other_protocol)
-                            flow_dict["target"].append(target_protocol)
+                            flow_dict["source"].append(target_protocol)
+                            flow_dict["target"].append(other_protocol)
                             flow_dict["contract"].append(other_compo)
                             flow_dict["amount"].append(compo_amount)
 
