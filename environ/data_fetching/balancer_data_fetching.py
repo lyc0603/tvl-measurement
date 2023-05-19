@@ -2,8 +2,6 @@
 Fetch the balancer-related data from the graph
 """
 
-import json
-
 from multicall import Call, Multicall
 from tqdm import tqdm
 
@@ -114,6 +112,24 @@ def get_token_actual_supply(token_address: str) -> float:
     return get_token_total_supply(token_address)
 
 
+def balancer_subgraph_token_price(
+    token_address: str,
+) -> float:
+    """
+    Function to get the price of the token from balancer subgraph
+    e.g. such as TempleDAO, BagerDAO
+    """
+
+    # call the graph
+    data_json = subgraph_query.run_query_var(
+        http=constants.BALANCER_URL,
+        query_scripts=constants.BALANCER_TOKEN_PRICE_QUERY,
+        var={"id": token_address},
+    )
+
+    return float(data_json["data"]["token"]["latestUSDPrice"])
+
+
 if __name__ == "__main__":
     # test
     # save the data to a json file
@@ -122,5 +138,6 @@ if __name__ == "__main__":
     # ) as f:
     #     json.dump(get_receipt_tokens_and_composition(), f, indent=4)
 
-    print(get_receipt_tokens_and_composition())
+    # print(get_receipt_tokens_and_composition())
     # print(get_token_actual_supply("0x5c6ee304399dbdb9c8ef030ab642b10820db8f56".lower()))
+    print(balancer_subgraph_token_price("0x50cf90b954958480b8df7958a9e965752f627124"))

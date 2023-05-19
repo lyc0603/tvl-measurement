@@ -157,5 +157,6 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, [str, int
 
 if __name__ == "__main__":
     # Example of how to use the functions
-    print(get_all_uni_v2_pools())
-    print(get_receipt_tokens_and_composition())
+    print(get_total_number_of_uni_v2_pools())
+    # print(get_all_uni_v2_pools())
+    # print(get_receipt_tokens_and_composition())

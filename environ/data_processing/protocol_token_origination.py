@@ -4,6 +4,7 @@ Functions for token origination
 
 import os
 from enum import Enum
+from typing import Optional
 
 from config import constants
 from environ.data_fetching import (
@@ -148,7 +149,7 @@ def get_data_from_origin(
         case Origin.YEARN:
             return yearn_data_fetching.get_receipt_tokens_and_composition()
         case _:
-            return None
+            return (None, None)
 
 
 if __name__ == "__main__":
