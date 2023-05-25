@@ -4,18 +4,17 @@ Script to fetch the price of the flows
 
 import json
 
-import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from config.constants import BALANCER_AAVE_V3_BOOSTED_POOL, PROCESSED_DATA_PATH
+from config.constants import PROCESSED_DATA_PATH
+from environ.data_processing.process_compo import _get_token_price
+from environ.data_fetching.token_price import (
+    backup_price_fetching_method,
+    get_balancer_derivative_price,
+)
 from environ.data_fetching.balancer_data_fetching import (
     get_receipt_tokens_and_composition,
-)
-from environ.data_fetching.token_price import (
-    get_derivative_simple_price,
-    get_derivative_square_price,
-    get_token_price_defillama,
 )
 
 # load the flow data
@@ -30,42 +29,76 @@ flow_df = pd.DataFrame(flow_dict)
 # get the unique list of tokens
 token_lst = flow_df["contract"].unique().tolist()
 
-# get balancer data
+# get the price of the token
+dict_price = _get_token_price()
+
+# get the composition of balancer
 (
     receipt_token_to_total_supply,
     receipt_token_to_composition,
 ) = get_receipt_tokens_and_composition()
 
-# iterate through the token list
-for token in tqdm(token_lst):
-    print(token)
-    try:
-        # get the price of the token
-        price = get_token_price_defillama(token)
-    except:  # pylint: disable=W0702
-        # if the token is not in defillama, then it is a derivative in balancer
-        if token in BALANCER_AAVE_V3_BOOSTED_POOL["derivative_square"].keys():
-            price = get_derivative_square_price(
-                token, receipt_token_to_total_supply, receipt_token_to_composition
-            )
 
-        elif token in BALANCER_AAVE_V3_BOOSTED_POOL["derivative_simple"]:
-            price = get_derivative_simple_price(
-                token, receipt_token_to_total_supply, receipt_token_to_composition
-            )
+def _update_token_data(
+    flow_df: pd.DataFrame,
+    token: str,
+    price: float,
+):
+    """
+    Function to update price data
+    """
 
-        else:
-            price = np.nan
-    else:
-        pass
-
-    # set the price of the token
+    # if the token is not in the dict, use the backup method
     flow_df.loc[flow_df["contract"] == token, "price"] = price
 
     # calculate the flow in USD
     flow_df.loc[flow_df["contract"] == token, "flow_usd"] = (
         flow_df.loc[flow_df["contract"] == token, "amount"] * price
     )
+
+
+# iterate through the token list
+for token in tqdm(token_lst):
+    try:
+        # set the price of the token
+        token_prc = dict_price[token]
+    except:  # pylint disable=bare-except
+        pass
+    else:
+        _update_token_data(
+            flow_df,
+            token,
+            token_prc,
+        )
+        continue
+
+    try:
+        # set the price of the token using backup method
+        token_prc = backup_price_fetching_method(token)
+    except:  # pylint disable=bare-except
+        pass
+    else:
+        _update_token_data(
+            flow_df,
+            token,
+            token_prc,
+        )
+        continue
+
+    if token in list(receipt_token_to_total_supply.keys()):
+        value = get_balancer_derivative_price(
+            token,
+            receipt_token_to_total_supply,
+            receipt_token_to_composition,
+        )
+    else:
+        _update_token_data(
+            flow_df,
+            token,
+            0,
+        )
+        print(f"Token {token} not found")
+
 
 # save the flow data
 flow_df.to_csv(f"{PROCESSED_DATA_PATH}/token_flow/defi_flow_usd.csv", index=False)

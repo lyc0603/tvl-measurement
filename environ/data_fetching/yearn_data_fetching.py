@@ -3,27 +3,27 @@ Functions to fetch the data from the Yearn
 """
 
 from multicall import Multicall, Call
-from environ.data_fetching import web3_call
+from environ.data_fetching import web3_call, subgraph_query
 from config import constants
 
 
 def get_vaults_list() -> list[str]:
     """
-    Function to get the list of vaults
+    Function to get the list of vaults in the yearn
     """
-    return list(
-        Call(
-            constants.YREGISTRY_ADDRESS,
-            ["getVaults()(address[])"],
-            [["vaults", None]],
-            _w3=web3_call.eth_w3,
-        )()["vaults"]
+    # Query the graph
+    json_response = subgraph_query.run_query(
+        constants.YEARN_URL,
+        constants.YEARN_POOLS_QUERY,
     )
 
+    # Get the list of vaults
+    return [id["id"] for id in json_response["data"]["vaults"]]
 
-def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, dict[str, int]]):
+
+def get_receipt_tokens_and_composition() -> None:
     """
-    Function to get the receipt tokens and their composition
+    Function to get the receipt tokens and their composistions
     """
 
     # get the list of vaults
@@ -32,7 +32,7 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, dict[str,
     receipt_token_to_total_supply = {}
     receipt_token_to_composition = {}
 
-    # get the total supply of each receipt token
+    # get the total assets, decimals, and underlying token of each receipt token
     call_list = []
     for receipt_token in receipt_tokens:
         call_list.append(
@@ -44,12 +44,26 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, dict[str,
         )
         call_list.append(
             Call(
+                receipt_token,
+                ["decimals()(uint256)"],
+                [["decimals " + receipt_token, None]],
+            )
+        )
+        call_list.append(
+            Call(
                 receipt_token, ["token()(address)"], [["token " + receipt_token, None]]
             )
         )
+
     multicall = Multicall(call_list, _w3=web3_call.eth_w3)()
 
-    # get the tokens' decimals
+    # calculate the total supply of each receipt token
+    for receipt_token in receipt_tokens:
+        receipt_token_to_total_supply[receipt_token] = multicall[
+            "totalSupply " + receipt_token
+        ] / (10 ** multicall["decimals " + receipt_token])
+
+    # get the composition and composition tokens' decimals
     underlying_tokens = []
     for receipt_token in receipt_tokens:
         token_address = multicall["token " + receipt_token]
@@ -58,50 +72,34 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, dict[str,
         underlying_tokens + list(receipt_tokens)
     )
 
-    # Returns the price of the Vault’s wrapped token,
-    # denominated in the unwrapped native token.
-    price_per_share = {}
+    # get the composition of each receipt token
     call_list = []
     for receipt_token in receipt_tokens:
-        # if no supply, set price to 0
-        if multicall["totalSupply " + receipt_token] == 0:
-            price_per_share[receipt_token] = 0
+        if receipt_token_to_total_supply[receipt_token] == 0:
             continue
         call_list.append(
             Call(
                 receipt_token,
-                ["getPricePerFullShare()(uint256)"],
+                ["totalAssets()(uint256)"],
                 [[receipt_token, None]],
             )
         )
     multicall2 = Multicall(call_list, _w3=web3_call.eth_w3)()
-    for receipt_token, p_p_p in multicall2.items():
-        price_per_share[receipt_token] = p_p_p / 10 ** tokens_to_decimals[receipt_token]
 
-    # Totay supply times price per share gives the quantity of the underlying token
+    # calculate the composition of each receipt token
     for receipt_token in receipt_tokens:
-        total_supply = multicall["totalSupply " + receipt_token]
-        receipt_token_to_total_supply[receipt_token] = (
-            total_supply / 10 ** tokens_to_decimals[receipt_token]
+        if receipt_token_to_total_supply[receipt_token] == 0:
+            continue
+        receipt_token_to_composition[receipt_token] = {}
+        receipt_token_to_composition[receipt_token][
+            multicall["token " + receipt_token]
+        ] = multicall2[receipt_token] / (
+            10 ** tokens_to_decimals[multicall["token " + receipt_token]]
         )
-        underlying_to_amount = {}
-        underlying_token = multicall["token " + receipt_token]
-        amount = (
-            price_per_share[receipt_token]
-            * total_supply
-            / 10 ** tokens_to_decimals[underlying_token]
-        )
-        underlying_to_amount[underlying_token] = amount
-        receipt_token_to_composition[receipt_token] = underlying_to_amount
+
     return receipt_token_to_total_supply, receipt_token_to_composition
 
 
-def get_all_receipt_tokens() -> list[str]:
-    """
-    Function to get the list of all receipt tokens
-    """
-    return get_vaults_list()
-
-
 if __name__ == "__main__":
-    print(get_vaults_list())
+    # print(get_vaults_list())
+    print(get_receipt_tokens_and_composition())

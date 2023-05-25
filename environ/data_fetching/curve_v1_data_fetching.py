@@ -200,9 +200,9 @@ def get_receipt_tokens_and_composition() -> (dict[str, int], dict[str, dict[str,
 
 if __name__ == "__main__":
     # test code
-    print(get_curve_registry())
+    # print(get_curve_registry())
     # print(get_curve_pools_list())
     # print(get_all_receipt_tokens())
     # print(get_vecrv_adress())
-    # print(get_receipt_tokens_and_composition())
+    print(get_receipt_tokens_and_composition())
     pass

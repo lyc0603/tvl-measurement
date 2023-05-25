@@ -43,6 +43,22 @@ def run_query_var(
             time.sleep(10)
 
 
+def run_query(http: str, query_scripts: str) -> dict[str, Union[int, str]]:
+    """
+    execute query without variable parameters
+    """
+    while True:
+        try:
+            # endpoint where you are making the request
+            request = requests.post(
+                http, "", json={"query": query_scripts}, timeout=120
+            )
+            if request.status_code == 200:
+                return request.json()
+        except:
+            time.sleep(10)
+
+
 if __name__ == "__main__":
     # Example of how to use this function
     from config.constants import UNISWAP_POOLS_QUERY, UNISWAP_V3_SUBGRAPH_ID

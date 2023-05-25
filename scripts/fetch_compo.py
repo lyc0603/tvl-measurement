@@ -12,7 +12,6 @@ from environ.data_fetching import (
     curve_v1_data_fetching,
     makerdao_data_fetching,
     uniswap_v2_data_fetching,
-    uniswap_v3_data_fetching,
     yearn_data_fetching,
 )
 
@@ -23,7 +22,6 @@ FETCH_DICT = {
     "Curve V1": curve_v1_data_fetching.get_receipt_tokens_and_composition(),
     "MakerDAO": makerdao_data_fetching.get_receipt_tokens_and_composition(),
     "Uniswap V2": uniswap_v2_data_fetching.get_receipt_tokens_and_composition(),
-    "Uniswap V3": uniswap_v3_data_fetching.get_receipt_tokens_and_composition(),
     "Yearn": yearn_data_fetching.get_receipt_tokens_and_composition(),
 }
 

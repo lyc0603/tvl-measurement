@@ -388,6 +388,19 @@ def get_lp_price(token_address: str) -> float:
     return lp_price
 
 
+def backup_price_fetching_method(
+    token: str,
+) -> float:
+    """
+    Backup method to fetch token price from uniswap v2 price oracle
+    """
+
+    try:
+        return uniswap_v2_subgraph_token_price(token)
+    except:  # pylint: disable=W0702
+        return get_token_price_defillama(token)
+
+
 if __name__ == "__main__":
     # Test the function
     # print(get_lp_price("0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc"))

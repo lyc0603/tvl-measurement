@@ -6,6 +6,9 @@ from os import path
 from config.settings import PROJECT_ROOT
 
 # --------------------------------------------
+# Target protocols
+TVL_LIST = ["AAVE_V2", "BALANCER", "YEARN", "CURVE", "MAKER", "COMPOUND_V2"]
+# --------------------------------------------
 # Data paths
 DATA_PATH = path.join(PROJECT_ROOT, "data")
 PROCESSED_DATA_PATH = path.join(PROJECT_ROOT, "processed_data")
@@ -25,8 +28,82 @@ THE_GRAPH_URL = (
 )
 BALANCER_URL = "https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2"
 UNISWAP_V2_URL = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
+UNISWAP_V3_URL = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3"
+YEARN_URL = "https://api.thegraph.com/subgraphs/name/rareweasel/yearn-vaults-v2-subgraph-mainnet"
 # --------------------------------------------
 # The Graph Queries
+# Pool queries
+UNISWAP_V2_POOLS_QUERY_DICT = {
+    "first_batch": """
+query MyQuery {
+  pairs(first: 1000, orderBy: id, orderDirection: asc) {
+    reserve0
+    reserve1
+    reserveUSD
+    id
+    totalSupply
+    token0 {
+      id
+      name
+      symbol
+    }
+    token1 {
+      id
+      name
+      symbol
+    }
+  }
+}
+""",
+    "following_batch": """
+query ($id_gt: ID!){
+  pairs(
+    first: 1000
+    orderBy: id
+    orderDirection: asc
+    where: {id_gt: $id_gt}
+  ) {
+    reserve0
+    reserve1
+    reserveUSD
+    id
+    token0 {
+      id
+      name
+      symbol
+    }
+    token1 {
+      id
+      name
+      symbol
+    }
+  }
+}
+""",
+}
+
+UNISWAP_V3_TOKENS_QUERY_DICT = {
+    "first_batch": """
+query MyQuery {
+  pools(first: 1000, orderBy: id, orderDirection: asc) {
+    id
+  }
+}
+""",
+    "following_batch": """
+query ($id_gt: ID!){
+  pools(
+    first: 1000
+    orderBy: id
+    orderDirection: asc
+    where: {id_gt: $id_gt}
+  ) {
+    id
+  }
+}
+""",
+}
+
 BALANCER_POOLS_QUERY = UNISWAP_POOLS_QUERY = """
 {
   liquidityPools(orderBy:totalValueLockedUSD,orderDirection:desc){
@@ -62,6 +139,15 @@ COMPOUND_POOLS_QUERY = """
 }
 """
 
+YEARN_POOLS_QUERY = """
+{
+  vaults(first: 1000, orderBy: id, orderDirection: asc) {
+    id
+  }
+}
+"""
+
+# Token price queries
 UNISWAP_V2_TOKEN_PRICE_QUERY = """
 query ($id: ID!){
   tokenDayDatas(
@@ -79,6 +165,15 @@ BALANCER_TOKEN_PRICE_QUERY = """
 query ($id: ID!){
   token(id: $id) {
     latestUSDPrice
+  }
+}
+"""
+
+# TVL queries
+UNISWAP_V2_POOL_TVL_QUERY = """
+query{
+  uniswapDayDatas(first: 1, orderBy: date, orderDirection: desc) {
+    totalLiquidityUSD
   }
 }
 """
@@ -116,8 +211,6 @@ DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F".lower()
 SAI_ADDRESS = "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359".lower()
 MCD_SPOT_ADDRESS = "0x65C79fcB50Ca1594B025960e539eD7A9a6D434A3".lower()
 MKR_ADDRESS = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2".lower()
-# Yearn related addresses
-YREGISTRY_ADDRESS = "0x3eE41C098f9666ed2eA246f4D2558010e59d63A0".lower()
 # --------------------------------------------
 # Burn addresses
 BURN_ADDRESS = [

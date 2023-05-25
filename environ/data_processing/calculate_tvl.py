@@ -79,19 +79,31 @@ def _get_general_token_prc_from_cg(
         except:  # pylint: disable=W0702
             # special method for different DeFi protocols
             try:
-                if (origin == Origin.MAKER) | (origin == Origin.AAVE_V2):
-                    # Special case for MakerDAO and Aave
-                    value = _get_makerdao_aave_tvl(token)
+                match origin:
+                    case Origin.MAKER | Origin.AAVE_V2:
+                        # Special case for MakerDAO and Aave
+                        value = _get_makerdao_aave_tvl(token)
 
-                if origin == Origin.BALANCER:
-                    # Special case for Balancer
-                    value = _get_balancer_tvl(
-                        token,
-                        receipt_token_to_total_supply,
-                        receipt_token_to_composition,
-                    )
+                    case Origin.BALANCER:
+                        # Special case for Balancer
+                        value = _get_balancer_tvl(
+                            token,
+                            receipt_token_to_total_supply,
+                            receipt_token_to_composition,
+                        )
+
+                    case Origin.COMPOUND_V2:
+                        # Special case for Compound
+                        value = _get_compound_tvl(
+                            token,
+                        )
+
+                    case _:
+                        # Special case for other protocols
+                        value = _backup_price_fetching_method(token, value_defillama)
+
             except:  # pylint: disable=W0702
-                value = 0
+                value = _backup_price_fetching_method(token, value_defillama)
                 print(f"Could not get the price of {token}")
                 # raise LookupError(f"Could not get the price of {token}")
 
@@ -182,6 +194,20 @@ def _get_compound_tvl(
         return value
 
     return 0
+
+
+def _backup_price_fetching_method(
+    token: str,
+    value_defillama: float,
+) -> float:
+    """
+    Backup method to fetch token price from uniswap v2 price oracle
+    """
+
+    try:
+        return token_price.uniswap_v2_subgraph_token_price(token)
+    except:  # pylint: disable=W0702
+        return value_defillama
 
 
 def _visualize_tvl(composition_df: pd.DataFrame, tvl: float, origin: Origin):
@@ -313,4 +339,4 @@ def get_tvl(
 
 if __name__ == "__main__":
     # Test the function
-    print(f"The TVL is {get_tvl(Origin.YEARN)}")
+    print(f"The TVL is {get_tvl(Origin.BALANCER)}")
