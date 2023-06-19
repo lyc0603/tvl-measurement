@@ -24,25 +24,7 @@ To install the latest release on `PyPI <https://pypi.org/project/toml/>`_, run:
   pip install toml
 ```
 
-Or to install the latest development version, run:
-
-```bash
-  git clone https://github.com/uiri/toml.git
-  cd toml
-  python setup.py install
-```
-
-
 ## Set up the repo
-
-### Give execute permission to your script and then run `setup_repo.sh`
-
-```
-chmod +x setup_repo.sh
-./setup_repo.sh
-```
-
-or follow the step-by-step instructions below
 
 ### Create a python virtual environment
 
