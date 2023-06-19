@@ -1,4 +1,7 @@
 # tvl-measurement
+
+[![python](https://img.shields.io/badge/Python-v3.11.3-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
+
 Repository for the study of TVL double counting issue.
 
 Clone this repository
@@ -12,6 +15,23 @@ Navigate to the directory of the cloned repo
 ```bash
 cd tvl-measurement
 ```
+
+## Installation
+
+To install the latest release on `PyPI <https://pypi.org/project/toml/>`_, run:
+
+```bash
+  pip install toml
+```
+
+Or to install the latest development version, run:
+
+```bash
+  git clone https://github.com/uiri/toml.git
+  cd toml
+  python setup.py install
+```
+
 
 ## Set up the repo
 
