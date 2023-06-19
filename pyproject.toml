@@ -17,28 +17,6 @@ dependencies = [
     'importlib-metadata; python_version<"3.12"',
 ]
 
-from setuptools import setup, find_packages
-
-setup(
-    name="environ",
-    packages=find_packages(),
-    install_requires=[
-        "multicall",
-        "python-dotenv",
-        "pandas",
-        "web3",
-        "tqdm",
-        "requests",
-        "plotly",
-        "randomcolor",
-        "pycoingecko",
-        "matplotlib",
-        "bs4",
-        "plotly",
-    ],
-    extra_require={"dev": ["pylint", "black"]},
-)
-
 [tool.black]
 line-length = 88
 target_version = ['py36']
