@@ -7,6 +7,8 @@ from config.constants import TABLES_PATH
 
 # iterate through unique category in df_token_cate
 for cate in df_token_cate["category"].unique():
+    cate_name = cate.lower().replace(" ", "_")
+
     # filter df_token_cate by cate
     df_cate = df_token_cate[df_token_cate["category"] == cate]
 
@@ -19,7 +21,7 @@ for cate in df_token_cate["category"].unique():
     # render df_cate
     with pd.option_context("max_colwidth", 1000):
         df_cate.to_latex(
-            f"{TABLES_PATH}/{cate}_list.tex",
+            f"{TABLES_PATH}/{cate_name}_list.tex",
             escape=False,
             index=False,
         )
