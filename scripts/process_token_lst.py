@@ -32,9 +32,7 @@ df_agg = {
 
 for cate, cate_info in CATE_DATA_INFO["cmc"].items():
     # Load governance and wrapped tokens
-    with open(
-        f"{DATA_PATH}/token_category/gov_tokens.json", "r", encoding="utf-8"
-    ) as gov_file:
+    with open(cate_info["path"], "r", encoding="utf-8") as gov_file:
         gov_tokens = json.load(gov_file)
     target_df = pd.DataFrame(gov_tokens["data"]["cryptoCurrencyList"])
     target_df = target_df[["name", "symbol", "platform"]]
@@ -51,7 +49,7 @@ for cate, cate_info in CATE_DATA_INFO["cmc"].items():
             # append to df_agg
             df_agg["name"].append(row["name"])
             df_agg["symbol"].append(row["symbol"])
-            df_agg["token_address"].append(row["platform"]["token_address"].lower())
+            df_agg["token_address"].append(row["platform"]["token_address"])
             df_agg["category"].append(row["category"])
             df_agg["stable_type"].append(np.nan)
 
@@ -60,7 +58,7 @@ for token in NON_CRYPTO_BACKING_STABLECOINS:
     # append to df_agg
     df_agg["name"].append(token["Name"])
     df_agg["symbol"].append(token["Symbol"])
-    df_agg["token_address"].append(token["Contract"].lower())
+    df_agg["token_address"].append(token["Contract"])
     df_agg["category"].append("Stablecoins")
     df_agg["stable_type"].append(token["Category"])
 

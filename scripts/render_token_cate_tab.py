@@ -26,6 +26,11 @@ for cate in df_token_cate["category"].unique():
         else ["Name", "Symbol", "Token Address", "Type"]
     )
 
+    # change smart contract column to be a link to etherscan
+    df_cate["Token Address"] = df_cate["Token Address"].apply(
+        lambda x: f"\\href{{https://etherscan.io/address/{x}}}{{\\tt {x}}}"
+    )
+
     # render df_cate
     with pd.option_context("max_colwidth", 1000):
         df_cate.to_latex(
