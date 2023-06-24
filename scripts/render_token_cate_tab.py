@@ -1,11 +1,12 @@
 """
 Script to render token category tab
 """
-import pandas as pd
-from scripts.process_token_lst import df_token_cate
-from config.constants import TABLES_PATH
-
 import warnings
+
+import pandas as pd
+
+from config.constants import TABLES_PATH
+from scripts.process_token_lst import df_token_cate
 
 warnings.filterwarnings("ignore")
 
@@ -44,3 +45,39 @@ for cate in df_token_cate["category"].unique():
             escape=False,
             index=False,
         )
+
+    # load the table
+    with open(f"{TABLES_PATH}/{cate_name}_list.tex", "r", encoding="utf-8") as table:
+        table_str = table.read()
+
+    # replace Name with \multicolumn{2}{|c|}{Name}
+    table_str = table_str.replace(
+        "Name",
+        "\multicolumn{2}{|c|}{Name}"
+        if cate != "Stablecoins"
+        else "\multicolumn{3}{|c|}{Name}",
+    )
+
+    # replace Symbol with \multicolumn{2}{|c|}{Symbol}
+    table_str = table_str.replace(
+        "Symbol",
+        "\multicolumn{2}{|c|}{Symbol}"
+        if cate != "Stablecoins"
+        else "\multicolumn{3}{|c|}{Symbol}",
+    )
+
+    # replace {ll} with {|c|c|c|c|}
+    if cate != "Stablecoins":
+        table_str = table_str.replace(
+            "{ll}",
+            "{llll}",
+        )
+    else:
+        table_str = table_str.replace(
+            "{lll}",
+            "{lllll}",
+        )
+
+    # save the table
+    with open(f"{TABLES_PATH}/{cate_name}_list.tex", "w", encoding="utf-8") as table:
+        table.write(table_str)
