@@ -88,11 +88,22 @@ def plot_sankey_tvl_decompose() -> None:
 
     # iterate through the text to change the font size
     for text in diagrams[0].texts:
-        text.set_fontsize(5)
+        text.set_fontsize(10)
         text.set_fontweight("bold")
 
-    # # tight layout
-    # plt.tight_layout()
+    # text position
+    diagrams[0].texts[0].set_position(xy=[-0.3, 0.95])  # Aave V2
+    diagrams[0].texts[1].set_position(xy=[-1.0, 0.95])  # Balancer
+    diagrams[0].texts[2].set_position(xy=[-1.8, -0.6])  # Yearn
+    diagrams[0].texts[3].set_position(xy=[-1.0, -0.95])  # Curve
+    diagrams[0].texts[4].set_position(xy=[-1.8, -0.1])  # Maker
+    diagrams[0].texts[5].set_position(xy=[-0.1, -0.95])  # Compound
+    diagrams[0].texts[6].set_position(xy=[-1.8, 0.4])  # Uniswap V2
+    diagrams[0].texts[7].set_position(xy=[0.85, 0.95])  # TVR
+    diagrams[0].texts[8].set_position(xy=[1, -0.95])  # Double Counting
+
+    # tight layout
+    plt.tight_layout()
 
     # remove the frame
     plt.box(False)

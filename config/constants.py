@@ -31,6 +31,27 @@ UNISWAP_V2_URL = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2"
 UNISWAP_V3_URL = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3"
 YEARN_URL = "https://api.thegraph.com/subgraphs/name/rareweasel/yearn-vaults-v2-subgraph-mainnet"
 # --------------------------------------------
+# The Token category URLs
+CMC_GOV = (
+    "https://api.coinmarketcap.com/data-api/v3/cryptocurrency/listing?"
+    + "start=1&limit=200&sortBy=market_cap&sortType=desc&convert=USD,BTC,ETH&"
+    + "cryptoType=all&tagType=all&audited=false&aux=ath,atl,high24h,low24h,"
+    + "num_market_pairs,cmc_rank,date_added,tags,platform,max_supply,circulating_supply,"
+    + "self_reported_circulating_supply,self_reported_market_cap,total_supply,volume_7d,"
+    + "volume_30d&tagSlugs=governance"
+)
+CMC_WRAPPED = (
+    "https://api.coinmarketcap.com/data-api/v3/cryptocurrency/listing?"
+    + "start=1&limit=100&sortBy=market_cap&sortType=desc&convert=USD,BTC,ETH&"
+    + "cryptoType=all&tagType=all&audited=false&aux=ath,atl,high24h,low24h,num_market_pairs,"
+    + "cmc_rank,date_added,tags,platform,max_supply,circulating_supply,"
+    + "self_reported_circulating_supply,self_reported_market_cap,total_supply,volume_7d,"
+    + "volume_30d&tagSlugs=wrapped-tokens"
+)
+
+LLAMA_STABLE = "https://stablecoins.llama.fi/stablecoins?includePrices=true"
+
+# --------------------------------------------
 # The Graph Queries
 # Pool queries
 UNISWAP_V2_POOLS_QUERY_DICT = {
@@ -285,4 +306,171 @@ DELISTED_TOKENS = [
 NO_RECORD_TOKEN = [
     # 1st July 2023 wstETH Sense Principal Token, A12 (sP-wstETH:01-07-2023:12)
     "0xc9ee62f98e251a7aa41116c3dc6272559791d387"
+]
+
+# --------------------------------------------
+
+NON_CRYPTO_BACKING_STABLECOINS = [
+    {
+        "Name": "Tether",
+        "Symbol": "USDT",
+        "Contract": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "USD Coin",
+        "Symbol": "USDC",
+        "Contract": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "Binance USD",
+        "Symbol": "BUSD",
+        "Contract": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "TrueUSD",
+        "Symbol": "TUSD",
+        "Contract": "0x0000000000085d4780B73119b644AE5ecd22b376",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "Frax",
+        "Symbol": "FRAX",
+        "Contract": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Pax Dollar",
+        "Symbol": "USDP",
+        "Contract": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "USDD",
+        "Symbol": "USDD",
+        "Contract": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Frax Price Index",
+        "Symbol": "FPI",
+        "Contract": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Alchemix USD",
+        "Symbol": "ALUSD",
+        "Contract": "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Euro Coin",
+        "Symbol": "EUROC",
+        "Contract": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "Stasis Euro",
+        "Symbol": "EURS",
+        "Contract": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "Euro Tether",
+        "Symbol": "EURT",
+        "Contract": "0xC581b735A1688071A1746c968e0798D642EDE491",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "Bean",
+        "Symbol": "BEAN",
+        "Contract": "0xBEA0000029AD1c77D3d5D23Ba2D8893dB9d1Efab",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Fei USD",
+        "Symbol": "FEI",
+        "Contract": "0x956F47F50A910163D8BF957Cf5846D573E7f87CA",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "ZUSD",
+        "Symbol": "ZUSD",
+        "Contract": "0xc56c2b7e71B54d38Aab6d52E94a04Cbfa8F604fA",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "HUSD",
+        "Symbol": "HUSD",
+        "Contract": "0xdF574c24545E5FfEcb9a659c229253D4111d87e1",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "TerraClassicUSD",
+        "Symbol": "USTC",
+        "Contract": "0xa47c8bf37f92aBed4A126BDA807A7b7498661acD",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Monerium EUR emoney",
+        "Symbol": "EURM",
+        "Contract": "0x3231Cb76718CDeF2155FC47b5286d82e6eDA273f",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "EUROe Stablecoin",
+        "Symbol": "EUROe",
+        "Contract": "0x820802Fa8a99901F52e39acD21177b0BE6EE2974",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "Neutrino USD",
+        "Symbol": "USDN",
+        "Contract": "0x674C6Ad92Fd080e4004b2312b45f796a192D27a0",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "USDK",
+        "Symbol": "USDK",
+        "Contract": "0x1c48f86ae57291F7686349F12601910BD8D470bb",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "SpiceUSD",
+        "Symbol": "USDS",
+        "Contract": "0x45fDb1b92a649fb6A64Ef1511D3Ba5Bf60044838",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Offshift anonUSD",
+        "Symbol": "ANONUSD",
+        "Contract": "0x5a7E6C8204A1359DB9AAcab7bA5Fc309B7981eFd",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Meme Dollar",
+        "Symbol": "PINA",
+        "Contract": "0x02814F435dD04e254Be7ae69F61FCa19881a780D",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "LUGH",
+        "Symbol": "EURL",
+        "Contract": "0xA967Dd943B336680540011536E7D8c3d33333515",
+        "Category": "fiat-backed",
+    },
+    {
+        "Name": "VOLT Protocol",
+        "Symbol": "VOLT",
+        "Contract": "0x559eBC30b0E58a45Cc9fF573f77EF1e5eb1b3E18",
+        "Category": "algorithmic",
+    },
+    {
+        "Name": "Float Protocol Float",
+        "Symbol": "FLOAT",
+        "Contract": "0xb05097849BCA421A3f51B249BA6CCa4aF4b97cb9",
+        "Category": "algorithmic",
+    },
 ]
