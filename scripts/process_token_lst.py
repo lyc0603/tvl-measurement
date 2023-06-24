@@ -4,6 +4,7 @@ Script to process token category list
 
 import json
 
+import numpy as np
 import pandas as pd
 
 from config.constants import DATA_PATH, NON_CRYPTO_BACKING_STABLECOINS
@@ -26,6 +27,7 @@ df_agg = {
     "symbol": [],
     "token_address": [],
     "category": [],
+    "stable_type": [],
 }
 
 for cate, cate_info in CATE_DATA_INFO["cmc"].items():
@@ -51,6 +53,7 @@ for cate, cate_info in CATE_DATA_INFO["cmc"].items():
             df_agg["symbol"].append(row["symbol"])
             df_agg["token_address"].append(row["platform"]["token_address"])
             df_agg["category"].append(row["category"])
+            df_agg["stable_type"].append(np.nan)
 
 # iterate through NON_CRYPTO_BACKING_STABLECOINS
 for token in NON_CRYPTO_BACKING_STABLECOINS:
@@ -59,6 +62,7 @@ for token in NON_CRYPTO_BACKING_STABLECOINS:
     df_agg["symbol"].append(token["Symbol"])
     df_agg["token_address"].append(token["Contract"])
     df_agg["category"].append("Stablecoins")
+    df_agg["stable_type"].append(token["Category"])
 
 # create df
 df_token_cate = pd.DataFrame(df_agg)

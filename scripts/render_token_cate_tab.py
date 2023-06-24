@@ -15,8 +15,16 @@ for cate in df_token_cate["category"].unique():
     # drop category column
     df_cate = df_cate.drop(columns=["category"])
 
+    # if cate is not Stablecoins, drop stable_type column
+    if cate != "Stablecoins":
+        df_cate = df_cate.drop(columns=["stable_type"])
+
     # sort df_cate by name
-    df_cate.columns = ["Name", "Symbol", "Token Address"]
+    df_cate.columns = (
+        ["Name", "Symbol", "Token Address"]
+        if cate != "Stablecoins"
+        else ["Name", "Symbol", "Token Address", "Type"]
+    )
 
     # render df_cate
     with pd.option_context("max_colwidth", 1000):
