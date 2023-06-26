@@ -3,13 +3,26 @@ Function to process the composition of the receipt tokens
 """
 
 import json
-from functools import partial
 import multiprocessing as mp
+import os
+from functools import partial
 
 import pandas as pd
 from tqdm import tqdm
 
 from config import constants
+from scripts.process_token_lst import df_token_cate
+
+
+ETH_DICT = {
+    "name": ["Ethereum", "Ethereum"],
+    "symbol": ["ETH", "ETH"],
+    "token_address": [
+        "eth",
+        "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    ],
+    "category": ["ETH", "ETH"],
+}
 
 
 def _get_token_price() -> dict[str, float]:
@@ -133,6 +146,71 @@ def _process_compo(
         json.dump(flow_dict, f_json, indent=4)
 
 
+def _forward_process_compo(
+    df_token_cate: pd.DataFrame = df_token_cate,
+    json_path: str = f"{constants.DATA_PATH}/composition/defi_compo.json",
+    save_path: str = f"{constants.PROCESSED_DATA_PATH}/non_derivative/non_derivative.json",
+) -> None:
+    """
+    Function to forward process the composition of the receipt tokens
+    """
+
+    # load all receipts and compo
+    with open(json_path, "r", encoding="utf-8") as f_json:
+        compo_dict = json.load(f_json)
+
+    # a dict to store the source, target and amount
+    non_derivative_dict = {"protocol": [], "contract": [], "amount": [], "category": []}
+
+    # lowercase all the contract
+    df_token_cate["token_address"] = df_token_cate["token_address"].apply(
+        lambda x: x.lower()
+    )
+
+    # append the ETH and 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    df_token_cate = pd.concat(
+        [
+            df_token_cate,
+            pd.DataFrame(ETH_DICT),
+        ]
+    )
+
+    # unique list of all tokens
+    unique_token_list = df_token_cate["token_address"].unique().tolist()
+
+    for protocol, protocol_info in tqdm(compo_dict.items()):
+        for _, receipt_info in protocol_info[1].items():
+            for contract, amount in receipt_info.items():
+                if amount != 0:
+                    # if the contract is in the token list
+                    if contract in unique_token_list:
+                        # get the category
+                        category = df_token_cate[
+                            df_token_cate["token_address"] == contract
+                        ]["category"].values[0]
+
+                        # append the result
+                        non_derivative_dict["protocol"].append(protocol)
+                        non_derivative_dict["contract"].append(contract)
+                        non_derivative_dict["amount"].append(amount)
+                        non_derivative_dict["category"].append(category)
+
+    # check whether the path exists
+    if not os.path.exists(f"{constants.PROCESSED_DATA_PATH}/non_derivative"):
+        os.mkdir(f"{constants.PROCESSED_DATA_PATH}/non_derivative")
+
+    # save the non derivative dict
+    with open(
+        save_path,
+        "w",
+        encoding="utf-8",
+    ) as f_json:
+        json.dump(non_derivative_dict, f_json, indent=4)
+
+
 if __name__ == "__main__":
-    _process_compo()
+    # _process_compo()
+    _forward_process_compo(
+        save_path=f"{constants.PROCESSED_DATA_PATH}/non_derivative/non_derivative.json",
+    )
     # print(_get_token_price())
