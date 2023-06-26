@@ -109,7 +109,6 @@ def plot_sankey_tvl_decompose(
         labels=labels_list,
         orientations=ORIENTATION_LIST,
         patchlabel="TVL",
-        label="TVL",
         # pathlengths=[0.01] * len(flows_list),
     )
 
@@ -133,7 +132,6 @@ def plot_sankey_tvl_decompose(
         labels=labels_list,
         orientations=[0, 1, 0, -1, -1],
         # patchlabel="TVR",
-        label="TVR",
         prior=0,
         connect=(7, 0),
     )
@@ -161,12 +159,6 @@ def plot_sankey_tvl_decompose(
 
     # remove the frame
     plt.box(False)
-
-    # add the legend to the right bottom
-    plt.legend(
-        loc="lower right",
-        bbox_to_anchor=(0.9, 0.1),
-    )
 
     plt.show()
 
