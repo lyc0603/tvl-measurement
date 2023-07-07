@@ -6,8 +6,35 @@ from os import path
 from config.settings import PROJECT_ROOT
 
 # --------------------------------------------
+END_OF_SAMPLE_PERIOD = "2023-07-01"
+CHAIN_LIST = [
+    "Total",
+    "Ethereum",
+    "Tron",
+    "Binance",
+    "Arbitrum",
+    "Polygon",
+    "Optimism",
+    "Avalanche",
+    "Mixin",
+    "Solana",
+]
+# --------------------------------------------
 # Target protocols
 TVL_LIST = ["AAVE_V2", "BALANCER", "YEARN", "CURVE", "MAKER", "COMPOUND_V2"]
+LLAMA_SLUG_LIST = [
+    "aave-v2",
+    "balancer-v2",
+    "yearn-finance",
+    "curve-dex",
+    "makerdao",
+    "compound",
+    # "uniswap-v2",
+]
+
+LLAMA_SLUG_ALL_LIST = [
+    "makerdao",
+]
 # --------------------------------------------
 # Data paths
 DATA_PATH = path.join(PROJECT_ROOT, "data")
@@ -48,9 +75,32 @@ CMC_WRAPPED = (
     + "self_reported_circulating_supply,self_reported_market_cap,total_supply,volume_7d,"
     + "volume_30d&tagSlugs=wrapped-tokens"
 )
+CMC_LAYER_ONE = (
+    "https://api.coinmarketcap.com/data-api/v3/cryptocurrency/listing?"
+    + "start=1&limit=100&sortBy=market_cap&sortType=desc&convert=USD,BTC,ETH&"
+    + "cryptoType=all&tagType=all&audited=false&aux=ath,atl,high24h,low24h,num_market_pairs,"
+    + "cmc_rank,date_added,tags,platform,max_supply,circulating_supply,"
+    + "self_reported_circulating_supply,self_reported_market_cap,total_supply,volume_7d,"
+    + "volume_30d&tagSlugs=layer-1"
+)
+
+CMC_LAYER_TWO = (
+    "https://api.coinmarketcap.com/data-api/v3/cryptocurrency/listing?"
+    + "start=1&limit=100&sortBy=market_cap&sortType=desc&convert=USD,BTC,ETH&"
+    + "cryptoType=all&tagType=all&audited=false&aux=ath,atl,high24h,low24h,num_market_pairs,"
+    + "cmc_rank,date_added,tags,platform,max_supply,circulating_supply,"
+    + "self_reported_circulating_supply,self_reported_market_cap,total_supply,volume_7d,"
+    + "volume_30d&tagSlugs=layer-2"
+)
 
 LLAMA_STABLE = "https://stablecoins.llama.fi/stablecoins?includePrices=true"
 
+# --------------------------------------------
+# DeFiLlama URLs
+DEFI_LLAMA_PROTOCOL_URL = "https://api.llama.fi/protocols"
+DEFI_LLAMA_TVL_URL = "https://api.llama.fi/protocol"
+DEFI_LLAMA_TREASURY_URL = "https://api.llama.fi/treasury"
+DEFI_LLAMA_ETH_TVL_URL = "https://api.llama.fi/v2/historicalChainTvl/Ethereum"
 # --------------------------------------------
 # The Graph Queries
 # Pool queries

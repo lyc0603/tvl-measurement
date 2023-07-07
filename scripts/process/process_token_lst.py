@@ -7,7 +7,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from config.constants import DATA_PATH, NON_CRYPTO_BACKING_STABLECOINS
+from config.constants import DATA_PATH
 
 CATE_DATA_INFO = {
     "cmc": {
@@ -19,8 +19,27 @@ CATE_DATA_INFO = {
             "path": f"{DATA_PATH}/token_category/wrapped_tokens.json",
             "category": "Wrapped Tokens",
         },
-    }
+        "layer_one_tokens": {
+            "path": f"{DATA_PATH}/token_category/layer_one_tokens.json",
+            "category": "Layer One Tokens",
+        },
+        "layer_two_tokens": {
+            "path": f"{DATA_PATH}/token_category/layer_two_tokens.json",
+            "category": "Layer Two Tokens",
+        },
+    },
+    "defi_llama": {
+        "stable_coins": {
+            "path": f"{DATA_PATH}/token_category/stable_coins.json",
+            "category": "Stablecoins",
+        },
+    },
 }
+
+NON_CRYPTO_BACKING_STABLECOINS_TYPE = [
+    "fiat-backed",
+    "algorithmic",
+]
 
 df_agg = {
     "name": [],
@@ -33,8 +52,8 @@ df_agg = {
 for cate, cate_info in CATE_DATA_INFO["cmc"].items():
     # Load governance and wrapped tokens
     with open(cate_info["path"], "r", encoding="utf-8") as gov_file:
-        gov_tokens = json.load(gov_file)
-    target_df = pd.DataFrame(gov_tokens["data"]["cryptoCurrencyList"])
+        target_tokens = json.load(gov_file)
+    target_df = pd.DataFrame(target_tokens["data"]["cryptoCurrencyList"])
     target_df = target_df[["name", "symbol", "platform"]]
 
     # create category column
@@ -53,14 +72,26 @@ for cate, cate_info in CATE_DATA_INFO["cmc"].items():
             df_agg["category"].append(row["category"])
             df_agg["stable_type"].append(np.nan)
 
-# iterate through NON_CRYPTO_BACKING_STABLECOINS
-for token in NON_CRYPTO_BACKING_STABLECOINS:
+with open(
+    CATE_DATA_INFO["defi_llama"]["stable_coins"]["path"], "r", encoding="utf-8"
+) as stable_file:
+    stable_coins = json.load(stable_file)
+
+stable_df = pd.DataFrame(stable_coins["peggedAssets"])
+
+# isolate 'fiat-backed'and 'algorithmic' stablecoins
+stable_df = stable_df[
+    stable_df["pegMechanism"].isin(NON_CRYPTO_BACKING_STABLECOINS_TYPE)
+].reset_index(drop=True)
+
+# iterate through df
+for index, row in stable_df.iterrows():
     # append to df_agg
-    df_agg["name"].append(token["Name"])
-    df_agg["symbol"].append(token["Symbol"])
-    df_agg["token_address"].append(token["Contract"])
-    df_agg["category"].append("Stablecoins")
-    df_agg["stable_type"].append(token["Category"])
+    df_agg["name"].append(row["name"])
+    df_agg["symbol"].append(row["symbol"])
+    df_agg["token_address"].append(np.nan)
+    df_agg["category"].append(CATE_DATA_INFO["defi_llama"]["stable_coins"]["category"])
+    df_agg["stable_type"].append(row["pegMechanism"])
 
 # create df
 df_token_cate = pd.DataFrame(df_agg)
