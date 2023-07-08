@@ -74,9 +74,6 @@ for chain in CHAIN_LIST:
     # show the legend
     plt.legend()
 
-    # place the legend on the upper left
-    plt.legend(loc="upper left")
-
     # if the chain is total, make the ticks and legend smaller
     if chain == "Total":
         plt.xticks(fontsize=8)
