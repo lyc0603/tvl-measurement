@@ -29,6 +29,10 @@ def process_llama_tvls(
         "date": [],
         "protocol": [],
         "tvr": [],
+        "gov": [],
+        "wrap": [],
+        "native": [],
+        "stable": [],
     }
 
     if chain == "Total":
@@ -65,17 +69,34 @@ def process_llama_tvls(
     # iterate throught llama_tvl_df
     for _, row in llama_tvr_df.iterrows():
         # initialize the tvl and tvr
-        tvr = 0
+        tvr, gov, wrap, native, stable = 0, 0, 0, 0, 0
 
         # iterate through tokens
         for token, token_tvl_usd in row["tokens"].items():
             # check if the token is in the unique_symbols
             if token in unique_symbols:
                 tvr += token_tvl_usd
+                match df_token_cate.loc[
+                    df_token_cate["symbol"] == token, "category"
+                ].values[0]:
+                    case "Governance Tokens":
+                        gov += token_tvl_usd
+                    case "Wrapped Tokens":
+                        wrap += token_tvl_usd
+                    case "Layer One Tokens":
+                        native += token_tvl_usd
+                    case "Layer Two Tokens":
+                        native += token_tvl_usd
+                    case "Stablecoins":
+                        stable += token_tvl_usd
 
         tvl_dict["date"].append(row["date"])
         tvl_dict["protocol"].append(slug)
         tvl_dict["tvr"].append(tvr)
+        tvl_dict["gov"].append(gov)
+        tvl_dict["wrap"].append(wrap)
+        tvl_dict["native"].append(native)
+        tvl_dict["stable"].append(stable)
 
     return tvl_dict, llama_tvl_df
 
@@ -110,7 +131,7 @@ def process_llama_tvl(
     # iterate throught llama_tvl_df
     for _, row in llama_tvl_df.iterrows():
         # initialize the tvl and tvr
-        tvl, tvr = 0, 0
+        tvl, tvr, gov, wrap, native, stable = 0, 0, 0, 0, 0, 0
 
         # iterate through tokens
         for token, token_tvl_usd in row["tokens"].items():
@@ -118,8 +139,26 @@ def process_llama_tvl(
             if token in unique_symbols:
                 tvr += token_tvl_usd
 
+                match df_token_cate.loc[
+                    df_token_cate["symbol"] == token, "category"
+                ].values[0]:
+                    case "Governance Tokens":
+                        gov += token_tvl_usd
+                    case "Wrapped Tokens":
+                        wrap += token_tvl_usd
+                    case "Layer One Tokens":
+                        native += token_tvl_usd
+                    case "Layer Two Tokens":
+                        native += token_tvl_usd
+                    case "Stablecoins":
+                        stable += token_tvl_usd
+
         llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "tvr"] = tvr
         llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "tvl"] = tvl
+        llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "gov"] = gov
+        llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "wrap"] = wrap
+        llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "native"] = native
+        llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "stable"] = stable
 
     # save the llama tvl data
     llama_tvl_df.to_csv(save_path, index=False)
