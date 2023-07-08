@@ -78,12 +78,12 @@ for chain in CHAIN_LIST:
     if chain == "Total":
         plt.xticks(fontsize=8)
         plt.yticks(fontsize=8)
-        plt.legend(loc="upper left", prop={"size": 8})
+        plt.legend(prop={"size": 8})
     else:
         # if the chain is not total, make the ticks and legend bigger
-        plt.xticks(fontsize=16)
-        plt.yticks(fontsize=16)
-        plt.legend(loc="upper left", prop={"size": 11})
+        plt.xticks(fontsize=18)
+        plt.yticks(fontsize=18)
+        plt.legend(prop={"size": 13})
 
     # rotate the xticks
     plt.xticks(rotation=45)
