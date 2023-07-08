@@ -7,11 +7,9 @@ import pandas as pd
 
 from config.constants import (
     CHAIN_LIST,
-    END_OF_SAMPLE_PERIOD,
     PROCESSED_DATA_PATH,
     FIGURES_PATH,
 )
-from environ.data_fetching.fetch_llama_tvl import fetch_llama_total_tvl
 from environ.data_processing.preprocess_total_tvl import preprocess_total_tvl
 
 for chain in CHAIN_LIST:

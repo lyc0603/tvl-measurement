@@ -77,6 +77,17 @@ for chain in CHAIN_LIST:
     # place the legend on the upper left
     plt.legend(loc="upper left")
 
+    # if the chain is total, make the ticks and legend smaller
+    if chain == "Total":
+        plt.xticks(fontsize=8)
+        plt.yticks(fontsize=8)
+        plt.legend(loc="upper left", prop={"size": 8})
+    else:
+        # if the chain is not total, make the ticks and legend bigger
+        plt.xticks(fontsize=16)
+        plt.yticks(fontsize=16)
+        plt.legend(loc="upper left", prop={"size": 11})
+
     # rotate the xticks
     plt.xticks(rotation=45)
 
