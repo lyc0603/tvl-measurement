@@ -3,7 +3,6 @@ Function to plot the decomposition of the tvl time series
 """
 
 import matplotlib.pyplot as plt
-import pandas as pd
 
 from config.constants import (
     CHAIN_LIST,
@@ -13,6 +12,8 @@ from config.constants import (
 from environ.data_processing.preprocess_total_tvl import preprocess_total_tvl
 
 for chain in CHAIN_LIST:
+    print(chain)
+
     # set the figure size
     plt.figure(figsize=(6, 4))
 
@@ -24,15 +25,15 @@ for chain in CHAIN_LIST:
     # plot the staked tvl
     plt.stackplot(
         df_tvr_all["date"],
-        df_tvr_all["gov"],
-        df_tvr_all["wrap"],
-        df_tvr_all["native"],
         df_tvr_all["stable"],
+        df_tvr_all["wrap"],
+        df_tvr_all["gov"],
+        df_tvr_all["native"],
         labels=[
-            "Governance Tokens",
-            "Wrapped Tokens",
-            "Native Tokens",
             "Non-crypto-backed Stablecoins",
+            "Wrapped Tokens",
+            "Governance Tokens",
+            "Native Tokens",
         ],
     )
 
