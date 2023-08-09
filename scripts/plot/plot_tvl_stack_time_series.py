@@ -9,7 +9,7 @@ from config.constants import (
     PROCESSED_DATA_PATH,
     FIGURES_PATH,
 )
-from environ.data_processing.preprocess_total_tvl import preprocess_total_tvl
+from environ.data_processing.preprocess_tvl import preprocess_total_tvl
 
 for chain in CHAIN_LIST:
     print(chain)

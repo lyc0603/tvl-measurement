@@ -3,7 +3,7 @@ Script to preprocess the total TVL data
 """
 
 from config.constants import PROCESSED_DATA_PATH
-from environ.data_processing.preprocess_total_tvl import preprocess_total_tvl
+from environ.data_processing.preprocess_tvl import preprocess_total_tvl
 
 # load the total tvl data
 df_tvl_all = preprocess_total_tvl(

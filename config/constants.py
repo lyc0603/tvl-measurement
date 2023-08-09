@@ -19,6 +19,7 @@ CHAIN_LIST = [
     "Mixin",
     "Solana",
 ]
+PTC_LIST = ["lido", "aave-v2", "makerdao"]
 # --------------------------------------------
 # Target protocols
 TVL_LIST = ["AAVE_V2", "BALANCER", "YEARN", "CURVE", "MAKER", "COMPOUND_V2"]

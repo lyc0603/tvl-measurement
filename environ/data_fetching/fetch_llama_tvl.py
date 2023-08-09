@@ -62,7 +62,9 @@ def fetch_llama_protocol_lst(save_path: str) -> None:
         json.dump(data_json, target_file, indent=4)
 
 
-def fetch_llama_tvl(ptc_slug: str = "aave_v2") -> None:
+def fetch_llama_tvl(
+    ptc_slug: str = "aave_v2", save_path: str = f"{DATA_PATH}/defillama/tvl"
+) -> None:
     """
     Function to fetch the tvl data from DeFiLlama
     """
@@ -70,8 +72,8 @@ def fetch_llama_tvl(ptc_slug: str = "aave_v2") -> None:
     time.sleep(1)
 
     # check whether the path exists
-    if not os.path.exists(f"{DATA_PATH}/defillama/tvl"):
-        os.makedirs(f"{DATA_PATH}/defillama/tvl")
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
 
     data_json = requests.get(url=f"{DEFI_LLAMA_TVL_URL}/{ptc_slug}", timeout=120).json()
 
@@ -79,9 +81,7 @@ def fetch_llama_tvl(ptc_slug: str = "aave_v2") -> None:
     if len(data_json["chainTvls"]) == 0:
         raise ValueError(f"The data for {ptc_slug} is empty.")
 
-    with open(
-        f"{DATA_PATH}/defillama/tvl/{ptc_slug}.json", "w", encoding="utf-8"
-    ) as target_file:
+    with open(f"{save_path}/{ptc_slug}.json", "w", encoding="utf-8") as target_file:
         json.dump(data_json, target_file, indent=4)
 
 
@@ -90,7 +90,7 @@ def fetch_llama_treasury(ptc_slug: str = "aave_v2") -> None:
     Function to fetch the treasury data from DeFiLlama
     """
 
-    time.sleep(5)
+    time.sleep(2)
 
     # check whether the path exists
     if not os.path.exists(f"{DATA_PATH}/defillama/treasury"):
@@ -99,6 +99,10 @@ def fetch_llama_treasury(ptc_slug: str = "aave_v2") -> None:
     data_json = requests.get(
         url=f"{DEFI_LLAMA_TREASURY_URL}/{ptc_slug}", timeout=120
     ).json()
+
+    # check whether the data is empty
+    if len(data_json["chainTvls"]) == 0:
+        raise ValueError(f"The data for {ptc_slug} is empty.")
 
     with open(
         f"{DATA_PATH}/defillama/treasury/{ptc_slug}.json", "w", encoding="utf-8"
@@ -109,5 +113,5 @@ def fetch_llama_treasury(ptc_slug: str = "aave_v2") -> None:
 if __name__ == "__main__":
     # fetch_llama_protocol_lst(save_path=f"{DATA_PATH}/defillama/protocol_lst.json")
     # fetch_llama_tvl(ptc_slug="aave_v2")
-    # fetch_llama_treasury(ptc_slug="yearn-finance")
-    fetch_llama_total_tvl_eth()
+    fetch_llama_treasury(ptc_slug="aave")
+    # fetch_llama_total_tvl_eth()

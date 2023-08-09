@@ -339,4 +339,4 @@ def get_tvl(
 
 if __name__ == "__main__":
     # Test the function
-    print(f"The TVL is {get_tvl(Origin.BALANCER)}")
+    print(f"The TVL is {get_tvl(Origin.CURVE)}")

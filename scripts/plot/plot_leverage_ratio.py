@@ -1,5 +1,5 @@
 """
-Script to plot the total TVL, total TVL without double counting, and TVR of the protocol
+Script to plot the laverage ratio
 """
 
 
@@ -12,12 +12,6 @@ from config.constants import (
 from environ.data_processing.preprocess_tvl import (
     preprocess_ptc_tvl,
 )
-
-PLOT_INFO_DICT = {
-    "tvl": "$TVL$",
-    "totalLiquidityUSD": "$TVL_{DC}$",
-    "tvr": "$TVR$",
-}
 
 for chain in CHAIN_LIST:
     # set the figure size
@@ -43,13 +37,13 @@ for chain in CHAIN_LIST:
             0
         ]
 
-    # plot the tvl with DC, tvl, and tvr
-    for col, label in PLOT_INFO_DICT.items():
-        plt.plot(
-            df_agg["date"],
-            df_agg[col],
-            label=label,
-        )
+    # calculate the leverage ratio
+
+    plt.plot(
+        df_agg["date"],
+        df_agg["totalLiquidityUSD"] / df_agg["tvr"],
+        label="Leverage Ratio",
+    )
 
     # show the legend
     plt.legend()
@@ -72,7 +66,7 @@ for chain in CHAIN_LIST:
     plt.tight_layout()
 
     # save the plot
-    plt.savefig(f"{FIGURES_PATH}/tvl_{chain}.pdf", dpi=300)
+    plt.savefig(f"{FIGURES_PATH}/leverage_ratio_{chain}.pdf", dpi=300)
 
     # show the plot
     plt.show()
