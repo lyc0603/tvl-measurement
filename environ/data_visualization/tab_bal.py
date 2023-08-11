@@ -5,8 +5,10 @@ Functions to generate the balance sheet for each protocol
 import json
 
 import pandas as pd
+from tqdm import tqdm
 
-from config.constants import DATA_PATH
+from config.constants import DATA_PATH, TABLES_PATH
+from environ.data_fetching.token_price import get_token_price_defillama
 from environ.data_fetching.web3_call import get_token_symbol
 
 
@@ -22,6 +24,7 @@ def preprocess_tvl_compo(
     deri_dict, receipt_dict = dict_compo[ptc_dict_name]
 
     dict_bal = {
+        "protocol_name": [],
         "entry": [],
         "token_contract": [],
         "token_quantity": [],
@@ -30,6 +33,7 @@ def preprocess_tvl_compo(
     # iterate over the receipt_dict
     for deri_token, receipt_token_dict in receipt_dict.items():
         # apped the derivative token
+        dict_bal["protocol_name"].append(ptc_dict_name)
         dict_bal["entry"].append("Liabilities")
         dict_bal["token_contract"].append(deri_token)
         dict_bal["token_quantity"].append(deri_dict[deri_token])
@@ -37,37 +41,97 @@ def preprocess_tvl_compo(
         # iterate over the receipt token dict
         for receipt_token, quantity in receipt_token_dict.items():
             # append the receipt token
+            dict_bal["protocol_name"].append(ptc_dict_name)
             dict_bal["entry"].append("Assets")
             dict_bal["token_contract"].append(receipt_token)
             dict_bal["token_quantity"].append(quantity)
     return pd.DataFrame(dict_bal)
 
 
-def preprocess_token_symbol(
-    df_bal: pd.DataFrame, df_compo: pd.DataFrame
-) -> pd.DataFrame:
+def tabulate_bal(
+    ptc_name: str, df_bal: pd.DataFrame, block_num: int = 1691593279
+) -> None:
     """
-    Function to preprocess the token symbol in the balance sheet
+    Function to generate LaTeX table
     """
 
-    # iterate over the df_bal
-    for token_contract in df_bal["token_contract"].unique():
-        try:
-            df_bal.loc[
-                df_bal["token_contract"] == token_contract, "token_symbol"
-            ] = df_compo.loc[
-                df_compo["token_contract"] == token_contract, "token_symbol"
-            ].values[
-                0
-            ]
-        except:  # pylint: disable=bare-except
-            df_bal.loc[
-                df_bal["token_contract"] == token_contract, "token_symbol"
-            ] = get_token_symbol(token_address=token_contract)
+    # header of LaTeX of balance sheet
+    bal_latex = (
+        r"""
+\begin{table}
+\centering
+\caption{Balance Sheet of MakerDAO}
+\label{tab:bal}
 
-    print(df_bal)
+\begin{longtable}{@{}p{0.25\linewidth}p{0.25\linewidth}p{0.25\linewidth}p{0.25\linewidth}@{}}
 
-    return df_bal
+\toprule
+
+"""
+        + f"""
+& Block {block_num} & Block {block_num} & \\ 
+"""
+        + r"""
+\midrule
+\textit{Assets} & & \textit{Liabilities} \\
+"""
+    )
+
+    df_ast = df_bal.loc[df_bal["entry"] == "Assets"].copy().reset_index()
+    df_liab = df_bal.loc[df_bal["entry"] == "Liabilities"].copy().reset_index()
+
+    # compare the length of the two dataframe
+    if len(df_ast) > len(df_liab):
+        # iterate over the assets dataframe
+        for idx, row in df_ast.iterrows():
+            # append assets to the left two columns
+            bal_latex += f"{row['token_symbol']} & ${row['dollar_amount']:.2f}"
+
+            # try to append liabilities
+            try:
+                bal_latex += f""" & {df_liab.loc[idx, 'token_symbol']} &\
+${df_liab.loc[idx, 'dollar_amount']:.2f} \\\\
+"""
+            except:  # pylint: disable=bare-except
+                bal_latex += r""" & & \\
+"""
+    else:
+        # iterate over the liabilities dataframe
+        for idx, row in df_liab.iterrows():
+            # append liabilities to the right two columns
+            bal_latex += f"{df_ast.loc[idx, 'token_symbol']} &\
+${df_ast.loc[idx, 'dollar_amount']:.2f}"
+
+            # try to append assets
+            try:
+                bal_latex += f"""& {row['token_symbol']} & ${row['dollar_amount']:.2f} \\\\
+"""
+            except:  # pylint: disable=bare-except
+                bal_latex += r""" & & \\
+"""
+
+    # append the total assets and liabilities
+    bal_latex += (
+        r"""
+\midrule
+"""
+        + f"""
+\textbf{"{Total Assets}"} & \${df_ast["dollar_amount"].sum():.2f} & \textbf{"{Total Liabilities}"} & \${df_liab["dollar_amount"].sum():.2f} \\
+"""
+    )
+
+    # footer of LaTeX of balance sheet
+    bal_latex += r"""
+\bottomrule\bottomrule
+
+\end{longtable}
+
+\end{table}
+"""
+
+    # save the LaTeX table
+    with open(f"{TABLES_PATH}/bal_{ptc_name}.tex", "w", encoding="utf-8") as f:
+        f.write(bal_latex)
 
 
 if __name__ == "__main__":
@@ -84,4 +148,43 @@ if __name__ == "__main__":
     df_bal = preprocess_tvl_compo(dict_compo=dict_compo, ptc_dict_name="MakerDAO")
 
     # preprocess the token symbol
-    df_bal = preprocess_token_symbol(df_bal=df_bal, df_compo=df_compo)
+    for token_contract in tqdm(df_bal["token_contract"].unique()):
+        try:
+            df_bal.loc[
+                df_bal["token_contract"] == token_contract, "token_symbol"
+            ] = df_compo.loc[
+                df_compo["token_contract"] == token_contract, "token_symbol"
+            ].values[
+                0
+            ]
+        except:  # pylint: disable=bare-except
+            df_bal.loc[
+                df_bal["token_contract"] == token_contract, "token_symbol"
+            ] = get_token_symbol(token_address=token_contract)
+
+        # preprocess the dollar amount
+        try:
+            df_bal.loc[
+                df_bal["token_contract"] == token_contract, "dollar_amount"
+            ] = df_bal.loc[
+                df_bal["token_contract"] == token_contract, "token_quantity"
+            ] * get_token_price_defillama(
+                token_address=token_contract
+            )
+        except Exception as e:  # pylint: disable=bare-except
+            print(e)
+            df_bal.loc[df_bal["token_contract"] == token_contract, "dollar_amount"] = (
+                df_bal.loc[df_bal["token_contract"] == token_contract, "token_quantity"]
+                * 0
+            )
+
+    df_bal.sort_values(by="dollar_amount", ascending=False, inplace=True)
+
+    tabulate_bal(ptc_name="MakerDAO", df_bal=df_bal)
+
+    print(df_bal)
+    print(
+        "Liabilities: ",
+        df_bal.loc[df_bal["entry"] == "Liabilities", "dollar_amount"].sum(),
+    )
+    print("Assets: ", df_bal.loc[df_bal["entry"] == "Assets", "dollar_amount"].sum())
