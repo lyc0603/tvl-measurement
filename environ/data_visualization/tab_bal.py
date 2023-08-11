@@ -69,7 +69,7 @@ def tabulate_bal(
 
 """
         + f"""
-& Block {block_num} & Block {block_num} & \\ 
+& Block {block_num} & & Block {block_num} \\\\
 """
         + r"""
 \midrule
@@ -116,7 +116,7 @@ ${df_ast.loc[idx, 'dollar_amount']:.2f}"
 \midrule
 """
         + f"""
-\textbf{"{Total Assets}"} & \${df_ast["dollar_amount"].sum():.2f} & \textbf{"{Total Liabilities}"} & \${df_liab["dollar_amount"].sum():.2f} \\
+\\textbf{"{Total Assets}"} & \${df_ast["dollar_amount"].sum():.2f} & \\textbf{"{Total Liabilities}"} & \${df_liab["dollar_amount"].sum():.2f} \\
 """
     )
 
