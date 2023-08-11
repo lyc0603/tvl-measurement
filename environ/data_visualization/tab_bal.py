@@ -73,12 +73,15 @@ def tabulate_bal(
 """
         + r"""
 \midrule
-\textit{Assets} & & \textit{Liabilities} \\
+\textit{Assets} & & \textit{Liabilities and Net Position} \\
 """
     )
 
-    df_ast = df_bal.loc[df_bal["entry"] == "Assets"].copy().reset_index()
-    df_liab = df_bal.loc[df_bal["entry"] == "Liabilities"].copy().reset_index()
+    print(df_bal)
+    df_bal = df_bal.loc[df_bal["dollar_amount"] != 0]
+
+    df_ast = df_bal.loc[df_bal["entry"] == "Assets"].copy().reset_index(drop=True)
+    df_liab = df_bal.loc[df_bal["entry"] == "Liabilities"].copy().reset_index(drop=True)
 
     # compare the length of the two dataframe
     if len(df_ast) > len(df_liab):
@@ -116,13 +119,13 @@ ${df_ast.loc[idx, 'dollar_amount']:.2f}"
 \midrule
 """
         + f"""
-\\textbf{"{Total Assets}"} & \${df_ast["dollar_amount"].sum():.2f} & \\textbf{"{Total Liabilities}"} & \${df_liab["dollar_amount"].sum():.2f} \\
+\\textbf{"{Total Assets}"} & \${df_ast["dollar_amount"].sum():.2f} & \\textbf{"{Total Liabilities and Net Position}"} & \${df_liab["dollar_amount"].sum():.2f} \\
 """
     )
 
     # footer of LaTeX of balance sheet
     bal_latex += r"""
-\bottomrule\bottomrule
+\bottomrule
 
 \end{longtable}
 
@@ -179,6 +182,27 @@ if __name__ == "__main__":
             )
 
     df_bal.sort_values(by="dollar_amount", ascending=False, inplace=True)
+    df_bal.drop(columns=["token_quantity"], inplace=True)
+
+    # calculate the net position
+    df_bal = pd.concat(
+        [
+            df_bal,
+            pd.DataFrame(
+                {
+                    "protocol_name": ["MakerDAO"],
+                    "entry": ["Liabilities"],
+                    "token_symbol": ["Net Position"],
+                    "dollar_amount": [
+                        df_bal.loc[df_bal["entry"] == "Assets", "dollar_amount"].sum()
+                        - df_bal.loc[
+                            df_bal["entry"] == "Liabilities", "dollar_amount"
+                        ].sum()
+                    ],
+                }
+            ),
+        ],
+    )
 
     tabulate_bal(ptc_name="MakerDAO", df_bal=df_bal)
 
