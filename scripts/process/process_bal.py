@@ -73,6 +73,13 @@ for token_contract in tqdm(
             df_bal.loc[df_bal["token_contract"] == token_contract, "token_quantity"] * 0
         )
 
+# sum up same token symbols
+df_bal = (
+    df_bal.groupby(["protocol_name", "entry", "token_symbol"])
+    .agg({"dollar_amount": "sum"})
+    .reset_index()
+)
+
 df_bal.sort_values(by=["protocol_name", "dollar_amount"], ascending=False, inplace=True)
 df_bal.drop(columns=["token_quantity"], inplace=True)
 

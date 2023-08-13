@@ -9,7 +9,7 @@ from config.constants import TABLES_PATH
 
 
 def tabulate_bal(
-    ptc_name: str, df_bal: pd.DataFrame, block_num: int = 17895867
+    ptc_name: str, df_bal: pd.DataFrame, block_num: int = 17899400
 ) -> None:
     """
     Function to generate LaTeX table
@@ -90,6 +90,9 @@ def tabulate_bal(
 \end{longtable}
 """
 
+    # remove " " in the protocol name
+    ptc_name = ptc_name.replace(" ", "")
+
     # save the LaTeX table
-    with open(f"{TABLES_PATH}/bal_{ptc_name}.tex", "w", encoding="utf-8") as f:
-        f.write(bal_latex)
+    with open(f"{TABLES_PATH}/bal_{ptc_name}.tex", "w", encoding="utf-8") as f_tab:
+        f_tab.write(bal_latex)
