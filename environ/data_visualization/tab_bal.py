@@ -66,7 +66,7 @@ def tabulate_bal(
                 bal_latex += f"{df_ast.loc[idx, 'token_symbol']} & \
 {df_ast.loc[idx, 'dollar_amount']:,.2f}"
             except:  # pylint: disable=bare-except
-                bal_latex += " & & "
+                bal_latex += " & "
 
             # append liabilities to the right two columns
             bal_latex += f""" & {row['token_symbol']} & {row['dollar_amount']:,.2f} \\\\
