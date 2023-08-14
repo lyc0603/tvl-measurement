@@ -61,16 +61,15 @@ def tabulate_bal(
     else:
         # iterate over the liabilities dataframe
         for idx, row in df_liab.iterrows():
-            # append liabilities to the right two columns
-            bal_latex += f"{row['token_symbol']} & {row['dollar_amount']:,.2f}"
-
             # try to append assets
             try:
-                bal_latex += f""" & {df_ast.loc[idx, 'token_symbol']} &\
-{df_ast.loc[idx, 'dollar_amount']:,.2f} \\\\
-"""
+                bal_latex += f"{df_ast.loc[idx, 'token_symbol']} & \
+{df_ast.loc[idx, 'dollar_amount']:,.2f}"
             except:  # pylint: disable=bare-except
-                bal_latex += r""" & & \\
+                bal_latex += " & & "
+
+            # append liabilities to the right two columns
+            bal_latex += f""" & {row['token_symbol']} & {row['dollar_amount']:,.2f} \\\\
 """
 
     # append the total assets and liabilities
