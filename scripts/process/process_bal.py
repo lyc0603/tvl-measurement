@@ -10,7 +10,7 @@ from tqdm import tqdm
 from config.constants import DATA_PATH
 from environ.data_fetching.token_price import get_eth_price, get_token_price_defillama
 from environ.data_fetching.web3_call import get_token_symbol
-from environ.data_processing.process_bal import preprocess_tvl_compo
+from environ.data_processing.process_bal import preprocess_tvl_compo, remove_no_info
 
 PTC_PATH_MAPPING = {
     "MakerDAO": f"{DATA_PATH}/tvl/tvl_composition_Origin.MAKER.csv",
@@ -20,6 +20,8 @@ PTC_PATH_MAPPING = {
     "Curve V1": f"{DATA_PATH}/tvl/tvl_composition_Origin.CURVE.csv",
     "Yearn": f"{DATA_PATH}/tvl/tvl_composition_Origin.YEARN.csv",
 }
+
+ETH_LIST = ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "ETH"]
 
 df_bal = []
 
@@ -50,8 +52,7 @@ for token_contract in tqdm(
     except:  # pylint: disable=bare-except
         df_bal.loc[df_bal["token_contract"] == token_contract, "token_symbol"] = (
             get_token_symbol(token_address=token_contract)
-            if token_contract
-            not in ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "ETH"]
+            if token_contract not in ETH_LIST
             else "ETH"
         )
 
@@ -60,18 +61,17 @@ for token_contract in tqdm(
         df_bal.loc[df_bal["token_contract"] == token_contract, "dollar_amount"] = (
             df_bal.loc[df_bal["token_contract"] == token_contract, "token_quantity"]
             * get_token_price_defillama(token_address=token_contract)
-            if token_contract
-            not in ["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "ETH"]
+            if token_contract not in ETH_LIST
             else df_bal.loc[
                 df_bal["token_contract"] == token_contract, "token_quantity"
             ]
             * get_eth_price()
         )
-    except Exception as e:  # pylint: disable=bare-except
-        print(e)
-        df_bal.loc[df_bal["token_contract"] == token_contract, "dollar_amount"] = (
-            df_bal.loc[df_bal["token_contract"] == token_contract, "token_quantity"] * 0
+    except:  # pylint: disable=bare-except
+        df_bal = remove_no_info(
+            df_bal=df_bal, dict_compo=dict_compo, token_contract=token_contract
         )
+
 
 # sum up same token symbols
 df_bal = (
@@ -81,7 +81,6 @@ df_bal = (
 )
 
 df_bal.sort_values(by=["protocol_name", "dollar_amount"], ascending=False, inplace=True)
-df_bal.drop(columns=["token_quantity"], inplace=True)
 
 # save the balance sheet
 df_bal.to_csv(f"{DATA_PATH}/tvl/bal_all.csv", index=False)
