@@ -60,13 +60,16 @@ for protocol in df_plot["protocol"].unique():
         label=f"{protocol}",
     )
 
-    # plot legend
-    plt.legend()
+# plot legend
+plt.legend()
 
-    # x and y labels
-    plt.xlabel("Percentage of price drop of ETH")
+# x and y labels
+plt.xlabel("Percentage of price drop of ETH")
 
-    # set the y label
-    plt.ylabel("Total TVL")
+# set the y label
+plt.ylabel("Total TVL")
+
+# tight layout
+plt.tight_layout()
 
 plt.savefig(f"{FIGURES_PATH}/protocol_tvl_drop.pdf", dpi=300)
