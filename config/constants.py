@@ -6,6 +6,9 @@ from os import path
 from config.settings import PROJECT_ROOT
 
 # --------------------------------------------
+SAMPLE_SYSTEM_TOKEN = ["ETH-A", "ETH-B", "ETH-C", "WSTETH-A", "WSTETH-B", "ETH"]
+
+# --------------------------------------------
 END_OF_SAMPLE_PERIOD = "2023-07-01"
 CHAIN_LIST = [
     "Total",
@@ -268,6 +271,9 @@ AAVE2_PROTOCOL_DATA_PROVIDER_ADDRESS = (
     "0x057835Ad21a177dbdd3090bB1CAE03EaCF78Fc6d".lower()
 )
 AAVE_ADDRESS = "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9".lower()
+AAVE_V3_POOL_DATA_PROVIDER = "0x7B4EB56E7CD4b454BA8ff71E4518426369a138a3".lower()
+AAVE_V3_POOL_ADDRESS = "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2".lower()
+AAVE_V3_ORACLE = "0x54586bE62E3c3580375aE3723C145253060Ca0C2".lower()
 # Balancer related addresses
 BAL_ADDRESS = "0xba100000625a3754423978a60c9317c58a424e3D".lower()
 # Compound related addresses
@@ -283,6 +289,9 @@ DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F".lower()
 SAI_ADDRESS = "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359".lower()
 MCD_SPOT_ADDRESS = "0x65C79fcB50Ca1594B025960e539eD7A9a6D434A3".lower()
 MKR_ADDRESS = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2".lower()
+# Lido related addresses
+LDO_ADDRESS = "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84".lower()
+WSTETH_ADDRESS = "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0".lower()
 # --------------------------------------------
 # Burn addresses
 BURN_ADDRESS = [
@@ -346,6 +355,26 @@ CUSTODIAN_ASSETS = [
     # Pax Dollar (USDP)
     "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
 ]
+
+# Real world assets prices
+RWA_ASSETS_PRICES = {
+    "RWA001": 15913500.00,
+    "RWA002": 92899355.93,
+    "RWA003": 2359560.00,
+    "RWA004": 8815730.00,
+    "RWA005": 17199394.00,
+    "RWA006": 0.00,
+    "RWA007": 1250000000.00,
+    "RWA008": 30043520.67,
+    "RWA009": 100000000.00,
+    "RWA010": 24333058.00,
+    "RWA011": 36499587.00,
+    "RWA012": 97332233.00,
+    "RWA013": 85165703.00,
+    "RWA014": 500000000.00,
+    "RWA015": 1280000000.00,
+}
+
 
 #  Delisted tokens
 DELISTED_TOKENS = [

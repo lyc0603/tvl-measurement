@@ -2,8 +2,7 @@
 Function to fetch MakerDAO data directly from the blockchain
 """
 
-import json
-
+import requests
 from multicall import Call, Multicall
 
 from config import collateral, constants
@@ -40,6 +39,60 @@ def get_collaterals_list() -> list:
     )(0, collateral_assets_count - 1)["list"]
 
     return collateral_type_list
+
+
+def get_info_makerdao(
+    collateral_type: bytes,
+) -> dict[str, str]:
+    """
+    Function to get the info of collateral
+    """
+
+    collateral_info = Call(
+        constants.ILK_REGISTRY_ADDRESS,
+        [
+            "info(bytes32)(string,string,uint256,uint256,address,address,address,address)",
+            collateral_type,
+        ],
+        [
+            ["name", None],
+            ["symbol", None],
+            ["class", None],
+            ["dec", None],
+            ["gem", None],
+            ["pip", None],
+            ["join", None],
+        ],
+        _w3=web3_call.eth_w3,
+    )()
+
+    return collateral_info
+
+
+def get_ilks_makerdao(
+    collateral_type: bytes,
+) -> dict[str, str]:
+    """
+    Function to get the info of collateral
+    """
+
+    collateral_info = Call(
+        constants.VAT_ADDRESS,
+        [
+            "ilks(bytes32)(uint256,uint256,uint256,uint256,uint256)",
+            collateral_type,
+        ],
+        [
+            ["Art", None],
+            ["rate", None],
+            ["spot", None],
+            ["line", None],
+            ["dust", None],
+        ],
+        _w3=web3_call.eth_w3,
+    )()
+
+    return collateral_info
 
 
 def get_collaterals_info(
@@ -299,12 +352,23 @@ def get_makerdao_tokens_to_spot_price() -> dict:
 
 if __name__ == "__main__":
     # print(get_collaterals_list())
+    # print(
+    #     get_info_makerdao(
+    #         get_collaterals_list()[15],
+    #     )
+    # )
+    get_dai_stats_oracle()
+    # print(
+    #     get_ilks_makerdao(
+    #         get_collaterals_list()[0],
+    #     )
+    # )
     # print(get_collaterals_info(get_collaterals_list()))
     # print(get_collateral_to_info_and_data())
-    print(get_receipt_tokens_and_composition())
-    with open(
-        f"{constants.DATA_PATH}/composition/MakerDAO.json",
-        "w",
-        encoding="utf-8",
-    ) as f_json:
-        json.dump(get_receipt_tokens_and_composition(), f_json, indent=4)
+    # print(get_receipt_tokens_and_composition())
+    # with open(
+    #     f"{constants.DATA_PATH}/composition/MakerDAO.json",
+    #     "w",
+    #     encoding="utf-8",
+    # ) as f_json:
+    #     json.dump(get_receipt_tokens_and_composition(), f_json, indent=4)

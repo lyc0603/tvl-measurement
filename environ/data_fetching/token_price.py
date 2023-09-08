@@ -406,7 +406,7 @@ if __name__ == "__main__":
     # print(get_lp_price("0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc"))
     # print(get_curve_lp_price("0x06325440d014e39736583c165c2963ba99faf14e"))
     # print(get_eth_price())
-    # print(get_token_price_defillama("0xf8fd466f12e236f4c96f7cce6c79eadb819abf58"))
+    print(get_token_price_defillama("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"))
     # print(get_token_price("0x470ebf5f030ed85fc1ed4c2d36b9dd02e77cf1b7"))
     # print(get_balancer_lp_price("0x2bbf681cc4eb09218bee85ea2a5d3d13fa40fc0c".lower()))
     # (
@@ -420,5 +420,5 @@ if __name__ == "__main__":
     #         derivative_token_address="0x60d604890feaa0b5460b28a424407c24fe89374a",
     #     )
     # )
-    print(uniswap_v2_subgraph_token_price("0x1985365e9f78359a9b6ad760e32412f4a445e862"))
+    # print(uniswap_v2_subgraph_token_price("0x1985365e9f78359a9b6ad760e32412f4a445e862"))
     pass

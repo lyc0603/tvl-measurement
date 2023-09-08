@@ -306,13 +306,14 @@ def get_token_name(token_address: str) -> str:
 if __name__ == "__main__":
     # Connect to the Ethereum blockchain
     eth_w3 = init_web3()
+    # print(get_token_symbol("0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"))
     # print(get_eth_balance("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"))
-    # print(
-    #     get_token_balance_of(
-    #         "0xe025e3ca2be02316033184551d4d3aa22024d9dc".lower(),
-    #         "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".lower(),
-    #     )
-    # )
+    print(
+        get_token_balance_of(
+            "0x018008bfb33d285247A21d44E50697654f754e63".lower(),
+            "0x6B175474E89094C44Da98b954EedeAC495271d0F".lower(),
+        )
+    )
     # print(
     #     get_tokens_total_supply(
     #         [

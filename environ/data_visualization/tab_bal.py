@@ -9,7 +9,7 @@ from config.constants import TABLES_PATH
 
 
 def tabulate_bal(
-    ptc_name: str, df_bal: pd.DataFrame, block_num: int = 17899400
+    ptc_name: str, df_bal: pd.DataFrame, block_num: int = 17983303
 ) -> None:
     """
     Function to generate LaTeX table
