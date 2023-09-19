@@ -20,7 +20,6 @@ setup(
         "matplotlib",
         "bs4",
         "plotly",
-        "Jinja2",
     ],
     extra_require={"dev": ["pylint", "black"]},
 )
