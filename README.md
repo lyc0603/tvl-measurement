@@ -1,4 +1,7 @@
 # tvl-measurement
+
+[![python](https://img.shields.io/badge/Python-v3.11.3-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
+
 Repository for the study of TVL double counting issue.
 
 Clone this repository
@@ -13,16 +16,15 @@ Navigate to the directory of the cloned repo
 cd tvl-measurement
 ```
 
+## Installation
+
+To install the latest release on `PyPI <https://pypi.org/project/toml/>`_, run:
+
+```bash
+  pip install toml
+```
+
 ## Set up the repo
-
-### Give execute permission to your script and then run `setup_repo.sh`
-
-```
-chmod +x setup_repo.sh
-./setup_repo.sh
-```
-
-or follow the step-by-step instructions below
 
 ### Create a python virtual environment
 
