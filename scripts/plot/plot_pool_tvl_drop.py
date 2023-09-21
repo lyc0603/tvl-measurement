@@ -9,6 +9,9 @@ from config.constants import FIGURES_PATH, SAMPLE_SYSTEM_TOKEN
 
 from scripts.process.process_risk_analysis import results
 
+# set the figure size
+plt.figure(figsize=(5, 2))
+
 df_sensitivity_test = pd.DataFrame(results)
 
 for pool in SAMPLE_SYSTEM_TOKEN:
@@ -29,8 +32,11 @@ plt.xlabel("Percentage of price drop of ETH")
 # set the y label
 plt.ylabel("Percentage of TVL")
 
-# set the legend
-plt.legend()
+# show the legend on the upper left corner
+plt.legend(loc="upper left")
+
+# add the grid and increase the opacity and increase the intensity
+plt.grid(alpha=0.3)
 
 # tight layout
 plt.tight_layout()

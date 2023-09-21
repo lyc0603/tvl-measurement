@@ -10,6 +10,9 @@ from environ.data_fetching.lido_data_fetching import get_total_pooled_ether_lido
 from environ.data_fetching.token_price import get_eth_price
 from scripts.process.process_risk_analysis import results
 
+# set the figure size
+plt.figure(figsize=(5, 2))
+
 df_makerdao = pd.read_csv(f"{DATA_PATH}/tvl/bal_makerdao.csv")
 
 tvl_dict = {
@@ -60,8 +63,11 @@ for protocol in df_plot["protocol"].unique():
         label=f"{protocol}",
     )
 
-# plot legend
-plt.legend()
+# show the legend on the upper left corner
+plt.legend(loc="upper left")
+
+# add the grid and increase the opacity and increase the intensity
+plt.grid(alpha=0.3)
 
 # x and y labels
 plt.xlabel("Percentage of price drop of ETH")
