@@ -16,8 +16,12 @@ from environ.data_processing.preprocess_tvl import preprocess_total_tvl
 for chain in CHAIN_LIST:
     print(chain)
 
-    # set the figure size
-    plt.figure(figsize=(5, 2))
+    if chain == "Total":
+        # set the figure size
+        plt.figure(figsize=(5, 2))
+    else:
+        # set the figure size
+        plt.figure(figsize=(2.5, 2))
 
     # load the total tvr data
     df_tvr_all = preprocess_total_tvl(
@@ -82,9 +86,3 @@ for chain in CHAIN_LIST:
 
     # save the plot
     plt.savefig(f"{FIGURES_PATH}/tvr_stack_{chain}.pdf", dpi=300)
-
-    # show the plot
-    plt.show()
-
-    # close the plot
-    plt.close()

@@ -38,6 +38,9 @@ plt.legend(loc="upper left")
 # add the grid and increase the opacity and increase the intensity
 plt.grid(alpha=0.3)
 
+# set the font of legend
+plt.legend(prop={"size": 6})
+
 # tight layout
 plt.tight_layout()
 

@@ -17,8 +17,12 @@ PLOT_INFO_DICT = {
 }
 
 for chain in CHAIN_LIST:
-    # set the figure size
-    plt.figure(figsize=(5, 2))
+    if chain == "Total":
+        # set the figure size
+        plt.figure(figsize=(5, 2))
+    else:
+        # set the figure size
+        plt.figure(figsize=(2.5, 2))
 
     # load the total tvl data
     df_agg = preprocess_ptc_tvl(
@@ -93,9 +97,3 @@ for chain in CHAIN_LIST:
 
     # save the plot
     plt.savefig(f"{FIGURES_PATH}/tvl_{chain}.pdf", dpi=300)
-
-    # show the plot
-    plt.show()
-
-    # close the plot
-    plt.close()

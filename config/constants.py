@@ -6,6 +6,9 @@ from os import path
 from config.settings import PROJECT_ROOT
 
 # --------------------------------------------
+FRED_API_KEY = "69cc1d5bf003f619a45787cff227f647"
+
+# --------------------------------------------
 SAMPLE_SYSTEM_TOKEN = ["ETH-A", "ETH-B", "ETH-C", "WSTETH-A", "WSTETH-B", "ETH"]
 
 # --------------------------------------------
