@@ -28,6 +28,11 @@ for chain in CHAIN_LIST:
         df_path=f"{PROCESSED_DATA_PATH}/defillama/defillama_tvr_all_{chain}.csv"
     )
 
+    # convert the data to percentage
+
+    for col in ["stable", "wrap", "gov", "native"]:
+        df_tvr_all[col] = df_tvr_all[col] / df_tvr_all["tvr"]
+
     # plot the staked tvl
     plt.stackplot(
         df_tvr_all["date"],
@@ -45,6 +50,9 @@ for chain in CHAIN_LIST:
 
     # show the legend on the upper left corner
     plt.legend(loc="upper left")
+
+    # change the font size of the legend
+    plt.legend(prop={"size": 15})
 
     # add the grid and increase the opacity and increase the intensity
     plt.grid(alpha=0.3)
