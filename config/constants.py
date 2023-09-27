@@ -14,6 +14,7 @@ CORR_NAMING_DICT = {
     "etherprice": "$ETH_t$",
     "s&p": "$S&P_t$",
     "leverage": "$Leverage_t$",
+    "multiplier": "$Multiplier_t$",
 }
 
 # --------------------------------------------
