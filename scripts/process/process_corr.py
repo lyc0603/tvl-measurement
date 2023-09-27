@@ -38,8 +38,15 @@ df_corr = df_corr.astype(float)
 # plot the correlation heatmap
 sns.heatmap(df_corr.corr(), annot=True, cmap="coolwarm")
 
-# column rotate
-plt.yticks(rotation=90)
+# rotate the xticklabels
+plt.xticks(rotation=90)
+
+# rotate the yticklabels
+plt.yticks(rotation=0)
+
+# enlarge the font size
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
 
 # tight layout
 plt.tight_layout()
