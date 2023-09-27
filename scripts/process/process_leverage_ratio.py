@@ -2,9 +2,6 @@
 Script to process leverage ratio data
 """
 
-import datetime
-
-import matplotlib.pyplot as plt
 
 from environ.data_processing.preprocess_tvl import preprocess_ptc_tvl
 

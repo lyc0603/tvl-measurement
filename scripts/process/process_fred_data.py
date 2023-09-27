@@ -3,6 +3,8 @@ Scripts to process the fred data
 """
 
 import json
+
+import numpy as np
 import pandas as pd
 
 from config.constants import DATA_PATH
@@ -24,6 +26,7 @@ for freq, freq_data in data_dict.items():
             # load the data
             df_data = pd.DataFrame(json.load(f)["observations"])
             df_data["date"] = pd.to_datetime(df_data["date"])
+            df_data.sort_values(by="date", ascending=True, inplace=True)
             df_data = df_data[["date", "value"]]
 
             if freq == "daily":
@@ -32,6 +35,10 @@ for freq, freq_data in data_dict.items():
                 )
                 # expand the dataframe to include all dates
                 df_data = df_data.set_index("date").reindex(pd_date).rename_axis("date")
+
+                if var == "VIX":
+                    # replace the "." as NaN
+                    df_data.loc[df_data["value"] == ".", "value"] = np.nan
 
                 # fill in the missing values
                 df_data["value"] = df_data["value"].interpolate(method="ffill")
