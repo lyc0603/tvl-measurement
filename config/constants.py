@@ -6,11 +6,23 @@ from os import path
 from config.settings import PROJECT_ROOT
 
 # --------------------------------------------
+FRED_DICT = {
+    "BOGMBASE": "M0",
+    "M2NS": "M2",
+    "DFF": "FFER",
+    "CORESTICKM159SFRBATL": "CPI",
+    "VIXCLS": "VIX",
+}
+# --------------------------------------------
+USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    + "AppleWebKit/537.36 (KHTML, like Gecko) "
+    + "Chrome/111.0.0.0 Safari/537.36"
+)
+# --------------------------------------------
 FRED_API_KEY = "69cc1d5bf003f619a45787cff227f647"
-
 # --------------------------------------------
 SAMPLE_SYSTEM_TOKEN = ["ETH-A", "ETH-B", "ETH-C", "WSTETH-A", "WSTETH-B", "ETH"]
-
 # --------------------------------------------
 END_OF_SAMPLE_PERIOD = "2023-07-01"
 CHAIN_LIST = [
