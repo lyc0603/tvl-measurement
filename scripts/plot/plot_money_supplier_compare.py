@@ -7,6 +7,7 @@ import matplotlib.dates as mdates
 
 from scripts.process.process_money_multiplier import money_multiplier_dict
 from scripts.process.process_leverage_ratio import leverage_ratio_dict
+from config.constants import FIGURES_PATH
 
 # set the figure size
 plt.figure(figsize=(5, 2))
@@ -18,6 +19,8 @@ plt.plot(
     money_multiplier_dict["value"],
     label="Money Multiplier",
     color="blue",
+    marker="o",
+    markersize=2,
     linewidth=1,
 )
 
@@ -27,11 +30,14 @@ plt.plot(
     leverage_ratio_dict["value"],
     label="Leverage Ratio",
     color="red",
+    marker="o",
+    markersize=2,
     linewidth=1,
 )
 
-# show the legend on the upper left corner
-plt.legend(loc="upper left")
+
+# show the legend on the upper right corner
+plt.legend(loc="upper right")
 
 # add the grid and increase the opacity and increase the intensity
 plt.grid(alpha=0.3)
@@ -53,4 +59,5 @@ plt.xticks(rotation=90)
 # tight layout
 plt.tight_layout()
 
-plt.show()
+# save the figure
+plt.savefig(f"{FIGURES_PATH}/money_supply_compare.pdf", dpi=300)
