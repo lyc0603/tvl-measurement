@@ -52,4 +52,4 @@ plt.yticks(fontsize=15)
 plt.tight_layout()
 
 # save the plot
-plt.savefig(f"{FIGURES_PATH}/corr.pdf", dpi=300)
+plt.savefig(f"{FIGURES_PATH}/corr_market_macro.pdf", dpi=300)
