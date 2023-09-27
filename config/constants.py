@@ -6,6 +6,17 @@ from os import path
 from config.settings import PROJECT_ROOT
 
 # --------------------------------------------
+CORR_NAMING_DICT = {
+    "CPI": "$CPI_t$",
+    "FFER": "$FFER_t$",
+    "VIX": "$VIX_t$",
+    "gasprice": "$Gas_t$",
+    "etherprice": "$ETH_t$",
+    "s&p": "$S&P_t$",
+    "leverage": "$Leverage_t$",
+}
+
+# --------------------------------------------
 FRED_DICT = {
     "BOGMBASE": "M0",
     "M2NS": "M2",

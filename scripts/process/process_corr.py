@@ -6,9 +6,13 @@ import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
 
+from config.constants import CORR_NAMING_DICT, FIGURES_PATH
 from scripts.process.process_fred_data import df_fred
 from scripts.process.process_leverage_ratio import leverage_ratio_dict
 from scripts.process.process_market_data import df_market
+
+# set the figure size
+plt.rcParams["figure.figsize"] = (6, 5)
 
 df_leverage = pd.DataFrame(leverage_ratio_dict).rename(columns={"value": "leverage"})
 
@@ -25,11 +29,20 @@ df_corr = df_corr[df_corr["date"] <= df_leverage["date"].max()]
 # drop the date column
 df_corr = df_corr.drop(columns=["date"])
 
+# rename the columns
+df_corr = df_corr.rename(columns=CORR_NAMING_DICT)
+
 # convert the data to float
 df_corr = df_corr.astype(float)
 
 # plot the correlation heatmap
 sns.heatmap(df_corr.corr(), annot=True, cmap="coolwarm")
 
-# show the plot
-plt.show()
+# column rotate
+plt.yticks(rotation=90)
+
+# tight layout
+plt.tight_layout()
+
+# save the plot
+plt.savefig(f"{FIGURES_PATH}/corr.pdf", dpi=300)
