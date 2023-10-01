@@ -34,7 +34,9 @@ USER_AGENT = (
 # --------------------------------------------
 FRED_API_KEY = "69cc1d5bf003f619a45787cff227f647"
 # --------------------------------------------
-SAMPLE_SYSTEM_TOKEN = ["ETH-A", "ETH-B", "ETH-C", "WSTETH-A", "WSTETH-B", "ETH"]
+MAKERDAO_ETH_RELATED_TOKEN = ["ETH-A", "ETH-B", "ETH-C", "WSTETH-A", "WSTETH-B"]
+LIDO_ETH_RELATED_TOKEN = ["ETH"]
+SAMPLE_SYSTEM_TOKEN = MAKERDAO_ETH_RELATED_TOKEN + LIDO_ETH_RELATED_TOKEN
 # --------------------------------------------
 END_OF_SAMPLE_PERIOD = "2023-07-01"
 CHAIN_LIST = [

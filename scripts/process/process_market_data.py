@@ -5,6 +5,7 @@ Script to process market data
 import pandas as pd
 
 from config.constants import DATA_PATH
+from scripts.process.process_sp import df_sp
 
 data_dict = {
     "csv": {
@@ -24,15 +25,6 @@ for var, _ in data_dict["csv"].items():
     df_data.sort_values(by="date", ascending=True, inplace=True)
     data_dict["csv"][var] = df_data
 
-df_sp = pd.read_excel(
-    f"{DATA_PATH}/market/PerformanceGraphExport.xls",
-    index_col=None,
-    skiprows=6,
-    skipfooter=4,
-    # usecols="A:B:C",
-)
-df_sp.columns = ["date", "s&p"]
-df_sp["date"] = pd.to_datetime(df_sp["date"])
 data_dict["other"]["s&p"] = df_sp
 
 for type, type_dict in data_dict.items():

@@ -10,7 +10,7 @@ from tqdm import tqdm
 from config.constants import DATA_PATH
 from environ.data_fetching.token_price import get_eth_price, get_token_price_defillama
 from environ.data_fetching.web3_call import get_token_symbol
-from environ.data_processing.process_bal import preprocess_tvl_compo, remove_no_info
+from environ.data_processing.process_bal import preprocess_tvl_compo
 
 PTC_PATH_MAPPING = {
     "MakerDAO": f"{DATA_PATH}/tvl/tvl_composition_Origin.MAKER.csv",
