@@ -43,3 +43,6 @@ for _, type_dict in data_dict.items():
 
 # convert the gasprice from wei to dollar
 df_market["gasprice"] = df_market["gasprice"] * df_market["etherprice"] / 1e18
+
+# reset the index
+df_market.reset_index(inplace=True)

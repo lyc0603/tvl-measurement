@@ -14,8 +14,6 @@ from config.constants import (
 from environ.data_processing.preprocess_tvl import preprocess_total_tvl
 
 for chain in CHAIN_LIST:
-    print(chain)
-
     if chain == "Total":
         # set the figure size
         plt.figure(figsize=(5, 2))
@@ -66,7 +64,7 @@ for chain in CHAIN_LIST:
     )
 
     # label the y axis
-    plt.ylabel("Dollar Amount", fontsize=6)
+    plt.ylabel("Percentage of TVR", fontsize=6)
 
     # set the unit of the y axis
     plt.gca().yaxis.get_major_formatter().set_useOffset(False)

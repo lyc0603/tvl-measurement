@@ -3,65 +3,72 @@ Script to plot the sensitivity test results of protocol
 """
 
 import matplotlib.pyplot as plt
-import pandas as pd
+import numpy as np
 
-from config.constants import DATA_PATH, FIGURES_PATH, SAMPLE_SYSTEM_TOKEN
-from environ.data_fetching.lido_data_fetching import get_total_pooled_ether_lido
-from environ.data_fetching.token_price import get_eth_price
-from scripts.process.process_risk_analysis import results
+from config.constants import FIGURES_PATH
+from scripts.process.process_risk_analysis import (
+    df_plot,
+    eth_price_current,
+    eth_price_max,
+)
 
 # set the figure size
 plt.figure(figsize=(5, 2))
 
-df_makerdao = pd.read_csv(f"{DATA_PATH}/tvl/bal_makerdao.csv")
-
-tvl_dict = {
-    "MakerDAO": df_makerdao.loc[
-        df_makerdao["entries"] == "Reserve Token", "dollar_amount"
-    ].sum(),
-    "Lido": get_total_pooled_ether_lido() * get_eth_price(),
+PLOT_DICT = {
+    "tvl": {
+        "x": df_plot["eth_price"],
+        "y": df_plot["tvl"],
+        "label": "TVL",
+    },
+    "tvr": {
+        "x": df_plot["eth_price"],
+        "y": df_plot["tvr"],
+        "label": "TVR",
+    },
 }
 
-
-df_sensitivity_test = pd.DataFrame(results)
-df_sensitivity_test = df_sensitivity_test.loc[
-    df_sensitivity_test["pool"].isin(SAMPLE_SYSTEM_TOKEN)
-].copy()
-
-plot_dict = {
-    "protocol": [],
-    "price_pct": [],
-    "tvl": [],
-}
-
-for protocol in df_sensitivity_test["protocol"].unique():
-    df_protocol = df_sensitivity_test[
-        df_sensitivity_test["protocol"] == protocol
-    ].copy()
-
-    for price_pct in df_protocol["price_pct"].unique():
-        df_price_pct = df_protocol[df_protocol["price_pct"] == price_pct].copy()
-
-        # get the total tvl
-        tvl = tvl_dict[protocol] - df_price_pct["tvl_drop"].sum()
-
-        # append the results to the dict
-        plot_dict["protocol"].append(protocol)
-        plot_dict["price_pct"].append(price_pct)
-        plot_dict["tvl"].append(tvl)
-
-# sum up the results
-df_plot = pd.DataFrame(plot_dict)
-
-for protocol in df_plot["protocol"].unique():
-    df_protocol = df_plot[df_plot["protocol"] == protocol].copy()
-
-    # plot the results
+# plot the results
+for var, var_info in PLOT_DICT.items():
     plt.plot(
-        df_protocol["price_pct"],
-        df_protocol["tvl"],
-        label=f"{protocol}",
+        var_info["x"],
+        var_info["y"],
+        label=var_info["label"],
     )
+
+
+DASHED_LINE_DICT = {
+    "current_eth_price": {
+        "x": eth_price_current / eth_price_current,
+        "color": "black",
+        "linestyle": "dashed",
+        "linewidth": 1,
+        "alpha": 0.5,
+        "label": "Current ETH price",
+    },
+    "max_eth_price": {
+        "x": eth_price_max / eth_price_current,
+        "color": "red",
+        "linestyle": "dashed",
+        "linewidth": 1,
+        "alpha": 0.5,
+        "label": "Max ETH price",
+    },
+}
+
+# plot a verticle dashed line at the current ether price
+for _, dashed_line_info in DASHED_LINE_DICT.items():
+    plt.axvline(
+        x=dashed_line_info["x"],
+        color=dashed_line_info["color"],
+        linestyle=dashed_line_info["linestyle"],
+        linewidth=dashed_line_info["linewidth"],
+        alpha=dashed_line_info["alpha"],
+        label=dashed_line_info["label"],
+    )
+
+# lower legend font size
+plt.rcParams["legend.fontsize"] = 6
 
 # show the legend on the upper left corner
 plt.legend(loc="upper left")
@@ -70,12 +77,14 @@ plt.legend(loc="upper left")
 plt.grid(alpha=0.3)
 
 # x and y labels
-plt.xlabel("Percentage of price drop of ETH")
+plt.xlabel("% of ETH price")
 
 # set the y label
-plt.ylabel("Total TVL")
+plt.ylabel("% of TVL/TVR")
 
 # tight layout
 plt.tight_layout()
 
 plt.savefig(f"{FIGURES_PATH}/protocol_tvl_drop.pdf", dpi=300)
+
+plt.show()

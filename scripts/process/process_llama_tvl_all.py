@@ -1,5 +1,5 @@
 """
-Script to process the Llama TVL dataset.
+Script to process the Llama TVL dataset to get aggregate tvl data for plotting.
 """
 
 import json

@@ -7,7 +7,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from config.constants import DATA_PATH
+from config.constants import DATA_PATH, TOKEN_CATEGORY_SPECIAL_CASE
 
 CATE_DATA_INFO = {
     "cmc": {
@@ -92,6 +92,14 @@ for index, row in stable_df.iterrows():
     df_agg["token_address"].append(np.nan)
     df_agg["category"].append(CATE_DATA_INFO["defi_llama"]["stable_coins"]["category"])
     df_agg["stable_type"].append(row["pegMechanism"])
+
+# add special tokens WETH
+for _, token_info in TOKEN_CATEGORY_SPECIAL_CASE.items():
+    df_agg["name"].append(token_info["name"])
+    df_agg["symbol"].append(token_info["symbol"])
+    df_agg["token_address"].append(token_info["token_address"])
+    df_agg["category"].append(token_info["category"])
+    df_agg["stable_type"].append(token_info["stable_type"])
 
 # create df
 df_token_cate = pd.DataFrame(df_agg)

@@ -4,32 +4,12 @@ Scripts to process the distribution mapping from ETH return to TVL and TVR retur
 
 import pandas as pd
 
-from config.constants import DATA_PATH, PROCESSED_DATA_PATH, SAMPLE_SYSTEM_TOKEN
+from config.constants import PROCESSED_DATA_PATH, SAMPLE_SYSTEM_TOKEN
 from environ.data_fetching.lido_data_fetching import get_total_pooled_ether_lido
 from environ.data_fetching.token_price import get_eth_price
 from environ.data_processing.preprocess_tvl_tvr_pct_change import get_tvl_tvr_pct_change
 from scripts.process.process_sp import df_sp
-from scripts.process.process_token_lst import df_token_cate
-
-df_makerdao_bal = pd.read_csv(f"{DATA_PATH}/tvl/bal_makerdao.csv")
-
-lido_tvl_tvr = get_total_pooled_ether_lido() * get_eth_price()
-
-tvl_tvr_dict = {
-    "tvl": {
-        "MakerDAO": df_makerdao_bal.loc[
-            df_makerdao_bal["entries"] == "Reserve Token", "dollar_amount"
-        ].sum(),
-        "Lido": lido_tvl_tvr,
-    },
-    "tvr": {
-        "MakerDAO": df_makerdao_bal.loc[
-            df_makerdao_bal["entries"].isin(df_token_cate["symbol"].unique()),
-            "dollar_amount",
-        ].sum(),
-        "Lido": lido_tvl_tvr,
-    },
-}
+from scripts.process.preprocess_tvl_tvr_makerdao_lido import tvl_tvr_dict
 
 results = {
     "idx": [],
@@ -59,7 +39,6 @@ idx = 0
 # iterate throught the S&P percentage change
 for sp_ret in df_sp["s&p"]:
     idx += 1
-    price_drop = -sp_ret
 
     for ilk in SAMPLE_SYSTEM_TOKEN:
         df_ilk = df_makerdao[
@@ -69,7 +48,7 @@ for sp_ret in df_sp["s&p"]:
         withdrawable_value, ilk_total_tvl = get_tvl_tvr_pct_change(
             df_ilk=df_makerdao,
             eth_price=eth_price,
-            price_drop=price_drop,
+            eth_ret=sp_ret,
         )
 
         # append the results to the dict
@@ -84,7 +63,7 @@ for sp_ret in df_sp["s&p"]:
     total_tvl = total_pool_ether * eth_price
 
     # iterate from ilk price to highest liq price
-    eth_price_drop = eth_price * (1 - price_drop)
+    eth_price_drop = eth_price * (1 + eth_ret)
 
     # calculate the withdrawable value
     withdrawable_value = total_pool_ether * eth_price_drop

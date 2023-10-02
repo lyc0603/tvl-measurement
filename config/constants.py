@@ -4,7 +4,22 @@ Configuration for the project
 
 from os import path
 from config.settings import PROJECT_ROOT
+import numpy as np
 
+# --------------------------------------------
+TOKEN_CATEGORY_SPECIAL_CASE = {
+    "WETH": {
+        "name": "Wrapped ETH",
+        "symbol": "WETH",
+        "token_address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "category": "Wrapped Tokens",
+        "stable_type": np.nan,
+    }
+}
+
+# --------------------------------------------
+DEFIEXPLORE_SAMPLE_DATE = "2023-09-01"
+SAMPLE_MIN_DATE = "2021-01-01"
 # --------------------------------------------
 CORR_NAMING_DICT = {
     "CPI": "$CPI_t$",
@@ -34,9 +49,15 @@ USER_AGENT = (
 # --------------------------------------------
 FRED_API_KEY = "69cc1d5bf003f619a45787cff227f647"
 # --------------------------------------------
-MAKERDAO_ETH_RELATED_TOKEN = ["ETH-A", "ETH-B", "ETH-C", "WSTETH-A", "WSTETH-B"]
-LIDO_ETH_RELATED_TOKEN = ["ETH"]
+MAKERDAO_ETH_TVR_RELATED_TOKEN = ["ETH-A", "ETH-B", "ETH-C"]
+MAKERDAO_ETH_RELATED_TOKEN = MAKERDAO_ETH_TVR_RELATED_TOKEN + [
+    "WSTETH-A",
+    "WSTETH-B",
+]
+LIDO_ETH_TVR_RELATED_TOKEN = ["ETH"]
+LIDO_ETH_RELATED_TOKEN = LIDO_ETH_TVR_RELATED_TOKEN
 SAMPLE_SYSTEM_TOKEN = MAKERDAO_ETH_RELATED_TOKEN + LIDO_ETH_RELATED_TOKEN
+SAMPLE_SYSTEM_TVR_TOKEN = MAKERDAO_ETH_TVR_RELATED_TOKEN + LIDO_ETH_TVR_RELATED_TOKEN
 # --------------------------------------------
 END_OF_SAMPLE_PERIOD = "2023-07-01"
 CHAIN_LIST = [

@@ -13,7 +13,7 @@ ILK_NON_LIQ_PRC_COL_NAME = "ilk_non_liq_prc"
 def get_tvl_tvr_pct_change(
     df_ilk: pd.DataFrame,
     eth_price: float,
-    price_drop: float,
+    eth_ret: float,
 ) -> tuple[float, float]:
     """
     Function to calculate the TVL and TVR percentage change when Ether price change
@@ -25,12 +25,22 @@ def get_tvl_tvr_pct_change(
     )
 
     # iterate from ilk price to highest liq price
-    ilk_price = eth_price * (1 - price_drop)
+    ilk_price = eth_price * (1 + eth_ret)
+
+    # get the collateral in different states currently
+    df_ilk_safe_current = df_ilk[df_ilk[LIQPRICE_COL_NAME] <= eth_price].copy()
+    df_ilk_liquidated_current = df_ilk[
+        (df_ilk[LIQPRICE_COL_NAME] > eth_price)
+        & (eth_price >= df_ilk[ILK_NON_LIQ_PRC_COL_NAME])
+    ].copy()
 
     # get the total collateral
-    ilk_total_tvl = df_ilk[COLLATERAL_COL_NAME].sum() * eth_price
+    ilk_total_tvl = (
+        df_ilk_safe_current[COLLATERAL_COL_NAME].sum() * eth_price
+        + df_ilk_liquidated_current[DEBT_COL_NAME].sum()
+    )
 
-    # get the colalteral in different states
+    # get the collateral in different states
     df_ilk_safe = df_ilk[df_ilk[LIQPRICE_COL_NAME] <= ilk_price].copy()
     df_ilk_liquidated = df_ilk[
         (df_ilk[LIQPRICE_COL_NAME] > ilk_price)

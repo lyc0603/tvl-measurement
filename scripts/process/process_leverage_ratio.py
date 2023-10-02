@@ -2,7 +2,6 @@
 Script to process leverage ratio data
 """
 
-
 from environ.data_processing.preprocess_tvl import preprocess_ptc_tvl
 
 df_agg = preprocess_ptc_tvl(
@@ -27,9 +26,3 @@ leverage_ratio_dict = {
 # calculate the leverage ratio
 leverage_ratio_dict["date"] = df_agg["date"].tolist()
 leverage_ratio_dict["value"] = (df_agg["totalLiquidityUSD"] / df_agg["tvr"]).tolist()
-
-# only keep the data after 2000
-for i in range(len(leverage_ratio_dict["date"])):
-    if leverage_ratio_dict["date"][i].year < 2021:
-        leverage_ratio_dict["date"][i] = None
-        leverage_ratio_dict["value"][i] = None

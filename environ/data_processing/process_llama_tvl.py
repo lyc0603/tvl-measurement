@@ -1,5 +1,5 @@
 """
-Function to process the llama tvl data
+Function to process the llama tvl data for each protocol
 """
 import json
 import os

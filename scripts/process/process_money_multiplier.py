@@ -50,9 +50,3 @@ for i in range(len(money_multiplier_dict["date"])):
     money_multiplier_dict["date"][i] = datetime.datetime.strptime(
         money_multiplier_dict["date"][i], "%Y-%m-%d"
     )
-
-# only keep the data after 2000
-for i in range(len(money_multiplier_dict["date"])):
-    if money_multiplier_dict["date"][i].year < 2021:
-        money_multiplier_dict["date"][i] = None
-        money_multiplier_dict["value"][i] = None
