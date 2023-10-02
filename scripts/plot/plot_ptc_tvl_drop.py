@@ -3,7 +3,6 @@ Script to plot the sensitivity test results of protocol
 """
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 from config.constants import FIGURES_PATH
 from scripts.process.process_risk_analysis import (
