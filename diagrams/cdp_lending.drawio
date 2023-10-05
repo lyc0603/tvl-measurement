@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-10-02T22:27:58.323Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="J--BsEXVtsSzwSdZo8bu" version="21.6.8" type="device">
+<mxfile host="Electron" modified="2023-10-05T13:40:52.459Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="SGa9wBRYdeMoCGb4pmPv" version="21.6.8" type="device">
   <diagram id="GUxEJdWFkQ5Y1Z3yI3_n" name="dex_agg_chain">
-    <mxGraphModel dx="771" dy="561" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="100" pageHeight="150" math="1" shadow="0">
+    <mxGraphModel dx="563" dy="387" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="100" pageHeight="150" math="1" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -48,6 +48,18 @@
         </mxCell>
         <mxCell id="2SqFd5uKFIkBH42q-k37-1" value="$$\mathcal{S}_{CL}^{(3)}$$" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
           <mxGeometry x="-66" y="110" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XhvYsYNJD10kPRpsODgj-1" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=7;labelBackgroundColor=none;fontColor=#FFFFFF;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="16" width="8" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="XhvYsYNJD10kPRpsODgj-10" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=7;labelBackgroundColor=none;fontColor=#FFFFFF;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="96.37" width="8" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="XhvYsYNJD10kPRpsODgj-11" value="4" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=7;labelBackgroundColor=none;fontColor=#FFFFFF;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="126" width="8" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="XhvYsYNJD10kPRpsODgj-13" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=7;labelBackgroundColor=none;fontColor=#FFFFFF;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="20" y="45.50000000000001" width="8" height="8" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
