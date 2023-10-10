@@ -28,19 +28,20 @@ for chain in CHAIN_LIST:
 
     # convert the data to percentage
 
-    for col in ["stable", "wrap", "gov", "native"]:
+    # for col in ["stable", "wrap", "gov", "native"]:
+    for col in ["stable", "gov", "native"]:
         df_tvr_all[col] = df_tvr_all[col] / df_tvr_all["tvr"]
 
     # plot the staked tvl
     plt.stackplot(
         df_tvr_all["date"],
         df_tvr_all["stable"],
-        df_tvr_all["wrap"],
+        # df_tvr_all["wrap"],
         df_tvr_all["gov"],
         df_tvr_all["native"],
         labels=[
             "Non-crypto-backed Stablecoins",
-            "Wrapped Tokens",
+            # "Wrapped Tokens",
             "Governance Tokens",
             "Native Tokens",
         ],
@@ -63,15 +64,14 @@ for chain in CHAIN_LIST:
         mdates.MonthLocator(interval=2),
     )
 
+    # limit the x axis
+    plt.xlim([df_tvr_all["date"].min(), df_tvr_all["date"].max()])
+
     # label the y axis
     plt.ylabel("Percentage of TVR", fontsize=6)
 
-    # set the unit of the y axis
-    plt.gca().yaxis.get_major_formatter().set_useOffset(False)
-    plt.gca().yaxis.set_major_formatter(
-        plt.FuncFormatter(lambda x, loc: "{:.0f}B".format(x / 1e9))
-    )
-    plt.gca().yaxis.set_major_locator(ticker.MultipleLocator(base=50e9))
+    # set the unit of the y axis as 0.2
+    plt.gca().yaxis.set_major_locator(ticker.MultipleLocator(0.2))
 
     # if the chain is total, make the ticks and legend smaller
     if chain == "Total":

@@ -43,6 +43,9 @@ def preprocess_total_tvl(
     # sum the tvl and tvr of the same date
     df_tvl_all = df_tvl_all.groupby(["date"]).sum().reset_index()
 
+    # keep data after 2019-06-01
+    df_tvl_all = df_tvl_all[df_tvl_all["date"] >= "2019-06-01"]
+
     return df_tvl_all
 
 
@@ -97,9 +100,6 @@ def preprocess_ptc_tvl(
         on="date",
         how="outer",
     )
-
-    # only keep the data after 2021-01-01
-    df_agg = df_agg[df_agg["date"] >= "2019-10-01"]
 
     return df_agg
 

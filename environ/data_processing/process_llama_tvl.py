@@ -82,8 +82,8 @@ def  process_llama_tvls(
                 ].values[0]:
                     case "Governance Tokens":
                         gov += token_tvl_usd
-                    # case "Wrapped Tokens":
-                    #     wrap += token_tvl_usd
+                    case "Wrapped Tokens":
+                        native += token_tvl_usd
                     case "Layer One Tokens":
                         native += token_tvl_usd
                     case "Layer Two Tokens":
@@ -146,8 +146,8 @@ def process_llama_tvl(
                 ].values[0]:
                     case "Governance Tokens":
                         gov += token_tvl_usd
-                    # case "Wrapped Tokens":
-                    #     wrap += token_tvl_usd
+                    case "Wrapped Tokens":
+                        native += token_tvl_usd
                     case "Layer One Tokens":
                         native += token_tvl_usd
                     case "Layer Two Tokens":

@@ -65,6 +65,14 @@ plt.legend(loc="upper right")
 # add the grid and increase the opacity and increase the intensity
 plt.grid(alpha=0.3)
 
+# set the x limit to 2019-06-01
+plt.xlim(
+    [
+        pd.to_datetime("2019-06-01"),
+        df_leverage_ratio[df_leverage_ratio["leverage_ratio"].notnull()]["date"].max(),
+    ]
+)
+
 # set the unit of the x axis
 # plt.gca().xaxis.set_major_formatter(
 #     mdates.DateFormatter("%Y-%m"),
