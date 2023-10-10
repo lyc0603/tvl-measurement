@@ -15,10 +15,10 @@ CATE_DATA_INFO = {
             "path": f"{DATA_PATH}/token_category/gov_tokens.json",
             "category": "Governance Tokens",
         },
-        "wrapped_tokens": {
-            "path": f"{DATA_PATH}/token_category/wrapped_tokens.json",
-            "category": "Wrapped Tokens",
-        },
+        # "wrapped_tokens": {
+        #     "path": f"{DATA_PATH}/token_category/wrapped_tokens.json",
+        #     "category": "Wrapped Tokens",
+        # },
         "layer_one_tokens": {
             "path": f"{DATA_PATH}/token_category/layer_one_tokens.json",
             "category": "Layer One Tokens",
@@ -93,13 +93,13 @@ for index, row in stable_df.iterrows():
     df_agg["category"].append(CATE_DATA_INFO["defi_llama"]["stable_coins"]["category"])
     df_agg["stable_type"].append(row["pegMechanism"])
 
-# add special tokens WETH
-for _, token_info in TOKEN_CATEGORY_SPECIAL_CASE.items():
-    df_agg["name"].append(token_info["name"])
-    df_agg["symbol"].append(token_info["symbol"])
-    df_agg["token_address"].append(token_info["token_address"])
-    df_agg["category"].append(token_info["category"])
-    df_agg["stable_type"].append(token_info["stable_type"])
+# # add special tokens WETH
+# for _, token_info in TOKEN_CATEGORY_SPECIAL_CASE.items():
+#     df_agg["name"].append(token_info["name"])
+#     df_agg["symbol"].append(token_info["symbol"])
+#     df_agg["token_address"].append(token_info["token_address"])
+#     df_agg["category"].append(token_info["category"])
+#     df_agg["stable_type"].append(token_info["stable_type"])
 
 # create df
 df_token_cate = pd.DataFrame(df_agg)

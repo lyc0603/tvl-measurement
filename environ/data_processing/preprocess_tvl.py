@@ -98,6 +98,9 @@ def preprocess_ptc_tvl(
         how="outer",
     )
 
+    # only keep the data after 2021-01-01
+    df_agg = df_agg[df_agg["date"] >= "2019-10-01"]
+
     return df_agg
 
 

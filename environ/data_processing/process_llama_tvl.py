@@ -15,7 +15,7 @@ from config.constants import (
 from scripts.process.process_token_lst import df_token_cate
 
 
-def process_llama_tvls(
+def  process_llama_tvls(
     llama_tvl_json: dict,
     slug: str,
     chain: str = "Total",
@@ -30,7 +30,7 @@ def process_llama_tvls(
         "protocol": [],
         "tvr": [],
         "gov": [],
-        "wrap": [],
+        # "wrap": [],
         "native": [],
         "stable": [],
     }
@@ -69,7 +69,8 @@ def process_llama_tvls(
     # iterate throught llama_tvl_df
     for _, row in llama_tvr_df.iterrows():
         # initialize the tvl and tvr
-        tvr, gov, wrap, native, stable = 0, 0, 0, 0, 0
+        # tvr, gov, wrap, native, stable = 0, 0, 0, 0, 0
+        tvr, gov, native, stable = 0, 0, 0, 0
 
         # iterate through tokens
         for token, token_tvl_usd in row["tokens"].items():
@@ -81,8 +82,8 @@ def process_llama_tvls(
                 ].values[0]:
                     case "Governance Tokens":
                         gov += token_tvl_usd
-                    case "Wrapped Tokens":
-                        wrap += token_tvl_usd
+                    # case "Wrapped Tokens":
+                    #     wrap += token_tvl_usd
                     case "Layer One Tokens":
                         native += token_tvl_usd
                     case "Layer Two Tokens":
@@ -94,7 +95,7 @@ def process_llama_tvls(
         tvl_dict["protocol"].append(slug)
         tvl_dict["tvr"].append(tvr)
         tvl_dict["gov"].append(gov)
-        tvl_dict["wrap"].append(wrap)
+        # tvl_dict["wrap"].append(wrap)
         tvl_dict["native"].append(native)
         tvl_dict["stable"].append(stable)
 
@@ -131,7 +132,8 @@ def process_llama_tvl(
     # iterate throught llama_tvl_df
     for _, row in llama_tvl_df.iterrows():
         # initialize the tvl and tvr
-        tvl, tvr, gov, wrap, native, stable = 0, 0, 0, 0, 0, 0
+        # tvl, tvr, gov, wrap, native, stable = 0, 0, 0, 0, 0, 0
+        tvl, tvr, gov, native, stable = 0, 0, 0, 0, 0
 
         # iterate through tokens
         for token, token_tvl_usd in row["tokens"].items():
@@ -144,8 +146,8 @@ def process_llama_tvl(
                 ].values[0]:
                     case "Governance Tokens":
                         gov += token_tvl_usd
-                    case "Wrapped Tokens":
-                        wrap += token_tvl_usd
+                    # case "Wrapped Tokens":
+                    #     wrap += token_tvl_usd
                     case "Layer One Tokens":
                         native += token_tvl_usd
                     case "Layer Two Tokens":
@@ -156,7 +158,7 @@ def process_llama_tvl(
         llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "tvr"] = tvr
         llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "tvl"] = tvl
         llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "gov"] = gov
-        llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "wrap"] = wrap
+        # llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "wrap"] = wrap
         llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "native"] = native
         llama_tvl_df.loc[llama_tvl_df["date"] == row["date"], "stable"] = stable
 
