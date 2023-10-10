@@ -92,13 +92,13 @@ def preprocess_ptc_tvl(
         df_tvl_all,
         df_tvr_all,
         on="date",
-        how="outer",
+        how="left",
     )
     df_agg = pd.merge(
         df_agg,
         total_tvl_eth_without_double_counting_df,
         on="date",
-        how="outer",
+        how="left",
     )
 
     return df_agg
