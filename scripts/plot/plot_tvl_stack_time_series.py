@@ -45,6 +45,13 @@ for chain in CHAIN_LIST:
             "Governance Tokens",
             "Native Tokens",
         ],
+        colors=[
+            "orange",
+            # "grey",
+            "green",
+            "red",
+        ],
+        alpha=0.5,
     )
 
     # show the legend on the upper left corner
@@ -66,6 +73,9 @@ for chain in CHAIN_LIST:
 
     # limit the x axis
     plt.xlim([df_tvr_all["date"].min(), df_tvr_all["date"].max()])
+
+    # limit the y axis
+    plt.ylim([0, 1])
 
     # label the y axis
     plt.ylabel("Percentage of TVR", fontsize=6)
