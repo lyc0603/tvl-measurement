@@ -46,10 +46,10 @@ for chain in CHAIN_LIST:
             "Native Tokens",
         ],
         colors=[
-            "orange",
-            # "grey",
-            "green",
             "red",
+            # "grey",
+            "orange",
+            "green",
         ],
         alpha=0.5,
     )
