@@ -28,8 +28,8 @@ CORR_NAMING_DICT = {
     "gasprice": "$Gas_t$",
     "etherprice": "$ETH_t$",
     "s&p": "$S&P_t$",
-    "leverage": "$Leverage_t$",
-    "multiplier": "$Multiplier_t$",
+    "leverage": "$Multiplier_t^{DeFi}$",
+    "multiplier": "$Multiplier_t^{TraFi}$",
 }
 
 # --------------------------------------------
