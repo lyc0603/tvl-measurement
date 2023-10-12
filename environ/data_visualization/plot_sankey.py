@@ -65,7 +65,7 @@ def plot_sankey(
     source_col: str = "source",
     target_col: str = "target",
     amount_col: str = "amount",
-    link_color_col: str = "token_color",
+    # link_color_col: str = "token_color",
 ) -> None:
     """
     Function to plot the sankey diagram
@@ -75,7 +75,7 @@ def plot_sankey(
     source_node = df_data[source_col].unique().tolist()
     target_node = df_data[target_col].unique().tolist()
     unique_lst = [f"{i}_S" for i in source_node] + [f"{i}_T" for i in target_node]
-    token_color_lst = df_data[link_color_col].values.tolist()
+    # token_color_lst = df_data[link_color_col].values.tolist()
     node_color_lst = [NODE_COLOR_DICT[i] for i in source_node] + [
         NODE_COLOR_DICT[i] for i in target_node
     ]
@@ -114,7 +114,7 @@ def plot_sankey(
                     source=source_lst,
                     target=target_lst,
                     value=amount_lst,
-                    color=token_color_lst,
+                    # color=token_color_lst,
                 ),
             )
         ]

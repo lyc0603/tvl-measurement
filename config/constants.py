@@ -341,6 +341,7 @@ MCD_SPOT_ADDRESS = "0x65C79fcB50Ca1594B025960e539eD7A9a6D434A3".lower()
 MKR_ADDRESS = "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2".lower()
 # Lido related addresses
 LDO_ADDRESS = "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84".lower()
+STETH_ADDRESS = "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84".lower()
 WSTETH_ADDRESS = "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0".lower()
 # --------------------------------------------
 # Burn addresses
