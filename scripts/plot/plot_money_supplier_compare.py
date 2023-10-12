@@ -32,14 +32,14 @@ df_agg = df_leverage_ratio.merge(
 
 PLOT_DICT = {
     "money_multiplier": {
-        "label": "Money Multiplier",
+        "label": "TraFi Money Multiplier",
         "color": "blue",
         "marker": "o",
         "markersize": 2,
         "linewidth": 1,
     },
     "leverage_ratio": {
-        "label": "Leverage Ratio",
+        "label": "DeFi Money Multiplier",
         "color": "red",
         "marker": "o",
         "markersize": 2,
