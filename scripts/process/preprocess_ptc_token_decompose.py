@@ -50,4 +50,7 @@ for ptc_slug, ptc_df in PTC_TOKEN_DECOMPO_STAKE_PLOT.items():
     # pivot the data
     df_token = df_token.pivot(index="date", columns="token", values="token_tvl_usd")
 
+    # rename the columns WETH as ETH/WETH
+    df_token = df_token.rename(columns={"WETH": "ETH/WETH"})
+
     PTC_TOKEN_DECOMPO_STAKE_PLOT[ptc_slug] = df_token
