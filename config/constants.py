@@ -3,8 +3,10 @@ Configuration for the project
 """
 
 from os import path
-from config.settings import PROJECT_ROOT
+
 import numpy as np
+
+from config.settings import PROJECT_ROOT
 
 # --------------------------------------------
 TOKEN_CATEGORY_SPECIAL_CASE = {
