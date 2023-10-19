@@ -8,6 +8,13 @@ import numpy as np
 
 from config.settings import PROJECT_ROOT
 
+
+# --------------------------------------------
+TVL_RELATED_NAMING_DICT = {
+    "tvl": "$TVL^{Adj}_t$",
+    "totalLiquidityUSD": "$TVL_t$",
+    "tvr": "$TVR_t$",
+}
 # --------------------------------------------
 TOKEN_CATEGORY_SPECIAL_CASE = {
     "WETH": {

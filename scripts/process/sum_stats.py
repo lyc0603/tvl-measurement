@@ -9,7 +9,7 @@ import pandas as pd
 from tqdm import tqdm
 from scripts.process.tvl_tvr import tvl_tvr_agg_total_df
 
-from config.constants import DATA_PATH
+from config.constants import DATA_PATH, TVL_RELATED_NAMING_DICT
 
 TIMESTAMP = 1688169600
 
@@ -46,7 +46,7 @@ describe_df = pd.concat(
         ptc_tvl_agg_df["$TVL_{i,t}$"].describe().to_frame().T,
         *[
             tvl_tvr_agg_total_df[key].describe().to_frame().T
-            for key in tvl_tvr_agg_total_df.keys()
+            for key in TVL_RELATED_NAMING_DICT.values()
         ],
     ]
 )
