@@ -7,6 +7,7 @@ from glob import glob
 
 import pandas as pd
 from tqdm import tqdm
+from scripts.process.tvl_tvr import tvl_tvr_agg_total_df
 
 from config.constants import DATA_PATH
 
@@ -34,24 +35,18 @@ ptc_tvl_agg_df = ptc_tvl_agg_df.loc[ptc_tvl_agg_df["totalLiquidityUSD"] > 0]
 ptc_tvl_agg_df["date"] = pd.to_datetime(ptc_tvl_agg_df["date"], unit="s")
 ptc_tvl_agg_df.sort_values(["protocol", "date"], inplace=True)
 ptc_tvl_agg_df["date"] = ptc_tvl_agg_df["date"].dt.strftime("%Y-%m-%d")
-ptc_tvl_agg_df.drop_duplicates(["protocol", "date"], keep="first", inplace=True)
-ptc_tvl_agg_df["totalLiquidityUSD"].describe().reset_index(name="totalLiquidityUSD")
+ptc_tvl_agg_df = ptc_tvl_agg_df.drop_duplicates(
+    ["protocol", "date"], keep="first"
+).rename(columns={"totalLiquidityUSD": "$TVL_{i,t}$"})
 
 describe_df = pd.DataFrame()
 describe_df = pd.concat(
     [
         describe_df,
-        ptc_tvl_agg_df["totalLiquidityUSD"].describe().to_frame().T,
-        ptc_tvl_agg_df.groupby(["date"])["totalLiquidityUSD"]
-        .sum()
-        .describe()
-        .to_frame()
-        .T,
-        ptc_tvl_agg_df.groupby(["protocol"])["totalLiquidityUSD"]
-        .mean()
-        .describe()
-        .to_frame()
-        .T,
+        ptc_tvl_agg_df["$TVL_{i,t}$"].describe().to_frame().T,
+        *[
+            tvl_tvr_agg_total_df[key].describe().to_frame().T
+            for key in tvl_tvr_agg_total_df.keys()
+        ],
     ]
 )
-describe_df.index = pd.Index(["$TVL_{i,t}$", "$TVL_{t}$", "$\\bar{TVL}_{i}$"])

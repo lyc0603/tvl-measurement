@@ -11,9 +11,9 @@ from config.constants import CHAIN_LIST, FIGURES_PATH
 from environ.data_processing.preprocess_tvl import preprocess_ptc_tvl
 
 PLOT_INFO_DICT = {
-    "tvl": {"label": "$TVL_{Adj}$", "color": "blue"},
-    "totalLiquidityUSD": {"label": "$TVL$", "color": "red"},
-    "tvr": {"label": "$TVR$", "color": "black"},
+    "tvl": {"label": "$TVL^{Adj}_{t}$", "color": "blue"},
+    "totalLiquidityUSD": {"label": "$TVL_t$", "color": "red"},
+    "tvr": {"label": "$TVR_t$", "color": "black"},
 }
 
 for chain in CHAIN_LIST:

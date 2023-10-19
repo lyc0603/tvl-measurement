@@ -2,8 +2,8 @@
 Script to tabulate the summary statistics
 """
 
-from environ.data_processing.sum_stats import describe_df
 from config.constants import TABLES_PATH
+from scripts.process.sum_stats import describe_df
 
 # convert the count column to int
 describe_df["count"] = describe_df["count"].apply(lambda x: f"{int(x):,}")
