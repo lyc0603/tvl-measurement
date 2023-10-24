@@ -4,7 +4,7 @@
 
 - [ ] i still think the sankey plot is interesting - especially given that we lack interesting / sophisticated visualization in the paper. but indeed, one sankey plot might be too week -- a couple of sankey plots from different, representative points in time would be more powerful. but if you can come up with better visualization, we can also deprecate the sankey plots
 
-- [ ] also, again in general many plots take too much space - giving reviewer the impression of low cost (as in space-taking)  benefit ratio. Reducing the plot size helps as well
+- [X] also, again in general many plots take too much space - giving reviewer the impression of low cost (as in space-taking)  benefit ratio. Reducing the plot size helps as well
 
 ## WINE
 

@@ -9,8 +9,7 @@ from config.constants import (
     PROCESSED_DATA_PATH,
 )
 from environ.data_fetching.fetch_llama_tvl import fetch_llama_total_tvl
-
-REMOVE_PROTOCOLS = ["binance-cex"]
+from scripts.process.remove_ptc import remove_ptc
 
 
 def preprocess_total_tvl(
@@ -22,7 +21,7 @@ def preprocess_total_tvl(
 
     # data loading and cleaning
     df_tvl_all = pd.read_csv(df_path)
-    df_tvl_all = df_tvl_all[~df_tvl_all["protocol"].isin(REMOVE_PROTOCOLS)]
+    df_tvl_all = df_tvl_all[~df_tvl_all["protocol"].isin(remove_ptc)]
     df_tvl_all["date"] = pd.to_datetime(df_tvl_all["date"])
     df_tvl_all = df_tvl_all.sort_values(by=["protocol", "date"], ascending=True)
     df_tvl_all["date"] = df_tvl_all["date"].dt.strftime("%Y-%m-%d")
@@ -32,6 +31,7 @@ def preprocess_total_tvl(
         (df_tvl_all["date"] >= BEGINNING_OF_SAMPLE_PERIOD)
         & (df_tvl_all["date"] <= END_OF_SAMPLE_PERIOD)
     ]
+
     return df_tvl_all.groupby(["date"]).sum().reset_index()
 
 

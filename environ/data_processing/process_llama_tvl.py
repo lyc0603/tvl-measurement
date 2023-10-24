@@ -15,7 +15,7 @@ from config.constants import (
 from scripts.process.process_token_lst import df_token_cate
 
 
-def  process_llama_tvls(
+def process_llama_tvls(
     llama_tvl_json: dict,
     slug: str,
     chain: str = "Total",
