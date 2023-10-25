@@ -34,6 +34,9 @@ for snapshot, date_dict in TVL_DECOMPOSE_SANKEY_DICT.items():
     # tight layout
     plt.tight_layout()
 
+    # enlarge the font size
+    plt.rcParams.update({"font.size": 14})
+
     # remove the frame
     plt.box(False)
 
