@@ -8,6 +8,9 @@ from matplotlib.sankey import Sankey
 from scripts.process.process_tvl_decompose_sankey import TVL_DECOMPOSE_SANKEY_DICT
 from config.constants import FIGURES_PATH
 
+# enlarge the font size
+plt.rcParams.update({"font.size": 13})
+
 for snapshot, date_dict in TVL_DECOMPOSE_SANKEY_DICT.items():
     fig = plt.figure(figsize=(10, 5))
     ax_df = fig.add_subplot(1, 1, 1, xticks=[], yticks=[])
@@ -33,9 +36,6 @@ for snapshot, date_dict in TVL_DECOMPOSE_SANKEY_DICT.items():
 
     # tight layout
     plt.tight_layout()
-
-    # enlarge the font size
-    plt.rcParams.update({"font.size": 14})
 
     # remove the frame
     plt.box(False)
