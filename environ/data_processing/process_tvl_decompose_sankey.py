@@ -6,8 +6,8 @@ import pandas as pd
 
 NAMING_DICT_PTC = {
     "curve-dex": "Curve",
-    "makerdao": "MakerDAO",
-    "convex-finance": "Convex",
+    "makerdao": "MakerDAO  ",
+    "convex-finance": "Convex  ",
     "aave-v2": "Aave V2",
     "lido": "Lido",
     "wbtc": "WBTC",
