@@ -16,7 +16,7 @@ NAMING_DICT_PTC = {
 
 NAMING_DICT_TOKEN = {
     "gov": "Governance Tokens",
-    "native": "Native Tokens",
+    "native": "      Native Tokens",
     "stable": "Non-crypto-backed Stablecoins",
 }
 
