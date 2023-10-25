@@ -4,7 +4,7 @@ Functions to process the data of TVL decomposition sankey plot
 
 import pandas as pd
 
-NAMING_DICT = {
+NAMING_DICT_PTC = {
     "curve-dex": "Curve",
     "makerdao": "MakerDAO",
     "convex-finance": "Convex",
@@ -12,6 +12,12 @@ NAMING_DICT = {
     "lido": "Lido",
     "wbtc": "WBTC",
     "Others": "Others",
+}
+
+NAMING_DICT_TOKEN = {
+    "gov": "Governance Tokens",
+    "native": "Native Tokens",
+    "stable": "Non-crypto-backed Stablecoins",
 }
 
 
@@ -64,9 +70,10 @@ def tvl_decompose_sankey_data(
     return {
         "flows": [[_ * 100 / total_tvl for _ in flows] for flows in flows_list],
         "labels": [
-            [NAMING_DICT[slug] for slug in tvl_plot_df["protocol"].to_list()]
+            [NAMING_DICT_PTC[slug] for slug in tvl_plot_df["protocol"].to_list()]
             + ["TVR", "Double Counting"],
-            ["TVR"] + tvr_plot_df.keys()[2:].to_list(),
+            ["TVR"]
+            + [NAMING_DICT_TOKEN[token] for token in tvr_plot_df.keys()[2:].to_list()],
         ],
-        "orientations": [[1, 1, -1, -1, 0, 0, -1], [0, 1, 1, -1]],
+        "orientations": [[1, 1, -1, -1, 0, 0, -1], [0, 1, 0, -1]],
     }
