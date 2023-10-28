@@ -10,8 +10,10 @@ from environ.data_fetching.token_price import get_eth_price
 from scripts.process.process_token_lst import df_token_cate
 
 df_makerdao_bal = pd.read_csv(f"{DATA_PATH}/tvl/bal_makerdao.csv")
+df_aave_v3_bal = pd.read_csv(f"{DATA_PATH}/tvl/bal_aave_v3.csv")
 
-lido_tvl_tvr = get_total_pooled_ether_lido() * get_eth_price()
+total_pool_ether = get_total_pooled_ether_lido()
+lido_tvl_tvr = total_pool_ether * get_eth_price()
 
 tvl_tvr_dict = {
     "tvl": {
@@ -19,6 +21,9 @@ tvl_tvr_dict = {
             df_makerdao_bal["entries"] == "Reserve Token", "dollar_amount"
         ].sum(),
         "Lido": lido_tvl_tvr,
+        "Aave V3": df_aave_v3_bal.loc[
+            df_aave_v3_bal["entries"] == "Reserve Token", "dollar_amount"
+        ].sum(),
     },
     "tvr": {
         "MakerDAO": df_makerdao_bal.loc[
@@ -26,6 +31,10 @@ tvl_tvr_dict = {
             "dollar_amount",
         ].sum(),
         "Lido": lido_tvl_tvr,
+        "Aave V3": df_aave_v3_bal.loc[
+            df_aave_v3_bal["token_symbols"].isin(df_token_cate["symbol"].unique()),
+            "dollar_amount",
+        ].sum(),
     },
 }
 

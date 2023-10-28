@@ -12,7 +12,7 @@ from scripts.process.process_risk_analysis import (
 )
 
 # set the figure size
-plt.figure(figsize=(5, 2))
+plt.figure(figsize=(5, 3))
 
 PLOT_DICT = {
     "tvl": {
@@ -76,10 +76,10 @@ plt.legend(loc="upper left")
 plt.grid(alpha=0.3)
 
 # x and y labels
-plt.xlabel("% of ETH price")
+plt.xlabel("ETH price")
 
 # set the y label
-plt.ylabel("% of TVL/TVR")
+plt.ylabel("TVL/TVR")
 
 # tight layout
 plt.tight_layout()

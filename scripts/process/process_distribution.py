@@ -9,7 +9,7 @@ from environ.data_fetching.lido_data_fetching import get_total_pooled_ether_lido
 from environ.data_fetching.token_price import get_eth_price
 from environ.data_processing.preprocess_tvl_tvr_pct_change import get_tvl_tvr_pct_change
 from scripts.process.process_sp import df_sp
-from scripts.process.preprocess_tvl_tvr_makerdao_lido import tvl_tvr_dict
+from scripts.process.preprocess_tvl_tvr_makerdao_lido_aave import tvl_tvr_dict
 
 results = {
     "idx": [],
