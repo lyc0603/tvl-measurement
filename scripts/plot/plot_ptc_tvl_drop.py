@@ -76,10 +76,10 @@ plt.legend(loc="upper left")
 plt.grid(alpha=0.3)
 
 # x and y labels
-plt.xlabel("ETH price")
+plt.xlabel("% of ETH price")
 
 # set the y label
-plt.ylabel("TVL/TVR")
+plt.ylabel("Change in TVL/TVR")
 
 # tight layout
 plt.tight_layout()
