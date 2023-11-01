@@ -10,10 +10,10 @@ from scripts.process.process_risk_analysis import (
 )
 
 VAR_NAMING_MAPPING = {
-    "TVL_Lido": "$TVL_{LIDO}$",
+    "TVL_Lido": "$N_{LIDO}$",
     "liqRatio": "$\\beta$",
     "LTV": "$\\alpha$",
-    "collat": "$N$",
+    "collat": "$Q^_{MAKER}$",
 }
 
 COLOR_LIST = ["red", "darkblue", "lightgreen"]
