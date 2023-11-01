@@ -93,7 +93,7 @@ for test_var, test_var_dict in risk_plot_dict.items():
     plt.ylabel("Change in TVL and TVR (USD)")
 
     # increase label and tick size
-    axes.xaxis.label.set_size(13)
+    axes.xaxis.label.set_size(12)
     axes.yaxis.label.set_size(18)
 
     # increase the font size
