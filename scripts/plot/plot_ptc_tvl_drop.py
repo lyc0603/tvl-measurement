@@ -21,45 +21,67 @@ COLOR_LIST = ["red", "darkblue", "green"]
 
 for test_var, test_var_dict in risk_plot_dict.items():
     # set the figure size
-    plt.figure(figsize=(6, 3))
+    fig, axes = plt.subplots(
+        figsize=(4, 6),
+    )
+
+    ls_list = []
+
     for color_idx, (test_var_value, df_plot) in enumerate(test_var_dict.items()):
         PLOT_DICT = {
             "tvl": {
                 "x": df_plot["eth_price"],
                 "y": df_plot["tvl"],
-                "label": str(test_var_value)
-                + str(VAR_NAMING_MAPPING[test_var])
-                + ", TVL"
+                "label": str(test_var_value) + str(VAR_NAMING_MAPPING[test_var])
                 if test_var_value != 1
-                else str(VAR_NAMING_MAPPING[test_var]) + ", TVL",
+                else str(VAR_NAMING_MAPPING[test_var]),
+                "ls": "TVL",
             },
             "tvr": {
                 "x": df_plot["eth_price"],
                 "y": df_plot["tvr"],
-                "label": str(test_var_value)
-                + str(VAR_NAMING_MAPPING[test_var])
-                + ", TVR"
+                "label": str(test_var_value) + str(VAR_NAMING_MAPPING[test_var])
                 if test_var_value != 1
-                else str(VAR_NAMING_MAPPING[test_var]) + ", TVR",
+                else str(VAR_NAMING_MAPPING[test_var]),
+                "ls": "TVR",
             },
         }
 
+        ls_list.append(PLOT_DICT["tvl"]["label"])
+
         # plot the results
         for var, var_info in PLOT_DICT.items():
-            plt.plot(
+            axes.plot(
                 var_info["x"],
                 var_info["y"],
-                label=var_info["label"],
+                # label=var_info["label"],
                 ls="dashed" if var == "tvr" else "-",
                 color=COLOR_LIST[color_idx],
             )
 
-    # show the legend with two columns and no box and large font
-    plt.legend(
-        ncol=3,
-        fontsize=8,
+    lines = axes.get_lines()
+    legend1 = plt.legend(
+        [
+            lines[i]
+            for i in [
+                0,
+                1,
+            ]
+        ],
+        ["TVL", "TVR"],
         frameon=False,
+        loc="upper right",
+        prop={"size": 12},
     )
+    legend2 = plt.legend(
+        [lines[i] for i in [0, 2, 4]],
+        ls_list,
+        frameon=False,
+        loc="lower left",
+        prop={"size": 12},
+    )
+    axes.add_artist(legend1)
+    axes.add_artist(legend2)
 
     # add the grid and increase the opacity and increase the intensity
     plt.grid(alpha=0.3)
@@ -69,6 +91,10 @@ for test_var, test_var_dict in risk_plot_dict.items():
 
     # set the y label
     plt.ylabel("Change in TVL and TVR (USD)")
+
+    # increase the font size
+    plt.xticks(fontsize=8)
+    plt.yticks(fontsize=8)
 
     # tight layout
     plt.tight_layout()
