@@ -12,7 +12,7 @@ from scripts.process.process_risk_analysis import (
 VAR_NAMING_MAPPING = {
     "TVL_Lido": "$N^{L}$",
     "liqRatio": "$\\beta$",
-    "LTV": "$\\alpha$",
+    "LTV": "$L$",
     "collat": "$Q^{M}$",
 }
 
@@ -71,14 +71,14 @@ for test_var, test_var_dict in risk_plot_dict.items():
         ["TVL", "TVR"],
         frameon=False,
         loc="upper right",
-        prop={"size": 12},
+        prop={"size": 18},
     )
     legend2 = plt.legend(
         [lines[i] for i in [0, 2, 4]],
         ls_list,
         frameon=False,
         loc="lower left",
-        prop={"size": 15},
+        prop={"size": 18},
     )
     axes.add_artist(legend1)
     axes.add_artist(legend2)
@@ -93,12 +93,12 @@ for test_var, test_var_dict in risk_plot_dict.items():
     plt.ylabel("Change in TVL and TVR (USD)")
 
     # increase label and tick size
-    axes.xaxis.label.set_size(12)
-    axes.yaxis.label.set_size(15)
+    axes.xaxis.label.set_size(18)
+    axes.yaxis.label.set_size(18)
 
     # increase the font size
-    plt.xticks(fontsize=12)
-    plt.yticks(fontsize=12)
+    plt.xticks(fontsize=16)
+    plt.yticks(fontsize=18)
 
     # tight layout
     plt.tight_layout()
