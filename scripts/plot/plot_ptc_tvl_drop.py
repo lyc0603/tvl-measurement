@@ -6,84 +6,68 @@ import matplotlib.pyplot as plt
 
 from config.constants import FIGURES_PATH
 from scripts.process.process_risk_analysis import (
-    df_plot,
-    eth_price_current,
-    eth_price_max,
+    risk_plot_dict,
 )
 
-# set the figure size
-plt.figure(figsize=(5, 3))
-
-PLOT_DICT = {
-    "tvl": {
-        "x": df_plot["eth_price"],
-        "y": df_plot["tvl"],
-        "label": "TVL",
-    },
-    "tvr": {
-        "x": df_plot["eth_price"],
-        "y": df_plot["tvr"],
-        "label": "TVR",
-    },
+VAR_NAMING_MAPPING = {
+    "TVL_Lido": "$TVL_{LIDO}$",
+    "liqRatio": "$\\beta$",
+    "LTV": "$\\alpha$",
+    "collat": "$N$",
 }
 
-# plot the results
-for var, var_info in PLOT_DICT.items():
-    plt.plot(
-        var_info["x"],
-        var_info["y"],
-        label=var_info["label"],
-    )
+COLOR_LIST = ["red", "darkblue", "lightgreen"]
 
 
-DASHED_LINE_DICT = {
-    "current_eth_price": {
-        "x": eth_price_current / eth_price_current,
-        "color": "black",
-        "linestyle": "dashed",
-        "linewidth": 1,
-        "alpha": 0.5,
-        "label": "Current ETH price",
-    },
-    "max_eth_price": {
-        "x": eth_price_max / eth_price_current,
-        "color": "red",
-        "linestyle": "dashed",
-        "linewidth": 1,
-        "alpha": 0.5,
-        "label": "Max ETH price",
-    },
-}
+for test_var, test_var_dict in risk_plot_dict.items():
+    # set the figure size
+    plt.figure(figsize=(4, 4))
+    for color_idx, (test_var_value, df_plot) in enumerate(test_var_dict.items()):
+        PLOT_DICT = {
+            "tvl": {
+                "x": df_plot["eth_price"],
+                "y": df_plot["tvl"],
+                "label": str(test_var_value)
+                + str(VAR_NAMING_MAPPING[test_var])
+                + ", TVL"
+                if test_var_value != 1
+                else str(VAR_NAMING_MAPPING[test_var]) + ", TVL",
+            },
+            "tvr": {
+                "x": df_plot["eth_price"],
+                "y": df_plot["tvr"],
+                "label": str(test_var_value)
+                + str(VAR_NAMING_MAPPING[test_var])
+                + ", TVR"
+                if test_var_value != 1
+                else str(VAR_NAMING_MAPPING[test_var]) + ", TVR",
+            },
+        }
 
-# plot a verticle dashed line at the current ether price
-for _, dashed_line_info in DASHED_LINE_DICT.items():
-    plt.axvline(
-        x=dashed_line_info["x"],
-        color=dashed_line_info["color"],
-        linestyle=dashed_line_info["linestyle"],
-        linewidth=dashed_line_info["linewidth"],
-        alpha=dashed_line_info["alpha"],
-        label=dashed_line_info["label"],
-    )
+        # plot the results
+        for var, var_info in PLOT_DICT.items():
+            plt.plot(
+                var_info["x"],
+                var_info["y"],
+                label=var_info["label"],
+                ls="dashed" if var == "tvr" else "-",
+                color=COLOR_LIST[color_idx],
+            )
 
-# lower legend font size
-plt.rcParams["legend.fontsize"] = 6
+    # show the legend with two columns and no box
+    plt.legend(ncol=2, frameon=False, prop={"size": 6})
 
-# show the legend on the upper left corner
-plt.legend(loc="upper left")
+    # add the grid and increase the opacity and increase the intensity
+    plt.grid(alpha=0.3)
 
-# add the grid and increase the opacity and increase the intensity
-plt.grid(alpha=0.3)
+    # x and y labels
+    plt.xlabel("ETH Price Decline in Percentage")
 
-# x and y labels
-plt.xlabel("% of ETH price")
+    # set the y label
+    plt.ylabel("Change in TVL and TVR (USD)")
 
-# set the y label
-plt.ylabel("Change in TVL/TVR")
+    # tight layout
+    plt.tight_layout()
 
-# tight layout
-plt.tight_layout()
-
-plt.savefig(f"{FIGURES_PATH}/protocol_tvl_drop.pdf", dpi=300)
-
-plt.show()
+    plt.savefig(f"{FIGURES_PATH}/sensitivity_{test_var}.pdf", dpi=300)
+    plt.show()
