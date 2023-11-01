@@ -10,7 +10,7 @@ from scripts.process.process_risk_analysis import (
 )
 
 VAR_NAMING_MAPPING = {
-    "TVL_Lido": "$N^{L}$",
+    "TVL_Lido": "$Q^{L}$",
     "liqRatio": "$\\beta$",
     "LTV": "$L$",
     "collat": "$N^{M}$",
