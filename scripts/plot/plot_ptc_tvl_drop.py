@@ -10,10 +10,10 @@ from scripts.process.process_risk_analysis import (
 )
 
 VAR_NAMING_MAPPING = {
-    "TVL_Lido": "$N_{LIDO}$",
+    "TVL_Lido": "$N^{L}$",
     "liqRatio": "$\\beta$",
     "LTV": "$\\alpha$",
-    "collat": "$Q^_{MAKER}$",
+    "collat": "$Q^{M}$",
 }
 
 COLOR_LIST = ["red", "darkblue", "lightgreen"]
@@ -55,7 +55,7 @@ for test_var, test_var_dict in risk_plot_dict.items():
             )
 
     # show the legend with two columns and no box
-    plt.legend(ncol=2, frameon=False, prop={"size": 6})
+    plt.legend(ncol=2, frameon=False)
 
     # add the grid and increase the opacity and increase the intensity
     plt.grid(alpha=0.3)
