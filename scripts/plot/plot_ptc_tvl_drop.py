@@ -13,7 +13,7 @@ VAR_NAMING_MAPPING = {
     "TVL_Lido": "$N^{L}$",
     "liqRatio": "$\\beta$",
     "LTV": "$L$",
-    "collat": "$Q^{M}$",
+    "collat": "$N^{M}$",
 }
 
 COLOR_LIST = ["red", "darkblue", "green"]
@@ -22,7 +22,7 @@ COLOR_LIST = ["red", "darkblue", "green"]
 for test_var, test_var_dict in risk_plot_dict.items():
     # set the figure size
     fig, axes = plt.subplots(
-        figsize=(4, 6),
+        figsize=(6, 6),
     )
 
     ls_list = []
