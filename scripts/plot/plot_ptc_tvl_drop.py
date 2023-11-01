@@ -21,7 +21,7 @@ COLOR_LIST = ["red", "darkblue", "lightgreen"]
 
 for test_var, test_var_dict in risk_plot_dict.items():
     # set the figure size
-    plt.figure(figsize=(4, 4))
+    plt.figure(figsize=(8, 5))
     for color_idx, (test_var_value, df_plot) in enumerate(test_var_dict.items()):
         PLOT_DICT = {
             "tvl": {
@@ -54,8 +54,13 @@ for test_var, test_var_dict in risk_plot_dict.items():
                 color=COLOR_LIST[color_idx],
             )
 
-    # show the legend with two columns and no box
-    plt.legend(ncol=2, frameon=False)
+    # show the legend with two columns and no box and large font
+    plt.legend(
+        ncol=3,
+        fontsize=8,
+        frameon=False,
+        prop={"size": 10},
+    )
 
     # add the grid and increase the opacity and increase the intensity
     plt.grid(alpha=0.3)
