@@ -78,7 +78,7 @@ for test_var, test_var_dict in risk_plot_dict.items():
         ls_list,
         frameon=False,
         loc="lower left",
-        prop={"size": 12},
+        prop={"size": 15},
     )
     axes.add_artist(legend1)
     axes.add_artist(legend2)
@@ -92,12 +92,16 @@ for test_var, test_var_dict in risk_plot_dict.items():
     # set the y label
     plt.ylabel("Change in TVL and TVR (USD)")
 
+    # increase label and tick size
+    axes.xaxis.label.set_size(12)
+    axes.yaxis.label.set_size(15)
+
     # increase the font size
-    plt.xticks(fontsize=8)
-    plt.yticks(fontsize=8)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
 
     # tight layout
     plt.tight_layout()
 
-    plt.savefig(f"{FIGURES_PATH}/sensitivity_{test_var}.pdf", dpi=300)
+    plt.savefig(f"{FIGURES_PATH}/sensitivity_{test_var}.pdf", dpi=2000)
     plt.show()
