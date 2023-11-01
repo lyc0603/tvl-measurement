@@ -16,12 +16,12 @@ VAR_NAMING_MAPPING = {
     "collat": "$Q^{M}$",
 }
 
-COLOR_LIST = ["red", "darkblue", "lightgreen"]
+COLOR_LIST = ["red", "darkblue", "green"]
 
 
 for test_var, test_var_dict in risk_plot_dict.items():
     # set the figure size
-    plt.figure(figsize=(8, 5))
+    plt.figure(figsize=(6, 3))
     for color_idx, (test_var_value, df_plot) in enumerate(test_var_dict.items()):
         PLOT_DICT = {
             "tvl": {
@@ -59,7 +59,6 @@ for test_var, test_var_dict in risk_plot_dict.items():
         ncol=3,
         fontsize=8,
         frameon=False,
-        prop={"size": 10},
     )
 
     # add the grid and increase the opacity and increase the intensity
