@@ -88,7 +88,7 @@ for test_var, test_var_dict in risk_plot_dict.items():
     plt.xlabel(r"ETH Price Decline in Percentage, $d$", loc="left")
 
     # set the y label
-    plt.ylabel(r"Change in TVL and TVR (USD), $\Delta_{TVL}$, $\Delta_{TVR}$")
+    plt.ylabel(r"Change in TVL $\Delta_{TVL}$ and TVR $\Delta_{TVR}$ (USD)")
 
     # increase label and tick size
     axes.xaxis.label.set_size(16)
