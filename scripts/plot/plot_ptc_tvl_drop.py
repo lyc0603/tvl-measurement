@@ -3,7 +3,6 @@ Script to plot the sensitivity test results of protocol
 """
 
 import matplotlib.pyplot as plt
-import matplotlib.ticker as mticker
 
 from config.constants import FIGURES_PATH
 from scripts.process.process_risk_analysis import risk_plot_dict
@@ -86,17 +85,20 @@ for test_var, test_var_dict in risk_plot_dict.items():
     plt.grid(alpha=0.3)
 
     # x and y labels
-    plt.xlabel("ETH Price Decline in Percentage")
+    plt.xlabel(r"ETH Price Decline in Percentage, $d$", loc="left")
 
     # set the y label
-    plt.ylabel("Change in TVL and TVR (USD)")
+    plt.ylabel(r"Change in TVL and TVR (USD), $\Delta_{TVL}$, $\Delta_{TVR}$")
 
     # increase label and tick size
-    axes.xaxis.label.set_size(12)
+    axes.xaxis.label.set_size(16)
     axes.yaxis.label.set_size(18)
 
+    # set the x axis range
+    axes.xaxis.set_label_coords(-0.5, -0.08)
+
     # increase the font size
-    plt.xticks(fontsize=14)
+    plt.xticks(fontsize=16)
     plt.yticks(fontsize=18)
 
     # tight layout
