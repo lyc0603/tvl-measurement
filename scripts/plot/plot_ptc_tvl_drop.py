@@ -3,17 +3,16 @@ Script to plot the sensitivity test results of protocol
 """
 
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 
 from config.constants import FIGURES_PATH
-from scripts.process.process_risk_analysis import (
-    risk_plot_dict,
-)
+from scripts.process.process_risk_analysis import risk_plot_dict
 
 VAR_NAMING_MAPPING = {
-    "TVL_Lido": "$Q^{L}$",
+    "TVL_Lido": "$q^{L}$",
     "liqRatio": "$\\beta$",
     "LTV": "$L$",
-    "collat": "$N^{M}$",
+    "collat": "$q^{M}$",
 }
 
 COLOR_LIST = ["red", "darkblue", "green"]
@@ -22,7 +21,7 @@ COLOR_LIST = ["red", "darkblue", "green"]
 for test_var, test_var_dict in risk_plot_dict.items():
     # set the figure size
     fig, axes = plt.subplots(
-        figsize=(6, 6),
+        figsize=(4, 6),
     )
 
     ls_list = []
@@ -73,13 +72,6 @@ for test_var, test_var_dict in risk_plot_dict.items():
         loc="upper right",
         prop={"size": 18},
     )
-
-    # Set the legend text and line color to black
-    for text in legend1.get_texts():
-        text.set_color("black")
-    for line in legend1.get_lines():
-        line.set_color("black")
-
     legend2 = plt.legend(
         [lines[i] for i in [0, 2, 4]],
         ls_list,
@@ -109,6 +101,10 @@ for test_var, test_var_dict in risk_plot_dict.items():
 
     # tight layout
     plt.tight_layout()
+
+    plt.gca().yaxis.set_major_formatter(
+        plt.FuncFormatter(lambda x, loc: "{:.1f}B".format(x / 1e9))
+    )
 
     plt.savefig(f"{FIGURES_PATH}/sensitivity_{test_var}.pdf", dpi=2000)
     plt.show()
