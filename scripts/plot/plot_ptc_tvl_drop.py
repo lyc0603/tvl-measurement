@@ -73,6 +73,13 @@ for test_var, test_var_dict in risk_plot_dict.items():
         loc="upper right",
         prop={"size": 18},
     )
+
+    # Set the legend text and line color to black
+    for text in legend1.get_texts():
+        text.set_color("black")
+    for line in legend1.get_lines():
+        line.set_color("black")
+
     legend2 = plt.legend(
         [lines[i] for i in [0, 2, 4]],
         ls_list,
