@@ -20,7 +20,7 @@ TEST_PARAMS = {
     "TVL_Lido": [1, 0.75, 0.5],
     "liqRatio": [1, 4, 0.25],
     "LTV": [1, 0.5, 1.5],
-    "collat": [0.8, 1, 1.2],
+    "collat": [1, 0.8, 1.2],
 }
 
 risk_plot_dict = {}
