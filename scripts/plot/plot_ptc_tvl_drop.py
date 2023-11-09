@@ -101,6 +101,10 @@ for test_var, test_var_dict in risk_plot_dict.items():
     plt.xticks(fontsize=16)
     plt.yticks(fontsize=18)
 
+    # set the color of legend 1 line to black
+    legend1.get_lines()[0].set_color("black")
+    legend1.get_lines()[1].set_color("black")
+
     # tight layout
     plt.tight_layout()
 
