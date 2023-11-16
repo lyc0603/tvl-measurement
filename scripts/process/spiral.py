@@ -145,7 +145,7 @@ def process_mint_event(event: dict) -> SpiralEvent:
         event=event["event"],
         log_index=event["logIndex"],
         address=event["address"],
-        mint_amount=int(event["args"]["value"]) / 1e18,
+        mint_amount=int(event["args"]["mintAmount"]) / 1e18,
     )
 
 
@@ -158,7 +158,7 @@ def process_borrow_event(event: dict) -> SpiralEvent:
         event=event["event"],
         log_index=event["logIndex"],
         address=event["address"],
-        borrow_amount=int(event["args"]["amount"]) / 1e18,
+        borrow_amount=int(event["args"]["borrowAmount"]) / 1e18,
     )
 
 
