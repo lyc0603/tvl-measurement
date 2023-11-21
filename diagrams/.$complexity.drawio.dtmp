@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-11-21T22:07:29.590Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="5UMpeKzuhqLF3VhotgC_" version="22.0.3" type="device">
+<mxfile host="Electron" modified="2023-11-21T22:10:35.818Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="uivkNm7AkjqoQYDcVgfU" version="22.0.3" type="device">
   <diagram id="ooE3Xo_wV-slX8WCPOP6" name="Page-4">
     <mxGraphModel dx="1345" dy="362" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="400" pageHeight="400" math="0" shadow="0">
       <root>
@@ -494,7 +494,7 @@
         <mxCell id="hHPE4022j6eGi9Bg3FWy-453" value="Stake&lt;br&gt;DAI" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=7;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="-753" y="204.5" width="26" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="hHPE4022j6eGi9Bg3FWy-454" value="Lido assign 32 ETH&lt;br&gt;to Lido Validator" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=7;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="hHPE4022j6eGi9Bg3FWy-454" value="Lido assigns 32 ETH&lt;br&gt;to Lido Validator" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=7;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="-553.5" y="98" width="67" height="17" as="geometry" />
         </mxCell>
         <mxCell id="hHPE4022j6eGi9Bg3FWy-456" value="Swap ETH&lt;br&gt;for DAI" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=7;fontStyle=1" vertex="1" parent="1">
