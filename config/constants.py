@@ -8,6 +8,24 @@ import numpy as np
 
 from config.settings import PROJECT_ROOT
 
+LOG_FORMAT = "%(asctime)-15s - %(levelname)s - %(message)s"
+
+DEFAULT_BLOCK_FIELDS = [
+    "number",
+    "hash",
+    "gasUsed",
+    "gasLimit",
+    "miner",
+    "timestamp",
+    "sha3Uncles",
+    "difficulty",
+    "totalDifficulty",
+    "size",
+    "extraData",
+    "receiptsRoot",
+    "stateRoot",
+    "transactions_count",
+]
 
 # --------------------------------------------
 TVL_RELATED_NAMING_DICT = {
