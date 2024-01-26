@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-11-22T12:24:50.248Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="aFkNYJB9MixgzwP3C8qA" version="22.1.2" type="device">
+<mxfile host="Electron" modified="2024-01-26T14:01:09.665Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.16 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="U2_9PBvBAIyMn8zx6WB4" version="22.1.16" type="device">
   <diagram id="GUxEJdWFkQ5Y1Z3yI3_n" name="dex_agg_chain">
-    <mxGraphModel dx="734" dy="301" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="280" pageHeight="150" math="1" shadow="0">
+    <mxGraphModel dx="825" dy="362" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="280" pageHeight="150" math="1" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -71,7 +71,7 @@
         <mxCell id="2xkSNjswD9UhOEGoZIQ9-10" value="&lt;p style=&quot;line-height: 270%;&quot;&gt;4&lt;/p&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=7;labelBackgroundColor=none;fontColor=#FFFFFF;fillColor=#000000;align=center;" parent="1" vertex="1">
           <mxGeometry x="-220" y="100" width="10" height="10" as="geometry" />
         </mxCell>
-        <mxCell id="pSTLvtJ6N-k_h_3kzANq-1" value="&lt;b style=&quot;font-size: 10px;&quot;&gt;ETH&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelBackgroundColor=none;labelBorderColor=none;fillColor=#eeeeee;strokeColor=#36393d;fontSize=10;fontFamily=Times New Roman;" parent="1" vertex="1">
+        <mxCell id="pSTLvtJ6N-k_h_3kzANq-1" value="&lt;b style=&quot;font-size: 10px;&quot;&gt;wstETH&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;labelBackgroundColor=none;labelBorderColor=none;fillColor=#eeeeee;strokeColor=#36393d;fontSize=10;fontFamily=Times New Roman;" parent="1" vertex="1">
           <mxGeometry x="-190" y="110" width="40" height="40" as="geometry" />
         </mxCell>
         <mxCell id="KAM6tXVUPyQemzaOSMBD-3" value="Uniswap&lt;br&gt;Pool" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=7.5;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontStyle=0" parent="1" vertex="1">
