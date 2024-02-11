@@ -4,7 +4,7 @@ Script to process the data of TVL decomposition sankey plot
 
 import pandas as pd
 
-from config.constants import END_OF_SAMPLE_PERIOD, PROCESSED_DATA_PATH
+from config.constants import PROCESSED_DATA_PATH, SAMPLE_DATA_DICT
 from environ.data_processing.process_tvl_decompose_sankey import (
     tvl_decompose_sankey_data,
 )
@@ -28,15 +28,11 @@ tvl_max_date = tvl_agg_df.loc[
     tvl_agg_df["totalLiquidityUSD"] == tvl_agg_df["totalLiquidityUSD"].max(), "date"
 ].values[0]
 
-TVL_DECOMPOSE_SANKEY_DICT = {
-    "max_date": tvl_decompose_sankey_data(
+TVL_DECOMPOSE_SANKEY_DICT = {}
+
+for event, date in SAMPLE_DATA_DICT.items():
+    TVL_DECOMPOSE_SANKEY_DICT[event] = tvl_decompose_sankey_data(
         tvl_total_df=tvl_total_df,
         tvr_total_df=tvr_total_df,
-        date=tvl_max_date,
-    ),
-    "end_date": tvl_decompose_sankey_data(
-        tvl_total_df=tvl_total_df,
-        tvr_total_df=tvr_total_df,
-        date=END_OF_SAMPLE_PERIOD + " " + "00:00:00",
-    ),
-}
+        date=date + " 00:00:00",
+    )

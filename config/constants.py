@@ -92,15 +92,15 @@ END_OF_SAMPLE_PERIOD = "2023-07-01"
 BEGINNING_OF_SAMPLE_PERIOD = "2019-06-01"
 CHAIN_LIST = [
     "Total",
-    "Ethereum",
-    "Tron",
-    "Binance",
-    "Arbitrum",
-    "Polygon",
-    "Optimism",
-    "Avalanche",
-    "Mixin",
-    "Solana",
+    # "Ethereum",
+    # "Tron",
+    # "Binance",
+    # "Arbitrum",
+    # "Polygon",
+    # "Optimism",
+    # "Avalanche",
+    # "Mixin",
+    # "Solana",
 ]
 PTC_LIST = ["lido", "aave-v2", "makerdao"]
 # --------------------------------------------
@@ -259,7 +259,9 @@ query ($id_gt: ID!){
 """,
 }
 
-BALANCER_POOLS_QUERY = UNISWAP_POOLS_QUERY = """
+BALANCER_POOLS_QUERY = (
+    UNISWAP_POOLS_QUERY
+) = """
 {
   liquidityPools(orderBy:totalValueLockedUSD,orderDirection:desc){
     id
@@ -636,3 +638,11 @@ NON_CRYPTO_BACKING_STABLECOINS = [
         "Category": "Algorithmic",
     },
 ]
+
+# sample date
+SAMPLE_DATA_DICT = {
+    "max_tvl": "2021-12-02",
+    "luna_collapse": "2022-05-09",
+    "ftx_collapse": "2022-11-08",
+    # "current_date": "2023-07-01",
+}

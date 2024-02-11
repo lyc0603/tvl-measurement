@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.sankey import Sankey
 
 from scripts.process.process_tvl_decompose_sankey import TVL_DECOMPOSE_SANKEY_DICT
-from config.constants import FIGURES_PATH
+from config.constants import FIGURES_PATH, SAMPLE_DATA_DICT
 
 # enlarge the font size
 plt.rcParams.update({"font.size": 13})

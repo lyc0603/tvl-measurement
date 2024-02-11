@@ -2,28 +2,31 @@
 Script to plot the total TVL, total TVL without double counting, and TVR of the protocol
 """
 
-
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import pandas as pd
 
-from config.constants import CHAIN_LIST, FIGURES_PATH
+from config.constants import CHAIN_LIST, FIGURES_PATH, SAMPLE_DATA_DICT
 from environ.data_processing.preprocess_tvl import preprocess_ptc_tvl
 
+fig, axes = plt.subplots(
+    figsize=(5, 2),
+)
+
 PLOT_INFO_DICT = {
-    "tvl": {"label": "$TVL^{Adj}_{t}$", "color": "blue"},
     "totalLiquidityUSD": {"label": "$TVL_t$", "color": "red"},
+    "tvl": {"label": "$TVL^{Adj}_{t}$", "color": "blue"},
     "tvr": {"label": "$TVR_t$", "color": "black"},
 }
 
-for chain in CHAIN_LIST:
-    if chain == "Total":
-        # set the figure size
-        plt.figure(figsize=(5, 2))
-    else:
-        # set the figure size
-        plt.figure(figsize=(2.5, 2))
+EVENT_INFO_DICT = {
+    "max_tvl": {"label": "Max TVL", "ls": "dashdot"},
+    "luna_collapse": {"label": "Luna Collapse", "ls": "dashed"},
+    "ftx_collapse": {"label": "FTX Collapse", "ls": "dotted"},
+}
 
+for chain in CHAIN_LIST:
     # load the total tvl data
     df_agg = preprocess_ptc_tvl(
         chain=chain,
@@ -46,16 +49,54 @@ for chain in CHAIN_LIST:
 
     # plot the tvl with DC, tvl, and tvr
     for col, info in PLOT_INFO_DICT.items():
-        plt.plot(
+        axes.plot(
             df_agg["date"],
             df_agg[col],
-            label=info["label"],
+            # label=info["label"],
             color=info["color"],
             linewidth=1,
         )
 
-    # show the legend on the upper left corner
-    plt.legend(loc="upper left")
+    for event, date in SAMPLE_DATA_DICT.items():
+        axes.axvline(
+            pd.to_datetime(date),
+            color="black",
+            linewidth=1,
+            # label=EVENT_INFO_DICT[event]["label"],
+            ls=EVENT_INFO_DICT[event]["ls"],
+        )
+
+    lines = axes.get_lines()
+    legend1 = plt.legend(
+        [
+            lines[i]
+            for i in [
+                0,
+                1,
+                2,
+            ]
+        ],
+        [info["label"] for _, info in PLOT_INFO_DICT.items()],
+        frameon=False,
+        loc="upper right",
+        prop={"size": 6},
+        title="Metrics",
+        title_fontsize="7",
+    )
+    legend2 = plt.legend(
+        [lines[i] for i in [3, 4, 5]],
+        [info["label"] for _, info in EVENT_INFO_DICT.items()],
+        frameon=False,
+        loc="lower left",
+        prop={"size": 6},
+        title="Events",
+        title_fontsize="7",
+    )
+    axes.add_artist(legend1)
+    axes.add_artist(legend2)
+
+    # # show the legend on the upper left corner
+    # plt.legend(loc="upper left")
 
     # add the grid and increase the opacity and increase the intensity
     plt.grid(alpha=0.3)

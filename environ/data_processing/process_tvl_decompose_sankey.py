@@ -11,6 +11,7 @@ NAMING_DICT_PTC = {
     "aave-v2": "Aave V2",
     "lido": "Lido",
     "wbtc": "WBTC",
+    "anchor": "Anchor     ",
     "Others": "Others",
 }
 
