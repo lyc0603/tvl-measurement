@@ -8,7 +8,13 @@ import pandas as pd
 
 from scripts.process.process_money_multiplier import money_multiplier_dict
 from scripts.process.process_leverage_ratio import leverage_ratio_dict
-from config.constants import FIGURES_PATH
+from config.constants import FIGURES_PATH, SAMPLE_DATA_DICT
+
+EVENT_INFO_DICT = {
+    "max_tvl": {"label": "Max TVL", "ls": "dashdot"},
+    "luna_collapse": {"label": "Luna Collapse", "ls": "dashed"},
+    "ftx_collapse": {"label": "FTX Collapse", "ls": "dotted"},
+}
 
 # set the figure size
 plt.figure(figsize=(5, 2))
@@ -31,13 +37,13 @@ df_agg = df_leverage_ratio.merge(
 )
 
 PLOT_DICT = {
-    "money_multiplier": {
-        "label": "TraFi Money Multiplier",
-        "color": "blue",
-        "marker": "o",
-        "markersize": 2,
-        "linewidth": 1,
-    },
+    # "money_multiplier": {
+    #     "label": "TraFi Money Multiplier",
+    #     "color": "blue",
+    #     "marker": "o",
+    #     "markersize": 2,
+    #     "linewidth": 1,
+    # },
     "leverage_ratio": {
         "label": "DeFi Money Multiplier",
         "color": "red",
@@ -58,9 +64,17 @@ for var, var_plot_info in PLOT_DICT.items():
         linewidth=var_plot_info["linewidth"],
     )
 
+for event, date in SAMPLE_DATA_DICT.items():
+    plt.axvline(
+        pd.to_datetime(date),
+        color="black",
+        linewidth=1,
+        label=EVENT_INFO_DICT[event]["label"],
+        ls=EVENT_INFO_DICT[event]["ls"],
+    )
 
 # show the legend on the upper right corner
-plt.legend(loc="upper right")
+plt.legend(prop={"size": 6})
 
 # add the grid and increase the opacity and increase the intensity
 plt.grid(alpha=0.3)
