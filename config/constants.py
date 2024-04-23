@@ -52,11 +52,11 @@ CORR_NAMING_DICT = {
     "CPI": "$CPI_t$",
     "FFER": "$FFER_t$",
     "VIX": "$VIX_t$",
+    "multiplier": "$M_t^{TradFi}$",
     "gasprice": "$Gas_t$",
     "etherprice": "$ETH_t$",
-    "s&p": "$S&P_t$",
-    "leverage": "$Multiplier_t^{DeFi}$",
-    "multiplier": "$Multiplier_t^{TradFi}$",
+    "s&p": "$S\&P_t$",
+    "leverage": "$M_t^{DeFi}$",
 }
 
 # --------------------------------------------

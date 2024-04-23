@@ -37,3 +37,6 @@ df_corr = df_corr.rename(columns=CORR_NAMING_DICT)
 
 # convert the data to float
 df_corr = df_corr.astype(float)
+
+# change the order of the columns
+df_corr = df_corr[CORR_NAMING_DICT.values()]

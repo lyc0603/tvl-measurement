@@ -5,21 +5,40 @@ Function to plot the decomposition of the tvl time series
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import pandas as pd
+
 
 from config.constants import (
     CHAIN_LIST,
-    PROCESSED_DATA_PATH,
     FIGURES_PATH,
+    PROCESSED_DATA_PATH,
+    SAMPLE_DATA_DICT,
 )
 from environ.data_processing.preprocess_tvl import preprocess_total_tvl
+
+EVENT_INFO_DICT = {
+    "max_tvl": {"label": "Max TVL", "ls": "dashdot"},
+    "luna_collapse": {"label": "Luna Collapse", "ls": "dashed"},
+    "ftx_collapse": {"label": "FTX Collapse", "ls": "dotted"},
+}
+
+PLOT_INFO_DICT = {
+    "stable": {"label": "Non-crypto-backed Stablecoins", "color": "red"},
+    "gov": {"label": "Governance Tokens", "color": "orange"},
+    "native": {"label": "Native Tokens", "color": "green"},
+}
 
 for chain in CHAIN_LIST:
     if chain == "Total":
         # set the figure size
-        plt.figure(figsize=(5, 2))
+        fig, axes = plt.subplots(
+            figsize=(5, 2),
+        )
     else:
         # set the figure size
-        plt.figure(figsize=(2.5, 2))
+        fig, axes = plt.subplots(
+            figsize=(5, 2),
+        )
 
     # load the total tvr data
     df_tvr_all = preprocess_total_tvl(
@@ -33,18 +52,18 @@ for chain in CHAIN_LIST:
         df_tvr_all[col] = df_tvr_all[col] / df_tvr_all["tvr"]
 
     # plot the staked tvl
-    plt.stackplot(
+    axes.stackplot(
         df_tvr_all["date"],
         df_tvr_all["stable"],
         # df_tvr_all["wrap"],
         df_tvr_all["gov"],
         df_tvr_all["native"],
-        labels=[
-            "Non-crypto-backed Stablecoins",
-            # "Wrapped Tokens",
-            "Governance Tokens",
-            "Native Tokens",
-        ],
+        # labels=[
+        #     "Non-crypto-backed Stablecoins",
+        #     # "Wrapped Tokens",
+        #     "Governance Tokens",
+        #     "Native Tokens",
+        # ],
         colors=[
             "red",
             # "grey",
@@ -54,11 +73,49 @@ for chain in CHAIN_LIST:
         alpha=0.5,
     )
 
-    # show the legend on the upper left corner
-    plt.legend(loc="upper left")
+    for event, date in SAMPLE_DATA_DICT.items():
+        axes.axvline(
+            pd.to_datetime(date),
+            color="black",
+            linewidth=1,
+            # label=EVENT_INFO_DICT[event]["label"],
+            ls=EVENT_INFO_DICT[event]["ls"],
+        )
 
-    # change the font size of the legend
-    plt.legend(prop={"size": 15})
+    # # show the legend on the upper left corner
+    # plt.legend(loc="upper left")
+
+    # # change the font size of the legend
+    # plt.legend(prop={"size": 15})
+
+    lines = axes.get_lines()
+    legend1 = plt.legend(
+        [
+            lines[i]
+            for i in [
+                0,
+                1,
+                2,
+            ]
+        ],
+        [info["label"] for _, info in PLOT_INFO_DICT.items()],
+        frameon=False,
+        loc="upper right",
+        prop={"size": 6},
+        title="Metrics",
+        title_fontsize="7",
+    )
+    legend2 = plt.legend(
+        [lines[i] for i in [3, 4, 5]],
+        [info["label"] for _, info in EVENT_INFO_DICT.items()],
+        frameon=False,
+        loc="lower left",
+        prop={"size": 6},
+        title="Events",
+        title_fontsize="7",
+    )
+    axes.add_artist(legend1)
+    axes.add_artist(legend2)
 
     # add the grid and increase the opacity and increase the intensity
     plt.grid(alpha=0.3)
