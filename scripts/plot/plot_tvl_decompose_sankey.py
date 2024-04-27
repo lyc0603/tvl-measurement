@@ -9,7 +9,7 @@ from scripts.process.process_tvl_decompose_sankey import TVL_DECOMPOSE_SANKEY_DI
 from config.constants import FIGURES_PATH, SAMPLE_DATA_DICT
 
 # enlarge the font size
-plt.rcParams.update({"font.size": 13})
+plt.rcParams.update({"font.size": 16})
 
 for snapshot, date_dict in TVL_DECOMPOSE_SANKEY_DICT.items():
     fig = plt.figure(figsize=(10, 5))
@@ -33,6 +33,10 @@ for snapshot, date_dict in TVL_DECOMPOSE_SANKEY_DICT.items():
         connect=(5, 0),
     )
     diagrams = sankey.finish()
+
+    diagrams[0].texts[1].set_position(xy=[-1, 0.95])
+    diagrams[0].texts[2].set_position(xy=[-1, -0.95])
+    # diagrams[1].texts[2].set_position(xy=[2.3, 0.3355696919097503])
 
     # tight layout
     plt.tight_layout()
