@@ -1,14 +1,14 @@
-<mxfile host="Electron" modified="2024-04-29T07:34:06.904Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="V-1Pv7cs8e1VXIAfZgHB" version="23.0.2" type="device">
+<mxfile host="Electron" modified="2024-04-30T14:43:57.073Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="bc13j2s73Rhj7KM-5V_z" version="23.0.2" type="device">
   <diagram id="GUxEJdWFkQ5Y1Z3yI3_n" name="dex_agg_chain">
-    <mxGraphModel dx="582" dy="295" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="100" pageHeight="150" math="1" shadow="0">
+    <mxGraphModel dx="758" dy="501" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="100" pageHeight="150" math="1" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="2pf4LdB47JyuiCXh3u_--2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=none;" parent="1" vertex="1">
-          <mxGeometry x="-100" y="76" width="200" height="74" as="geometry" />
+          <mxGeometry x="-100" y="80" width="200" height="70" as="geometry" />
         </mxCell>
         <mxCell id="2pf4LdB47JyuiCXh3u_--1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=none;flipH=1;" parent="1" vertex="1">
-          <mxGeometry x="-100" width="200" height="76" as="geometry" />
+          <mxGeometry x="-100" width="200" height="70" as="geometry" />
         </mxCell>
         <mxCell id="bZvmhqit_LieYHjqC5bX-45" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=classicThin;endFill=1;arcSize=5;fillColor=#d80073;strokeColor=#000000;" parent="1" source="nBqxjyZSAqmiugvEhESZ-1" target="bZvmhqit_LieYHjqC5bX-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -55,10 +55,10 @@
         <mxCell id="2SqFd5uKFIkBH42q-k37-1" value="$$\mathcal{S}_{\textnormal{W}}^{(3)}$$" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" parent="1" vertex="1">
           <mxGeometry x="-66" y="110" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="puCPBz8C2vMCooEPcNfL-1" value="&lt;b style=&quot;font-size: 7px;&quot;&gt;Lido&lt;br style=&quot;font-size: 7px;&quot;&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=7;spacing=2;" parent="1" vertex="1">
+        <mxCell id="puCPBz8C2vMCooEPcNfL-1" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Lido&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;spacing=2;" parent="1" vertex="1">
           <mxGeometry x="-100" width="20" height="11" as="geometry" />
         </mxCell>
-        <mxCell id="puCPBz8C2vMCooEPcNfL-2" value="&lt;b style=&quot;font-size: 7px;&quot;&gt;MakerDAO&lt;br style=&quot;font-size: 7px;&quot;&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=7;spacing=2;" parent="1" vertex="1">
+        <mxCell id="puCPBz8C2vMCooEPcNfL-2" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;MakerDAO&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;spacing=2;" parent="1" vertex="1">
           <mxGeometry x="-100" y="140" width="40" height="10" as="geometry" />
         </mxCell>
         <mxCell id="fO8XjicVepQpFwOURcZq-1" value="&lt;p style=&quot;line-height: 270%;&quot;&gt;1&lt;/p&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=7;labelBackgroundColor=none;fontColor=#FFFFFF;fillColor=#000000;align=center;" parent="1" vertex="1">
